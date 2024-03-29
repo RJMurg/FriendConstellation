@@ -1,0 +1,266 @@
+:where(html) {
+    --yellow-100: #fcf4d6;
+    --yellow-200: #fddc69;
+    --yellow-300: #f1c21b;
+    --yellow-400: #d2a106;
+    --yellow-500: #b28600;
+    --yellow-600: #8e6a00;
+    --yellow-700: #684e00;
+    --yellow-800: #483700;
+    --yellow-900: #302400;
+    --yellow-1000: #1c1500;
+  
+    --yellow-100-hover: #f8e6a0;
+    --yellow-200-hover: #fccd27;
+    --yellow-300-hover: #ddb00e;
+    --yellow-400-hover: #bc9005;
+    --yellow-500-hover: #9e7700;
+    --yellow-600-hover: #755800;
+    --yellow-700-hover: #806000;
+    --yellow-800-hover: #5c4600;
+    --yellow-900-hover: #3d2e00;
+    --yellow-1000-hover: #332600;
+  
+    --orange-100: #fff2e8;
+    --orange-200: #ffd9be;
+    --orange-300: #ffb784;
+    --orange-400: #ff832b;
+    --orange-500: #eb6200;
+    --orange-600: #ba4e00;
+    --orange-700: #8a3800;
+    --orange-800: #5e2900;
+    --orange-900: #3e1a00;
+    --orange-1000: #231000;
+  
+    --orange-100-hover: #ffe2cc;
+    --orange-200-hover: #ffc69e;
+    --orange-300-hover: #ff9d57;
+    --orange-400-hover: #fa6800;
+    --orange-500-hover: #cc5500;
+    --orange-600-hover: #9e4200;
+    --orange-700-hover: #a84400;
+    --orange-800-hover: #753300;
+    --orange-900-hover: #522200;
+    --orange-1000-hover: #421e00;
+  
+    --red-100: #fff1f1;
+    --red-200: #ffd7d9;
+    --red-300: #ffb3b8;
+    --red-400: #ff8389;
+    --red-500: #fa4d56;
+    --red-600: #da1e28;
+    --red-700: #a2191f;
+    --red-800: #750e13;
+    --red-900: #520408;
+    --red-1000: #2d0709;
+  
+    --red-1000-hover: #540d11;
+    --red-900-hover: #66050a;
+    --red-800-hover: #921118;
+    --red-700-hover: #c21e25;
+    --red-600-hover: #b81922;
+    --red-500-hover: #ee0713;
+    --red-400-hover: #ff6168;
+    --red-300-hover: #ff99a0;
+    --red-200-hover: #ffc2c5;
+    --red-100-hover: #ffe0e0;
+  
+    --magenta-100: #fff0f7;
+    --magenta-200: #ffd6e8;
+    --magenta-300: #ffafd2;
+    --magenta-400: #ff7eb6;
+    --magenta-500: #ee5396;
+    --magenta-600: #d02670;
+    --magenta-700: #9f1853;
+    --magenta-800: #740937;
+    --magenta-900: #510224;
+    --magenta-1000: #2a0a18;
+  
+    --magenta-1000-hover: #53142f;
+    --magenta-900-hover: #68032e;
+    --magenta-800-hover: #8e0b43;
+    --magenta-700-hover: #bf1d63;
+    --magenta-600-hover: #b0215f;
+    --magenta-500-hover: #e3176f;
+    --magenta-400-hover: #ff57a0;
+    --magenta-300-hover: #ff94c3;
+    --magenta-200-hover: #ffbdda;
+    --magenta-100-hover: #ffe0ef;
+  
+    --purple-100: #f6f2ff;
+    --purple-200: #e8daff;
+    --purple-300: #d4bbff;
+    --purple-400: #be95ff; /* base0E */
+    --purple-500: #a56eff;
+    --purple-600: #8a3ffc;
+    --purple-700: #6929c4;
+    --purple-800: #491d8b;
+    --purple-900: #31135e;
+    --purple-1000: #1c0f30;
+  
+    --purple-1000-hover: #341c59;
+    --purple-900-hover: #40197b;
+    --purple-800-hover: #5b24ad;
+    --purple-700-hover: #7c3dd6;
+    --purple-600-hover: #7822fb;
+    --purple-500-hover: #9352ff;
+    --purple-400-hover: #ae7aff;
+    --purple-300-hover: #c5a3ff;
+    --purple-200-hover: #dcc7ff;
+    --purple-100-hover: #ede5ff;
+  
+    --blue-100: #edf5ff;
+    --blue-200: #d0e2ff;
+    --blue-300: #a6c8ff;
+    --blue-400: #78a9ff;
+    --blue-500: #4589ff;
+    --blue-600: #0f62fe;
+    --blue-700: #0043ce;
+    --blue-800: #002d9c;
+    --blue-900: #001d6c;
+    --blue-1000: #001141;
+  
+    --blue-1000-hover: #001f75;
+    --blue-900-hover: #00258a;
+    --blue-800-hover: #0039c7;
+    --blue-700-hover: #0053ff;
+    --blue-600-hover: #0050e6;
+    --blue-500-hover: #1f70ff;
+    --blue-400-hover: #5c97ff;
+    --blue-300-hover: #8ab6ff;
+    --blue-200-hover: #b8d3ff;
+    --blue-100-hover: #dbebff;
+  
+    --cyan-100: #e5f6ff;
+    --cyan-200: #bae6ff;
+    --cyan-300: #82cfff;
+    --cyan-400: #33b1ff;
+    --cyan-500: #1192e8;
+    --cyan-600: #0072c3;
+    --cyan-700: #00539a;
+    --cyan-800: #003a6d;
+    --cyan-900: #012749;
+    --cyan-1000: #061727;
+  
+    --cyan-100-hover: #cceeff;
+    --cyan-200-hover: #99daff;
+    --cyan-300-hover: #57beff;
+    --cyan-400-hover: #059fff;
+    --cyan-500-hover: #0f7ec8;
+    --cyan-600-hover: #005fa3;
+    --cyan-700-hover: #0066bd;
+    --cyan-800-hover: #00498a;
+    --cyan-900-hover: #013360;
+    --cyan-1000-hover: #0b2947;
+  
+    --teal-100: #d9fbfb;
+    --teal-200: #9ef0f0;
+    --teal-300: #3ddbd9;
+    --teal-400: #08bdba;
+    --teal-500: #009d9a;
+    --teal-600: #007d79;
+    --teal-700: #005d5d;
+    --teal-800: #004144;
+    --teal-900: #022b30;
+    --teal-1000: #081a1c;
+  
+    --teal-100-hover: #acf6f6;
+    --teal-200-hover: #57e5e5;
+    --teal-300-hover: #25cac8;
+    --teal-400-hover: #07aba9;
+    --teal-500-hover: #008a87;
+    --teal-600-hover: #006b68;
+    --teal-700-hover: #007070;
+    --teal-800-hover: #005357;
+    --teal-900-hover: #033940;
+    --teal-1000-hover: #0f3034;
+  
+    --green-100: #defbe6;
+    --green-200: #a7f0ba;
+    --green-300: #6fdc8c;
+    --green-400: #42be65;
+    --green-500: #24a148;
+    --green-600: #198038;
+    --green-700: #0e6027;
+    --green-800: #044317;
+    --green-900: #022d0d;
+    --green-1000: #071908;
+  
+    --green-100-hover: #b6f6c8;
+    --green-200-hover: #74e792;
+    --green-300-hover: #36ce5e;
+    --green-400-hover: #3bab5a;
+    --green-500-hover: #208e3f;
+    --green-600-hover: #166f31;
+    --green-700-hover: #11742f;
+    --green-800-hover: #05521c;
+    --green-900-hover: #033b11;
+    --green-1000-hover: #0d300f;
+  
+    --cool-gray-100: #f2f4f8;
+    --cool-gray-200: #dde1e6;
+    --cool-gray-300: #c1c7cd;
+    --cool-gray-400: #a2a9b0;
+    --cool-gray-500: #878d96;
+    --cool-gray-600: #697077;
+    --cool-gray-700: #4d5358;
+    --cool-gray-800: #343a3f;
+    --cool-gray-900: #21272a;
+    --cool-gray-1000: #121619;
+  
+    --cool-gray-100-hover: #e4e9f1;
+    --cool-gray-200-hover: #cdd3da;
+    --cool-gray-300-hover: #adb5bd;
+    --cool-gray-400-hover: #9199a1;
+    --cool-gray-500-hover: #757b85;
+    --cool-gray-600-hover: #585e64;
+    --cool-gray-700-hover: #5d646a;
+    --cool-gray-800-hover: #434a51;
+    --cool-gray-900-hover: #2b3236;
+    --cool-gray-1000-hover: #222a2f;
+  
+    --gray-100: #f4f4f4;
+    --gray-200: #e0e0e0;
+    --gray-300: #c6c6c6;
+    --gray-400: #a8a8a8;
+    --gray-500: #8d8d8d;
+    --gray-600: #6f6f6f;
+    --gray-700: #525252;
+    --gray-800: #393939;
+    --gray-900: #262626;
+    --gray-1000: #161616;
+  
+    --gray-100-hover: #e8e8e8;
+    --gray-200-hover: #d1d1d1;
+    --gray-300-hover: #b5b5b5;
+    --gray-400-hover: #999999;
+    --gray-500-hover: #7a7a7a;
+    --gray-600-hover: #5e5e5e;
+    --gray-700-hover: #636363;
+    --gray-800-hover: #474747;
+    --gray-900-hover: #333333;
+    --gray-1000-hover: #292929;
+  
+    --warm-gray-100: #f7f3f2;
+    --warm-gray-200: #e5e0df;
+    --warm-gray-300: #cac5c4;
+    --warm-gray-400: #ada8a8;
+    --warm-gray-500: #8f8b8b;
+    --warm-gray-600: #726e6e;
+    --warm-gray-700: #565151;
+    --warm-gray-800: #3c3838;
+    --warm-gray-900: #272525;
+    --warm-gray-1000: #171414;
+  
+    --warm-gray-100-hover: #f0e8e6;
+    --warm-gray-200-hover: #d8d0cf;
+    --warm-gray-300-hover: #b9b3b1;
+    --warm-gray-400-hover: #9c9696;
+    --warm-gray-500-hover: #7f7b7b;
+    --warm-gray-600-hover: #605d5d;
+    --warm-gray-700-hover: #696363;
+    --warm-gray-800-hover: #4c4848;
+    --warm-gray-900-hover: #343232;
+    --warm-gray-1000-hover: #2c2626;
+  }
+  

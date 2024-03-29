@@ -1,0 +1,99 @@
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+}
+
+select {
+	width: 100%;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	border: 2px solid var(--grey-4);
+	background-color: var(--grey-2);
+	color: var(--white);
+	font-family: 'IBM Plex Sans', sans-serif;
+}
+
+input {
+	width: 100%;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	border: 2px solid var(--grey-4);
+	background-color: var(--grey-2);
+	color: var(--white);
+	font-family: 'IBM Plex Sans', sans-serif;
+}
+
+input[type='checkbox'] {
+	width: 1rem;
+	height: 1rem;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	border: 2px solid var(--grey-4);
+	background-color: var(--grey-2);
+	color: var(--white);
+	font-family: 'IBM Plex Mono', monospace;
+}
+
+input:invalid {
+	border: 0.1rem solid var(--red);
+}
+
+button {
+	padding: 0.5rem;
+	margin-top: 1rem;
+	border-radius: 0.5rem;
+	border: none;
+	background-color: var(--grey-3);
+	color: var(--white);
+	font-family: 'IBM Plex Mono', monospace;
+	font-weight: 700;
+	box-shadow: 5px 5px 5px 0 var(--black);
+	cursor: pointer;
+	transition: 0.5s ease-out;
+}
+
+button:hover {
+	background-color: var(--grey-4);
+	scale: 1.05;
+	transition: 0.5s ease-in;
+}
+
+label {
+	margin: 1rem 0 0.5rem 0;
+	align-self: flex-start !important;
+	text-align: left;
+	font-weight: 700;
+	padding-right: 0.5rem;
+}
+
+div.selectelement {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 0.4rem;
+	width: 100%;
+}
+
+div.selectelement label {
+	margin: 0;
+}
+
+.required:after {
+	content: ' *';
+	font-weight: bold;
+}
+
+.element {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: max-content;
+}
+
+.selectelement label {
+	font-weight: normal;
+}
