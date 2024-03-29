@@ -86,3 +86,9 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.key{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}

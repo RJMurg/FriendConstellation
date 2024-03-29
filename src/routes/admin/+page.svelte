@@ -3,8 +3,7 @@
     import '$lib/css/base.css';
     import '$lib/css/layout/forms.css';
     import '$lib/css/colours/carbon-colours.css';
-    import ChooseItem from 'carbon-icons-svelte/lib/ChooseItem.svelte';
-    import Home from "carbon-icons-svelte/lib/Home.svelte";
+    import { TrophyFilled, Trophy, StarFilled, StarHalf, Star, Home, ChooseItem, TrashCan, AddAlt, Send } from 'carbon-icons-svelte';
 
 	export let form: ActionData;
 	export let data: PageData;
@@ -41,45 +40,121 @@
         </div>
 	</form>
 {:else}
-	<h2 class="subtitle medium">Chose an option:</h2>
+    <div class="header">
+        <div class="form-buttons">
+            <form method="post" action="?/logout">
+                <button class="cspp" >
+                    Log Out
+                </button>
+            </form>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-4">
-				<button class="cspp" on:click={() => (window.location.href = '/admin/events')}>
-					Events
-				</button>
-			</div>
+            <form method="post" action="?/addPerson">
+                <input type="text" id="name" name="name">
+                <button type="submit" >
+                    Send
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="starlist">
+        {#each data.starboard as {id, name, stars}, i}
+            <div class="starbox">
+                <div class="positionbox">
+                    <h1 class="title medium">
+                        {i + 1}
+                    </h1>
+                </div>
+                <div class="staree">
+                    <h1 class="staree-name">
+                        {name} -
+                        {#if stars.total < 0}
+                            <span style="color: var(--red-500);">
+                                {stars.total}
+                            </span>
+                        {:else}
+                            <span>
+                                {stars.total}
+                            </span>
+                        {/if}
+                    </h1>
+    
+                    <div class="staree-stars">
+                        {#if stars.total >= 0}
+                            {#if stars.hundredStars >= 0}
+                                {#each Array(Number(stars.hundredStars)) as _, i}
+                                    <TrophyFilled fill="var(--yellow-500)" size={32}/>
+                                {/each}
+                            {/if}
+                            {#if stars.fiftyStars >= 0}
+                                {#each Array(Number(stars.fiftyStars)) as _, i}
+                                    <Trophy fill="var(--yellow-500)" size={32}/>
+                                {/each}
+                            {/if}
+                            {#if stars.tenStars >= 0}
+                                {#each Array(Number(stars.tenStars)) as _, i}
+                                    <StarFilled fill="var(--yellow-500)" size={32}/>
+                                {/each}
+                            {/if}
+                            {#if stars.fiveStars >= 0}
+                                {#each Array(Number(stars.fiveStars)) as _, i}
+                                    <StarHalf fill="var(--yellow-500)" size={32}/>
+                                {/each}
+                            {/if}
+                            {#if stars.stars >= 0}
+                                {#each Array(Number(stars.stars)) as _, i}
+                                    <Star fill="var(--yellow-500)" size={32}/>
+                                {/each}
+                            {/if}
+                        {:else if stars.total < 0}
+                            {#if stars.hundredStars >= 0}
+                                {#each Array(Number(stars.hundredStars)) as _, i}
+                                    <TrophyFilled fill="var(--red-500)" size={32}/>
+                                {/each}
+                            {/if}
+                            {#if stars.fiftyStars >= 0}
+                                {#each Array(Number(stars.fiftyStars)) as _, i}
+                                    <Trophy fill="var(--red-500)" size={32}/>
+                                {/each}
+                            {/if}
+                            {#if stars.tenStars >= 0}
+                                {#each Array(Number(stars.tenStars)) as _, i}
+                                    <StarFilled fill="var(--red-500)" size={32}/>
+                                {/each}
+                            {/if}
+                            {#if stars.fiveStars >= 0}
+                                {#each Array(Number(stars.fiveStars)) as _, i}
+                                    <StarHalf fill="var(--red-500)" size={32}/>
+                                {/each}
+                            {/if}
+                            {#if stars.stars >= 0}
+                                {#each Array(Number(stars.stars)) as _, i}
+                                    <Star fill="var(--red-500)" size={32}/>
+                                {/each}
+                            {/if}
+                        {:else}
+                            <p>Unknown</p>
+                        {/if}
+                    </div>
+                </div>
 
-			<div class="col-lg-4">
-				<button class="cspp" on:click={() => (window.location.href = '/admin/stages')}>
-					Stages
-				</button>
-			</div>
+                <div class="admin-actions">
+                    <form method="POST" action="?/deletePerson">
+                        <input type="hidden" name="id" value="{id}">
+                        <button>
+                            <TrashCan fill="var(--red-500)" size={16}/>
+                        </button>
+                    </form>
 
-			<div class="col-lg-4">
-				<button class="cspp" on:click={() => alert('Puzzles are not complete.')}>
-					Puzzles (WIP)
-				</button>
-			</div>
-
-			<div class="col-lg-6">
-				<button class="cspp" on:click={() => alert('Leaderboards are not complete.')}>
-					Leaderboard (WIP)
-				</button>
-			</div>
-
-			<div class="col-lg-6">
-				<button class="cspp" on:click={() => alert('Overall is not complete!')}>
-					Overall (WIP)
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<form method="post" class="nocss" action="?/logout">
-		<button class="cspp" >
-			Log Out
-		</button>
-	</form>
+                    <form  method="POST" action="?/updatePerson">
+                        <input type="hidden" name="id" value="{id}">
+                        <input type="text" inputmode="numeric" pattern="[-0-9]*" id="stars" name="stars">
+                        <button>
+                            <Send fill="var(--green-500)" size={16}/>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {/each}
+    </div>
 {/if}
