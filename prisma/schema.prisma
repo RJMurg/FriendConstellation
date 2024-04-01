@@ -8,7 +8,18 @@ datasource db {
 }
 
 model starboard {
-  id    Int     @id @default(autoincrement())
-  name  String? @db.VarChar(100)
-  stars BigInt
+  id             Int     @id @default(autoincrement())
+  name           String? @db.VarChar(100)
+  stars          BigInt  @default(1)
+  assignedtask   Int?
+  taskscompleted Int?
+  tasks          tasks?  @relation(fields: [assignedtask], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_currenttask")
+}
+
+model tasks {
+  id          Int         @id
+  title       String?     @db.VarChar(100)
+  description String?     @db.VarChar(500)
+  reward      BigInt?
+  starboard   starboard[]
 }

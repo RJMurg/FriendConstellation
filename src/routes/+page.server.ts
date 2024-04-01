@@ -20,7 +20,6 @@ export const load = (async () => {
         parsedStars.push(stareeTemplate);
     }
 
-    console.log(parsedStars);
     return {
         starboard: parsedStars
     };
