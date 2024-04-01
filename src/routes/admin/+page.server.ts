@@ -14,6 +14,25 @@ export const load: PageServerLoad = async ({ cookies }) => {
         }
     });
 
+	const taskList = await prisma.tasks.findMany({
+        orderBy: {
+            reward: 'desc'
+        }
+    });
+
+    const parsedTasks: {id: number, title: string, description: string, stars: object; reward: { hundredStars: number, fiftyStars: number, tenStars: number, fiveStars: number, stars: number, negative: boolean, total: number } }[] = [];
+
+    for(let i = 0; i < taskList.length; i++){
+        const taskRewardTemplate = {
+            id: taskList[i].id,
+            title: taskList[i].title ?? '',
+            description: taskList[i].description ?? '', // Handle null value by providing a default value of an empty string
+            stars: {}, // Add the missing 'stars' property
+            reward: breakdownStars(Number(taskList[i].reward))
+        }
+        parsedTasks.push(taskRewardTemplate);
+    }
+
     const parsedStars: { id: number; name: string; stars: object; }[] = [];
 
     for(let i = 0; i < starboard.length; i++){
@@ -47,13 +66,15 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		// Return success
 		return {
 			loggedIn: true,
-			starboard: parsedStars
+			starboard: parsedStars,
+			tasks: parsedTasks
 		};
 	} else {
 		// Return failure
 		return {
 			loggedIn: false,
-			starboard: parsedStars
+			starboard: parsedStars,
+			tasks: parsedTasks
 		};
 	}
 };
@@ -123,6 +144,24 @@ export const actions = {
 
 		const result = await prisma.starboard.create({
 			data: {name: String(reqData.get('name')), stars: BigInt(0)}
+		});
+	},
+	createTask: async ({ request }) => {
+		const reqData = await request.formData();
+
+		const result = await prisma.tasks.create({
+			data: {
+				title: String(reqData.get('title')),
+				description: String(reqData.get('description')),
+				reward: BigInt(reqData.get('reward')),
+			}
+		});
+	},
+	deleteTask: async ({ request }) => {
+		const reqData = await request.formData();
+
+		const result = await prisma.tasks.delete({
+			where: {id: Number(reqData.get('id'))}
 		});
 	}
 } satisfies Actions;

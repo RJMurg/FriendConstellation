@@ -23,12 +23,12 @@
         </h1>
 
         <div class="horizontal">
-            <Button class="starboard-buttons" kind="secondary" on:click={() => location.href="/tasks"}>
+            <Button class="starboard-buttons" kind="secondary" on:click={() => location.href="/tasks"}  data-sveltekit-preload-date="hover">
                 <TaskStar size={16}/>
                 <span class="button-span">Taskboard</span>
             </Button>
 
-            <Button class="starboard-buttons" kind="primary" on:click={() => location.href="/"}>
+            <Button class="starboard-buttons" kind="primary" on:click={() => location.href="/"}  data-sveltekit-preload-date="hover">
                 <ChartClusterBar size={16}/>
                 <span class="button-span">Starboard</span>
             </Button>

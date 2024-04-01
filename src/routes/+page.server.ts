@@ -9,7 +9,7 @@ export const load = (async () => {
         }
     });
 
-    const parsedStars: { id: number; name: string; stars: object; }[] = [];
+    const parsedStars: { id: number; name: string; stars: { hundredStars: number, fiftyStars: number, tenStars: number, fiveStars: number, stars: number, negative: boolean, total: number }; }[] = [];
 
     for(let i = 0; i < starboard.length; i++){
         let position = String(i + 1);

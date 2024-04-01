@@ -17,7 +17,7 @@ model starboard {
 }
 
 model tasks {
-  id          Int         @id
+  id          Int         @id @default(autoincrement())
   title       String?     @db.VarChar(100)
   description String?     @db.VarChar(500)
   reward      BigInt?
