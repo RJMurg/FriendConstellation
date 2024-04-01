@@ -12,10 +12,28 @@ export const load = (async () => {
     const parsedStars: { id: number; name: string; stars: object; }[] = [];
 
     for(let i = 0; i < starboard.length; i++){
+        let position = String(i + 1);
+        const finalDigit = Number(String(i + 1).slice(-1));
+
+        if(finalDigit == 1){
+            position += "st";
+        }
+        else if(finalDigit == 2){
+            position += "nd";
+        }
+        else if(finalDigit == 3){
+            position += "rd";
+        }
+        else{
+            position += "th";
+        }
+
+
         const stareeTemplate = {
             id: starboard[i].id,
             name: starboard[i].name ?? '',
-            stars: breakdownStars(Number(starboard[i].stars))
+            stars: breakdownStars(Number(starboard[i].stars)),
+            position: position
         }
         parsedStars.push(stareeTemplate);
     }

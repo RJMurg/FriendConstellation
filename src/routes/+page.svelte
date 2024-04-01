@@ -1,8 +1,10 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import { TrophyFilled, Trophy, StarFilled, StarHalf, Star } from 'carbon-icons-svelte';
+    import { TrophyFilled, Trophy, StarFilled, StarHalf, Star, TaskStar, ChartClusterBar, ChartCustom } from 'carbon-icons-svelte';
     import '$lib/css/base.css';
+    import '$lib/css/layout/forms.css';
     import '$lib/css/colours/carbon-colours.css';
+	import { redirect } from '@sveltejs/kit';
     
     export let data: PageData;
 </script>
@@ -17,6 +19,20 @@
     <h1 class="title large">
         Ruán's Starboard
     </h1>
+
+    <div class="key nogap">
+        <button on:click={() => location.href="/tasks"}>
+            <TaskStar size={16}/>
+            Taskboard
+        </button>
+
+        <button on:click={() => location.href="/"}>
+            <ChartClusterBar size={16} fill="var(--green-500)"/>
+            Starboard
+        </button>
+    </div>
+
+
     <div class="key">
         <div>
             <TrophyFilled fill="var(--yellow-500)"/> = 100 Stars
@@ -54,11 +70,11 @@
             </div>
         </div>
     {:else}
-        {#each data.starboard as {name, stars}, i}
+        {#each data.starboard as {name, stars, position}}
             <div class="starbox">
                 <div class="positionbox">
                     <h1 class="title medium">
-                        {i + 1}
+                        {position}
                     </h1>
 
                 </div>

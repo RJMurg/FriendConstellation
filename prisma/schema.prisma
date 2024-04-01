@@ -9,10 +9,10 @@ datasource db {
 
 model starboard {
   id             Int     @id @default(autoincrement())
-  name           String? @db.VarChar(100)
+  name           String? @default("un-named") @db.VarChar(100)
   stars          BigInt  @default(1)
   assignedtask   Int?
-  taskscompleted Int?
+  taskscompleted Int?    @default(0)
   tasks          tasks?  @relation(fields: [assignedtask], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_currenttask")
 }
 
