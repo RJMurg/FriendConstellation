@@ -19,7 +19,7 @@
 <div class="starbox">
     <div class="staree">
         <h1 class="staree-name">
-            {title}:
+            {title}: Up to
             {#if reward.total < 0}
                 <span style="color: var(--red-500);">
                     {reward.total}

@@ -34,6 +34,10 @@
             </Button>
         </div>
 
+        <h4>
+            Send a photo or video of the relevant task once you have completed it
+        </h4>
+
         <hr>
     </div>
 
