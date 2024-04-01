@@ -31,6 +31,7 @@
         </button>
     </div>
 
+    <hr>
 
     <div class="key">
         <div>
