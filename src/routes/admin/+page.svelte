@@ -124,7 +124,7 @@
                         </h1>
                     </div>
                 </div>
-
+            {:else}
                 {#each data.starboard as {id, name, stars, position}}
                     <div class="horizontal">
                         <Starbox

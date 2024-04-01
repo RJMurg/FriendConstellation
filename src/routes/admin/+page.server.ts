@@ -61,6 +61,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
         }
         parsedStars.push(stareeTemplate);
     }
+
 	// Check if admin cookie is set
 	if (cookies.get('admin') == 'true') {
 		// Return success
