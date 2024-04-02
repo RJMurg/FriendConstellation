@@ -62,6 +62,7 @@
 
 		<h4>Send a photo or video of the relevant task once you have completed it</h4>
 	{/if}
+	<h4><a href="https://youtu.be/8q8IEsbpOSg?si=Khk3AH-PIR5H5py3">I have officially caused pain</a></h4>
 </div>
 
 {#if page == 'starboard'}
