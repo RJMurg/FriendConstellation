@@ -23,3 +23,9 @@ model tasks {
   reward      BigInt?
   starboard   starboard[]
 }
+
+model webhooks {
+  server  String? @db.VarChar(500)
+  webhook String? @db.VarChar(500)
+  id      Int     @id @default(autoincrement())
+}

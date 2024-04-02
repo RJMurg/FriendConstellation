@@ -1,5 +1,5 @@
 import type { PageServerLoad, Actions } from './$types';
-import { redirect } from '@sveltejs/kit';
+import axios from 'axios';
 import prisma from '$lib/server/prisma';
 import { breakdownStars } from '$lib/starBreakdown';
 
@@ -157,6 +157,25 @@ export const actions = {
 				reward: BigInt(reqData.get('reward')),
 			}
 		});
+
+		let webhookContent = 'A new task has been added to the [starboard](https://stars.rjm.ie/)!\n' + '**Title:** ' + reqData.get('title') + '\n*' + reqData.get('description') + '*\n\n' + '**Reward:** Up to ' + reqData.get('reward');
+
+		if(Number(reqData.get('reward')) == 1 || Number(reqData.get('reward')) == -1){
+			webhookContent += " star!";
+		}
+		else{
+			webhookContent += " stars!";
+		}
+
+		const webhooks = await prisma.webhooks.findMany();
+
+		for(let i = 0; i < webhooks.length; i++){
+			axios.post(`https://discord.com/api/webhooks/${webhooks[i].server}/${webhooks[i].webhook}`, {
+				username: "Starboard",
+				content: webhookContent,
+				avatar_url: 'https://stars.rjm.ie/favicon.webp'
+			})
+		}
 	},
 	deleteTask: async ({ request }) => {
 		const reqData = await request.formData();
