@@ -113,7 +113,7 @@
 			selectorPrimaryFocus="#db-name"
 		>
 			<form method="post" action="?/addPerson" use:enhance>
-				<TextInput required name="title" labelText="Name" placeholder="Person's name..." />
+				<TextInput required name="name" labelText="Name" placeholder="Person's name..." />
 
 				<br />
 
