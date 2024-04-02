@@ -120,31 +120,41 @@ export const actions = {
 			status: 500
 		}
 	},
-	deletePerson: async ({ request }) => {
+	createTask: async ({ request }) => {
 		const reqData = await request.formData();
 
-		const result = await prisma.starboard.delete({
-			where: {id: Number(reqData.get('id'))}
+		const result = await prisma.tasks.create({
+			data: {
+				title: String(reqData.get('title')),
+				description: String(reqData.get('description')),
+				reward: BigInt(reqData.get('reward')),
+			}
 		});
+
+		let webhookContent = 'A new task has been added to the [starboard](https://stars.rjm.ie/)!\n' + '**Title:** ' + reqData.get('title') + '\n*' + reqData.get('description') + '*\n\n' + '**Reward:** Up to ' + reqData.get('reward');
+
+		if(Number(reqData.get('reward')) == 1 || Number(reqData.get('reward')) == -1){
+			webhookContent += " star!";
+		}
+		else{
+			webhookContent += " stars!";
+		}
+
+		const webhooks = await prisma.webhooks.findMany();
+
+		for(let i = 0; i < webhooks.length; i++){
+			axios.post(`https://discord.com/api/webhooks/${webhooks[i].server}/${webhooks[i].webhook}`, {
+				username: "Starboard",
+				content: webhookContent,
+				avatar_url: 'https://stars.rjm.ie/favicon.webp'
+			})
+		}
 	},
-	updatePerson: async ({ request }) => {
+	deleteTask: async ({ request }) => {
 		const reqData = await request.formData();
-		const initialStars = await prisma.starboard.findUnique({
+
+		const result = await prisma.tasks.delete({
 			where: {id: Number(reqData.get('id'))}
-		});
-
-		const newStarTotal = initialStars?.stars + BigInt(reqData.get('stars'));
-
-		const result = await prisma.starboard.update({
-			where: { id: Number(reqData.get('id')) },
-			data: {stars: newStarTotal}
-		});
-	},
-	addPerson: async ({ request }) => {
-		const reqData = await request.formData();
-
-		const result = await prisma.starboard.create({
-			data: {name: String(reqData.get('name')), stars: BigInt(0)}
 		});
 	}
 } satisfies Actions;

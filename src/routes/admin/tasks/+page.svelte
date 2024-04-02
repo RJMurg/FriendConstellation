@@ -8,12 +8,13 @@
     import "carbon-components-svelte/css/all.css";
     import '$lib/css/carbon-colours.css';
     import '$lib/css/style.css';
-    import { Home, AddAlt, Logout, TaskStar, Send } from 'carbon-icons-svelte';
+    import { Home, Return, Logout, TaskStar, Send } from 'carbon-icons-svelte';
     import { Theme, Button, TextInput, NumberInput, TextArea, PasswordInput, Modal } from 'carbon-components-svelte';
 
 	export let form: ActionData;
 	export let data: PageData;
 	export let LoggedIn = false;
+    export let open = false;
 
     if(data.loggedIn){
         LoggedIn = true;
@@ -47,6 +48,50 @@
             </Button>
         </div>
     {:else}
+        
+        <Modal
+        bind:open
+        passiveModal
+        modalHeading="Create Task"
+        secondaryButtonText="Cancel"
+        selectorPrimaryFocus="#db-name"
+        >
+            <form method="post" action="?/createTask" use:enhance>
+                <TextInput
+                required
+                name="title"
+                labelText="Task Name"
+                placeholder="Task name..."
+                />
+
+                <br>
+
+                <TextArea
+                required
+                name="description"
+                labelText="Task Description"
+                placeholder="Enter the task description..."
+                />
+
+                <br>
+
+                <NumberInput
+                required
+                min={0}
+                step={1}
+                value={1}
+                name="reward"
+                label="Maximum reward offered"
+                />
+
+                <br>
+
+                <Button type="submit" on:submit={() => {open = false}}>
+                    <Send size={16}/>
+                    <span class="button-span">Submit</span>
+                </Button>
+            </form>
+        </Modal>
 
         <div class="commandmodal horizontal">
             <form method="post" action="?/logout" use:enhance>
@@ -55,41 +100,40 @@
                 </Button>
             </form>
 
-            <Button on:click={() => (location.href = "/admin/tasks")}>
-                <TaskStar size={16}/>
-                <span class="button-span">Go to tasks</span>
+            <Button on:click={() => (location.href = "/admin")}>
+                <Return size={16}/>
+                <span class="button-span">Go back</span>
             </Button>
 
-            <form method="post" class="horizontal" action="?/addPerson" use:enhance>
-                <TextInput size="xl" name="name" placeholder="Enter a name"/>
-                <Button icon={AddAlt} type="submit"/>
-            </form>
+            <Button on:click={() => (open = true)}>
+                <TaskStar size={16}/>
+                <span class="button-span">Create Task</span>
+            </Button>
         </div>
 
         <h3>
-            Starboard
+            Taskboard
         </h3>
         <div class="starlist">
-            {#if data.starboard.length == 0}
+            {#if data.tasks.length == 0}
                 <div class="starbox">
                     <div class="staree">
                         <h1 class="staree-name">
-                            No people on starboard...
+                            No tasks available yet...
                         </h1>
                     </div>
                 </div>
             {:else}
-                {#each data.starboard as {id, name, stars, position}}
+                {#each data.tasks as {id, title, description, reward}}
                     <div class="horizontal">
-                        <Starbox
-                            name={name}
-                            position={position}
-                            stars={stars}
+                        <Taskbox
+                            title={title}
+                            description={description}
+                            reward={reward}
                         />
 
-                        <AdminControls
+                        <TaskControls
                             id={id}
-                            name={name}
                         />
                     </div>
                 {/each}
