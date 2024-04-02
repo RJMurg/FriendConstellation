@@ -1,5 +1,5 @@
 type parsedStars = {
-    id: number;
-    name: string;
-    stars: number;
+	id: number;
+	name: string;
+	stars: number;
 };
