@@ -4,3 +4,10 @@ node_modules
 Dockerfile
 docker-compose.yaml
 README.md
+.env.example
+.eslintignore
+.eslintrc.cjs
+.npmrc
+.prettierignore
+.prettierrc
+.github

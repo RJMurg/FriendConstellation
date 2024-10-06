@@ -1,15 +1,20 @@
 services:
-  app:
+  starboard:
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.starboard.rule=Host(`stars.rjm.ie`)"
+    - "traefik.http.services.starboard.loadbalancer.server.port=3000"
+    - "traefik.http.routers.starboard.entrypoints=websecure"
+    - "traefik.http.routers.starboard.tls.certresolver=external-resolver"
+    - "external-service=true"
     build: .
     container_name: starboard
-    ports:
-      - '30666:3000'
     environment:
       DATABASE_URL: postgresql://prisma:prisma@db:5432/prismadb?schema=public
     depends_on:
       - db
     networks:
-      - app-network
+      - traefik-external
 
   db:
     image: postgres:13
@@ -21,11 +26,11 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
-      - app-network
+      - traefik-external
 
 networks:
-  app-network:
-    driver: bridge
+  traefik-external:
+    external: true
 
 volumes:
   postgres-data:
