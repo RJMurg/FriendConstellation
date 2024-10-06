@@ -15,4 +15,8 @@ echo "Running Prisma migrations..."
 npx prisma migrate deploy
 
 echo "Building Site"
-npm run dev -- --host
+npm run build
+
+# Start the server
+echo "Starting server..."
+node build
