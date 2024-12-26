@@ -7,13 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model starboard {
+model users {
   id             Int     @id @default(autoincrement())
   name           String? @default("un-named") @db.VarChar(100)
   stars          BigInt  @default(1)
-  assignedtask   Int?
-  taskscompleted Int?    @default(0)
-  tasks          tasks?  @relation(fields: [assignedtask], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_currenttask")
+
+  logs logs[]
 }
 
 model tasks {
@@ -21,11 +20,18 @@ model tasks {
   title       String?     @db.VarChar(100)
   description String?     @db.VarChar(500)
   reward      BigInt?
-  starboard   starboard[]
 }
 
 model webhooks {
   server  String? @db.VarChar(500)
   webhook String? @db.VarChar(500)
   id      Int     @id @default(autoincrement())
+}
+
+model logs {
+  id Int @id @default(autoincrement())
+  user_id Int
+  action String
+  timestamp DateTime @default(now())
+  User users @relation(fields: [user_id], references: [id])
 }
