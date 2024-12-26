@@ -1,12 +1,12 @@
 services:
   starboard:
     labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.starboard.rule=Host(`stars.rjm.ie`)"
-    - "traefik.http.services.starboard.loadbalancer.server.port=3000"
-    - "traefik.http.routers.starboard.entrypoints=websecure"
-    - "traefik.http.routers.starboard.tls.certresolver=external-resolver"
-    - "external-service=true"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.starboard.rule=Host(`stars.rjm.ie`)'
+      - 'traefik.http.services.starboard.loadbalancer.server.port=3000'
+      - 'traefik.http.routers.starboard.entrypoints=websecure'
+      - 'traefik.http.routers.starboard.tls.certresolver=external-resolver'
+      - 'external-service=true'
     build: .
     container_name: starboard
     environment:

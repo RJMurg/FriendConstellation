@@ -3,4 +3,8 @@
 	let { children } = $props();
 </script>
 
-{@render children()}
+<div
+	class="dark flex min-h-screen w-screen flex-col items-center justify-center overflow-x-scroll bg-black text-white"
+>
+	{@render children()}
+</div>
