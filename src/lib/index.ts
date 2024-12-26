@@ -7,7 +7,7 @@
  */
 export function stringifyPosition(position: number): string {
 	const positionArray = position.toString().split('');
-    const lastDigit = positionArray[positionArray.length - 1];
+	const lastDigit = positionArray[positionArray.length - 1];
 
 	if (lastDigit === '1') {
 		return positionArray.toString() + 'st';
@@ -46,5 +46,5 @@ export function parseStars(stars: number): Stars {
 		tenStars,
 		fiveStars,
 		stars: oneStars
-	}
+	};
 }
