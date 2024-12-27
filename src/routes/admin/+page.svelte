@@ -1,202 +1,194 @@
 <script lang="ts">
-	import type { PageData, ActionData } from './$types';
 	import { enhance } from '$app/forms';
-	import Starbox from '$lib/starbox.svelte';
-	import AdminControls from '$lib/adminControls.svelte';
-	import Taskbox from '$lib/taskbox.svelte';
-	import TaskControls from '$lib/taskControls.svelte';
-	import 'carbon-components-svelte/css/all.css';
-	import '$lib/css/carbon-colours.css';
-	import '$lib/css/style.css';
-	import { Home, Logout, TaskStar, Send, UserFollow } from 'carbon-icons-svelte';
-	import {
-		Button,
-		TextInput,
-		NumberInput,
-		TextArea,
-		PasswordInput,
-		Modal
-	} from 'carbon-components-svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import type { PageData } from './$types';
+	import { ChevronRight } from 'lucide-svelte';
+	import Details from '$lib/details.json';
+	import EmptyCard from '$lib/components/custom/EmptyCard.svelte';
+	import StarCard from '$lib/components/custom/StarCard.svelte';
+	import ModifyUser from '$lib/components/custom/ModifyUser.svelte';
+	import TaskCard from '$lib/components/custom/TaskCard.svelte';
+	import ModifyTask from '$lib/components/custom/ModifyTask.svelte';
+	import WebhookCard from '$lib/components/custom/WebhookCard.svelte';
+	import ModifyWebhook from '$lib/components/custom/ModifyWebhook.svelte';
+	import AdminMenu from '$lib/components/custom/AdminMenu.svelte';
 
-	export let form: ActionData;
-	export let data: PageData;
-	export let LoggedIn = false;
-	export let page = 'starboard';
-	export let open = false;
-	import Pagebox from '$lib/pagebox.svelte';
+	let { data }: { data: PageData } = $props();
 
-	if (data.loggedIn) {
-		LoggedIn = true;
-	}
+	let players = $state(data.players ?? []);
+	let tasks = $state(data.tasks);
+	let webhooks = $state(data.webhooks);
+	let page = $state('players');
+	let playersButtonVariant: buttonTypes = $state('default');
+	let tasksButtonVariant: buttonTypes = $state('secondary');
+	let webhooksButtonvariant: buttonTypes = $state('secondary');
 
-	$: if (form?.status == 200) {
-		LoggedIn = true;
-	}
-
-	$: if (form?.status == 500) {
-		LoggedIn = false;
-	}
+	$effect(() => {
+		if (page === 'tasks') {
+			playersButtonVariant = 'secondary';
+			webhooksButtonvariant = 'secondary';
+			tasksButtonVariant = 'default';
+		} else if (page === 'webhooks') {
+			playersButtonVariant = 'secondary';
+			webhooksButtonvariant = 'default';
+			tasksButtonVariant = 'secondary';
+		} else if (page === 'players') {
+			playersButtonVariant = 'default';
+			webhooksButtonvariant = 'secondary';
+			tasksButtonVariant = 'secondary';
+		}
+	});
 </script>
 
 <svelte:head>
-	<title>Starboard - Admin</title>
+	<title>
+		{Details.title} - Admin
+	</title>
 </svelte:head>
 
-{#if !LoggedIn}
-	<div>
-		<h3>Please enter the Administrator Password:</h3>
-		<form method="post" action="?/login" use:enhance>
-			<PasswordInput name="password" placeholder="Enter the password..." required />
-		</form>
-
-		<Button
-			class="starboard-buttons"
-			kind="primary"
-			on:click={() => (location.href = '/')}
-			data-sveltekit-preload-date="hover"
-		>
-			<Home size={16} />
-			<span class="button-span">Go Home</span>
+{#if !data.loggedIn}
+	<h1 class="mb-5 text-center text-4xl font-bold">Admin Login</h1>
+	<form action="?/login" method="post" class="flex w-full max-w-sm items-center space-x-2">
+		<Input type="password" name="password" placeholder="Enter admin password" />
+		<Button type="submit">
+			<ChevronRight class="" />
 		</Button>
-	</div>
-{:else}
-	{#if page == 'taskboard'}
-		<Modal
-			bind:open
-			passiveModal
-			modalHeading="Create Task"
-			secondaryButtonText="Cancel"
-			selectorPrimaryFocus="#db-name"
+	</form>
+	<Button variant="secondary" href="/" class="mt-2">Go Home</Button>
+{:else if page === 'players'}
+	<AdminMenu {playersButtonVariant} {tasksButtonVariant} {webhooksButtonvariant} bind:page />
+
+	<h1 class="my-2 text-center text-4xl font-bold">Champions</h1>
+	<Dialog.Root>
+		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
+			>Add Champion</Dialog.Trigger
 		>
-			<form method="post" action="?/addTask" use:enhance>
-				<TextInput required name="title" labelText="Task Name" placeholder="Task name..." />
+		<Dialog.Content class="sm:max-w-[425px]">
+			<Dialog.Header>
+				<Dialog.Title class="dark">Add Champion</Dialog.Title>
+				<Dialog.Description>Add a Champion to the Starboard.</Dialog.Description>
+			</Dialog.Header>
+			<form action="?/addPlayer" method="POST">
+				<div class="grid gap-4 py-4">
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Input name="name" placeholder="Champion Name" class="col-span-3 text-white" />
+					</div>
 
-				<br />
-
-				<TextArea
-					required
-					name="description"
-					labelText="Task Description"
-					placeholder="Enter the task description..."
-				/>
-
-				<br />
-
-				<NumberInput
-					required
-					min={0}
-					step={1}
-					value={1}
-					name="reward"
-					label="Maximum reward offered"
-				/>
-
-				<br />
-
-				<Button
-					type="submit"
-					on:submit={() => {
-						open = false;
-					}}
-				>
-					<Send size={16} />
-					<span class="button-span">Submit</span>
-				</Button>
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Input name="stars" value="1" class="col-span-3 text-white" type="number" />
+					</div>
+				</div>
+				<Dialog.Footer>
+					<Button type="submit">Add</Button>
+				</Dialog.Footer>
 			</form>
-		</Modal>
-	{:else if page == 'starboard'}
-		<Modal
-			bind:open
-			passiveModal
-			modalHeading="Create Person"
-			secondaryButtonText="Cancel"
-			selectorPrimaryFocus="#db-name"
-		>
-			<form method="post" action="?/addPerson" use:enhance>
-				<TextInput required name="name" labelText="Name" placeholder="Person's name..." />
+		</Dialog.Content>
+	</Dialog.Root>
+	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
+		{#if (players ?? []).length == 0}
+			<EmptyCard message="No champions have been added." />
+		{:else}
+			{#each players ?? [] as player, i}
+				<div class="flex flex-row">
+					<StarCard player={player.name} position={i + 1} stars={player.stars} />
 
-				<br />
-
-				<NumberInput required min={0} step={1} value={1} name="stars" label="Starting stars" />
-
-				<br />
-
-				<Button
-					type="submit"
-					on:submit={() => {
-						open = false;
-					}}
-				>
-					<Send size={16} />
-					<span class="button-span">Submit</span>
-				</Button>
-			</form>
-		</Modal>
-	{/if}
-
-	<div class="commandmodal horizontal">
-		<form method="post" action="?/logout" use:enhance>
-			<Button icon={Logout} kind="secondary" type="submit" style="width: 100%;">Logout</Button>
-		</form>
-
-		{#if page == 'taskboard'}
-			<Button on:click={() => (open = true)}>
-				<TaskStar size={16} />
-				<span class="button-span">Create Task</span>
-			</Button>
-		{:else if page == 'starboard'}
-			<Button on:click={() => (open = true)}>
-				<UserFollow size={16} />
-				<span class="button-span">Create Person</span>
-			</Button>
+					<ModifyUser id={player.id} />
+				</div>
+			{/each}
 		{/if}
 	</div>
+{:else if page === 'tasks'}
+	<AdminMenu {playersButtonVariant} {tasksButtonVariant} {webhooksButtonvariant} bind:page />
 
-	<hr />
+	<h1 class="my-2 text-center text-4xl font-bold">Tasks</h1>
+	<Dialog.Root>
+		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
+			>Add Task</Dialog.Trigger
+		>
+		<Dialog.Content class="sm:max-w-[425px]">
+			<Dialog.Header>
+				<Dialog.Title class="dark">Add Task</Dialog.Title>
+				<Dialog.Description>Add a Task to the Starboard.</Dialog.Description>
+			</Dialog.Header>
+			<form action="?/addTask" method="POST">
+				<div class="grid gap-4 py-4">
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Input name="name" placeholder="Task Title" class="col-span-3 text-white" />
+					</div>
 
-	{#if page == 'starboard'}
-		<Pagebox bind:page />
-	{:else if page == 'taskboard'}
-		<Pagebox bind:page />
-	{/if}
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Input
+							name="description"
+							placeholder="Explain how to complete the task"
+							class="col-span-3 text-white"
+						/>
+					</div>
 
-	{#if page == 'starboard'}
-		<h3>Starboard</h3>
-		<div class="starlist">
-			{#if data.starboard.length == 0}
-				<div class="starbox">
-					<div class="staree">
-						<h1 class="staree-name">No people on starboard...</h1>
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Input name="stars" value="1" class="col-span-3 text-white" type="number" />
 					</div>
 				</div>
-			{:else}
-				{#each data.starboard as { id, name, stars, position }}
-					<div class="horizontal">
-						<Starbox {name} {position} {stars} />
+				<Dialog.Footer>
+					<Button type="submit">Add</Button>
+				</Dialog.Footer>
+			</form>
+		</Dialog.Content>
+	</Dialog.Root>
+	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
+		{#if (tasks ?? []).length == 0}
+			<EmptyCard message="No tasks have been added." />
+		{:else}
+			{#each tasks ?? [] as task, i}
+				<div class="flex flex-row">
+					<TaskCard name={task.title} description={task.description} stars={task.reward} />
 
-						<AdminControls {id} {name} />
+					<ModifyTask id={task.id} />
+				</div>
+			{/each}
+		{/if}
+	</div>
+{:else if page === 'webhooks'}
+	<AdminMenu {playersButtonVariant} {tasksButtonVariant} {webhooksButtonvariant} bind:page />
+
+	<h1 class="my-2 text-center text-4xl font-bold">Webhooks</h1>
+	<Dialog.Root>
+		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
+			>Add Webhook</Dialog.Trigger
+		>
+		<Dialog.Content class="sm:max-w-[425px]">
+			<Dialog.Header>
+				<Dialog.Title class="dark">Add Webhook</Dialog.Title>
+				<Dialog.Description>Add a Webhook to the Starboard.</Dialog.Description>
+			</Dialog.Header>
+			<form action="?/addWebhook" method="POST">
+				<div class="grid gap-4 py-4">
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Input name="name" placeholder="Webhook Name" class="col-span-3 text-white" />
 					</div>
-				{/each}
-			{/if}
-		</div>
-	{:else if page == 'taskboard'}
-		<h3>Taskboard</h3>
-		<div class="starlist">
-			{#if data.tasks.length == 0}
-				<div class="starbox">
-					<div class="staree">
-						<h1 class="staree-name">No tasks available yet...</h1>
+
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Input name="url" placeholder="Webhook URL" class="col-span-3 text-white" />
 					</div>
 				</div>
-			{:else}
-				{#each data.tasks as { id, title, description, reward }}
-					<div class="horizontal">
-						<Taskbox {title} {description} {reward} />
+				<Dialog.Footer>
+					<Button type="submit">Add</Button>
+				</Dialog.Footer>
+			</form>
+		</Dialog.Content>
+	</Dialog.Root>
+	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
+		{#if (webhooks ?? []).length == 0}
+			<EmptyCard message="No webhooks have been added." />
+		{:else}
+			{#each webhooks ?? [] as webhook, i}
+				<div class="flex flex-row">
+					<WebhookCard name={webhook.name} url={webhook.webhook} />
 
-						<TaskControls {id} />
-					</div>
-				{/each}
-			{/if}
-		</div>
-	{/if}
+					<ModifyWebhook id={webhook.id} />
+				</div>
+			{/each}
+		{/if}
+	</div>
 {/if}

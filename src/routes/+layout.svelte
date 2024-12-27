@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { Theme } from 'carbon-components-svelte';
-	import 'carbon-components-svelte/css/all.css';
+	import '../app.css';
+	let { children } = $props();
 </script>
 
-<Theme theme="g100">
-	<slot />
-</Theme>
+<div
+	class="dark flex min-h-screen w-screen flex-col items-center justify-center bg-black text-white"
+>
+	{@render children()}
+</div>

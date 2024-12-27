@@ -1,5 +1,9 @@
-type parsedStars = {
-	id: number;
-	name: string;
+type Stars = {
 	stars: number;
+	fiveStars: number;
+	tenStars: number;
+	fiftyStars: number;
+	hundredStars: number;
 };
+
+type buttonTypes = 'default' | 'secondary';

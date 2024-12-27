@@ -1,95 +1,67 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import Starbox from '$lib/starbox.svelte';
-	import Taskbox from '$lib/taskbox.svelte';
-	import Pagebox from '$lib/pagebox.svelte';
-	import {
-		TrophyFilled,
-		Trophy,
-		StarFilled,
-		StarHalf,
-		Star,
-		TaskStar,
-		ChartClusterBar
-	} from 'carbon-icons-svelte';
-	import 'carbon-components-svelte/css/all.css';
-	import '$lib/css/carbon-colours.css';
-	import '$lib/css/style.css';
+	import EmptyCard from '$lib/components/custom/EmptyCard.svelte';
+	import StarCard from '$lib/components/custom/StarCard.svelte';
+	import Details from '$lib/details.json';
+	import HomeMenu from '$lib/components/custom/HomeMenu.svelte';
+	import TaskCard from '$lib/components/custom/TaskCard.svelte';
 
-	export let data: PageData;
-	export let page = 'starboard';
+	let { data }: { data: PageData } = $props();
+
+	let page = $state('players');
+	let playersButtonVariant: buttonTypes = $state('default');
+	let tasksButtonVariant: buttonTypes = $state('secondary');
+
+	$effect(() => {
+		if (page === 'tasks') {
+			playersButtonVariant = 'secondary';
+			tasksButtonVariant = 'default';
+		} else if (page === 'webhooks') {
+			playersButtonVariant = 'secondary';
+			tasksButtonVariant = 'secondary';
+		} else if (page === 'players') {
+			playersButtonVariant = 'default';
+			tasksButtonVariant = 'secondary';
+		}
+	});
 </script>
 
 <svelte:head>
-	<title>Starboard</title>
+	<title>
+		{Details.title} - {Details.subtitle}
+	</title>
 </svelte:head>
 
-<div class="header">
-	{#if page == 'starboard'}
-		<h1 class="title">Starboard</h1>
+<h1 class="absolute top-0 flex w-full flex-col items-center justify-center">
+	<div
+		class="flex flex-row items-center justify-center text-center text-4xl font-bold md:text-6xl"
+		id="title"
+	>
+		<img src="favicon.webp" alt="Starboard logo" class="mr-1 w-16" />
+		{Details.title.toUpperCase()}
+		<img src="favicon.webp" alt="Starboard logo" class="ml-1 w-16" />
+	</div>
 
-		<Pagebox bind:page />
+	<HomeMenu {playersButtonVariant} {tasksButtonVariant} bind:page />
+</h1>
 
-		<hr />
-
-		<div class="horizontal">
-			<div>
-				<TrophyFilled fill="var(--yellow-500)" /> = 100 Stars
-			</div>
-
-			<div>
-				<Trophy fill="var(--yellow-500)" /> = 50 Stars
-			</div>
-
-			<div>
-				<StarFilled fill="var(--yellow-500)" /> = 10 Stars
-			</div>
-
-			<div>
-				<StarHalf fill="var(--yellow-500)" /> = 5 Stars
-			</div>
-
-			<div>
-				<Star fill="var(--yellow-500)" /> = 1 Star
-			</div>
-		</div>
-	{:else if page == 'taskboard'}
-		<h1 class="title">Taskboard</h1>
-
-		<Pagebox bind:page />
-
-		<hr />
-
-		<h4>Send a photo or video of the relevant task once you have completed it</h4>
-	{/if}
-	<h4><a href="https://youtu.be/8q8IEsbpOSg?si=Khk3AH-PIR5H5py3">I have officially caused pain</a></h4>
-</div>
-
-{#if page == 'starboard'}
-	<div class="starlist">
-		{#if data.starboard.length == 0}
-			<div class="starbox">
-				<div class="staree">
-					<h1 class="staree-name">No people on starboard...</h1>
-				</div>
-			</div>
+{#if page === 'players'}
+	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
+		{#if data.players.length == 0}
+			<EmptyCard message="No Champions have joined Starboard yet." />
 		{:else}
-			{#each data.starboard as { name, stars, position }}
-				<Starbox {name} {position} {stars} />
+			{#each data.players as player, i}
+				<StarCard player={player.name} position={i + 1} stars={player.stars} />
 			{/each}
 		{/if}
 	</div>
-{:else if page == 'taskboard'}
-	<div class="starlist">
+{:else if page === 'tasks'}
+	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
 		{#if data.tasks.length == 0}
-			<div class="starbox">
-				<div class="staree">
-					<h1 class="staree-name">No tasks available yet...</h1>
-				</div>
-			</div>
+			<EmptyCard message="No Tasks have been added Starboard yet." />
 		{:else}
-			{#each data.tasks as { title, description, reward }}
-				<Taskbox {title} {description} {reward} />
+			{#each data.tasks as task, i}
+				<TaskCard name={task.title} description={task.description} stars={task.reward} />
 			{/each}
 		{/if}
 	</div>

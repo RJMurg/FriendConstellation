@@ -1,184 +1,208 @@
 import type { PageServerLoad, Actions } from './$types';
-import axios from 'axios';
-import prisma from '$lib/server/prisma';
-import { breakdownStars } from '$lib/starBreakdown';
-
-// Read in info from .env file
 import { config } from 'dotenv';
+import { v4 as uuidv4 } from 'uuid';
+import prisma from '$lib/server/prisma';
+import process from 'process';
+import { getActionMessage, sendWebhookMessage } from '$lib';
+
 config();
 
-export const load: PageServerLoad = async ({ cookies }) => {
-	const starboard = await prisma.starboard.findMany({
-		orderBy: {
-			stars: 'desc'
+export const load = (async ({ cookies }) => {
+	const token = cookies.get('token');
+	let loggedIn = false;
+
+	const tokenFromDatabase = await prisma.logins.findFirst({
+		where: {
+			token: token
 		}
 	});
 
-	const taskList = await prisma.tasks.findMany({
-		orderBy: {
-			reward: 'desc'
+	if (tokenFromDatabase) {
+		if (tokenFromDatabase.expires >= new Date()) {
+			loggedIn = true;
 		}
-	});
-
-	const parsedTasks: {
-		id: number;
-		title: string;
-		description: string;
-		stars: object;
-		reward: {
-			hundredStars: number;
-			fiftyStars: number;
-			tenStars: number;
-			fiveStars: number;
-			stars: number;
-			negative: boolean;
-			total: number;
-		};
-	}[] = [];
-
-	for (let i = 0; i < taskList.length; i++) {
-		const taskRewardTemplate = {
-			id: taskList[i].id,
-			title: taskList[i].title ?? '',
-			description: taskList[i].description ?? '', // Handle null value by providing a default value of an empty string
-			stars: {}, // Add the missing 'stars' property
-			reward: breakdownStars(Number(taskList[i].reward))
-		};
-		parsedTasks.push(taskRewardTemplate);
 	}
 
-	const parsedStars: { id: number; name: string; stars: object }[] = [];
+	if (loggedIn) {
+		const players = await prisma.users.findMany({
+			orderBy: {
+				stars: 'desc'
+			}
+		});
 
-	for (let i = 0; i < starboard.length; i++) {
-		let position = String(i + 1);
-		const finalDigit = Number(String(i + 1).slice(-1));
+		const tasks = await prisma.tasks.findMany({
+			orderBy: {
+				reward: 'desc'
+			}
+		});
 
-		if (finalDigit == 1) {
-			position += 'st';
-		} else if (finalDigit == 2) {
-			position += 'nd';
-		} else if (finalDigit == 3) {
-			position += 'rd';
-		} else {
-			position += 'th';
-		}
+		const webhooks = await prisma.webhooks.findMany();
 
-		const stareeTemplate = {
-			id: starboard[i].id,
-			name: starboard[i].name ?? '',
-			stars: breakdownStars(Number(starboard[i].stars)),
-			position: position
-		};
-		parsedStars.push(stareeTemplate);
-	}
-
-	// Check if admin cookie is set
-	if (cookies.get('admin') == 'true') {
-		// Return success
 		return {
-			loggedIn: true,
-			starboard: parsedStars,
-			tasks: parsedTasks
-		};
-	} else {
-		// Return failure
-		return {
-			loggedIn: false,
-			starboard: parsedStars,
-			tasks: parsedTasks
+			loggedIn,
+			players,
+			tasks,
+			webhooks
 		};
 	}
-};
+
+	return {
+		loggedIn
+	};
+}) satisfies PageServerLoad;
 
 export const actions = {
 	login: async ({ cookies, request }) => {
-		const reqData = await request.formData();
+		const formData = await request.formData();
+		const password = formData.get('password');
 
-		// Check if password is correct from .env file
-		if (reqData.get('password') === process.env.ADMIN_PASSWORD) {
-			// Set cookie to true, with age of 2 hours
-			cookies.set('admin', 'true', {
-				maxAge: 7200,
-				secure: false,
-				path: '/admin'
+		if (password === process.env.ADMIN_PASSWORD) {
+			const newToken = uuidv4();
+
+			await prisma.logins.create({
+				data: {
+					token: newToken,
+					expires: new Date(Date.now() + 1000 * 60 * 60)
+				}
 			});
 
-			// Return success
+			cookies.set('token', newToken, {
+				maxAge: 60 * 60,
+				path: '/'
+			});
+
+			const players = await prisma.users.findMany({
+				orderBy: {
+					stars: 'desc'
+				}
+			});
+
+			const tasks = await prisma.tasks.findMany({
+				orderBy: {
+					reward: 'desc'
+				}
+			});
+
+			const webhooks = await prisma.webhooks.findMany();
+
 			return {
-				status: 200
+				attemptSuccessful: true,
+				players,
+				tasks,
+				webhooks
 			};
 		} else {
-			cookies.set('admin', 'false', {
-				maxAge: -1,
-				path: '/admin'
-			});
-
-			// Return failure
 			return {
-				status: 500
+				attemptSuccessful: false
 			};
 		}
 	},
+
 	logout: async ({ cookies }) => {
-		// Set cookie to false, with age of -1 (expires immediately)
-		cookies.set('admin', 'false', {
-			maxAge: -1,
-			path: '/admin'
+		const token = cookies.get('token');
+
+		await prisma.logins.deleteMany({
+			where: {
+				token: token
+			}
 		});
 
-		return {
-			status: 500
-		};
-	},
-	deletePerson: async ({ request }) => {
-		const reqData = await request.formData();
-
-		const result = await prisma.starboard.delete({
-			where: { id: Number(reqData.get('id')) }
+		cookies.delete('token', {
+			path: '/'
 		});
 	},
-	updatePerson: async ({ request }) => {
-		const reqData = await request.formData();
-		const initialStars = await prisma.starboard.findUnique({
-			where: { id: Number(reqData.get('id')) }
-		});
 
-		const newStarTotal = initialStars?.stars + BigInt(reqData.get('stars'));
+	addPlayer: async ({ request }) => {
+		const formData = await request.formData();
+		const name = formData.get('name');
+		const stars = String(formData.get('stars'));
 
-		await prisma.starboard.update({
-			where: { id: Number(reqData.get('id')) },
-			data: { stars: newStarTotal }
-		});
-	},
-	addPerson: async ({ request }) => {
-		const reqData = await request.formData();
-
-		await prisma.starboard.create({
-			data: { name: String(reqData.get('name')), stars: BigInt(reqData.get('stars')) }
+		await prisma.users.create({
+			data: {
+				name: String(name),
+				stars: parseInt(stars)
+			}
 		});
 	},
+
+	deletePlayer: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+
+		// We have to delete the relevant logs first to avoid a constraint violation
+		await prisma.logs.deleteMany({
+			where: {
+				user_id: parseInt(id)
+			}
+		});
+
+		await prisma.users.delete({
+			where: {
+				id: parseInt(id)
+			}
+		});
+	},
+
+	updateStars: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+		const stars = String(formData.get('stars'));
+		const log = String(formData.get('log'));
+
+		console.log(log);
+
+		const currentStars = await prisma.users.findFirst({
+			where: {
+				id: parseInt(id)
+			}
+		});
+
+		const newStars = parseInt(stars) + (currentStars?.stars ?? 0);
+
+		await prisma.users.update({
+			where: {
+				id: parseInt(id)
+			},
+			data: {
+				stars: newStars
+			}
+		});
+
+		const actionMessage = getActionMessage(parseInt(stars), log);
+
+		await prisma.logs.create({
+			data: {
+				user_id: parseInt(id),
+				action: actionMessage
+			}
+		});
+	},
+
 	addTask: async ({ request }) => {
-		const reqData = await request.formData();
+		const formData = await request.formData();
+		const name = formData.get('name');
+		const description = formData.get('description');
+		const stars = String(formData.get('stars'));
 
 		await prisma.tasks.create({
 			data: {
-				title: String(reqData.get('title')),
-				description: String(reqData.get('description')),
-				reward: BigInt(reqData.get('reward'))
+				title: String(name),
+				description: String(description),
+				reward: parseInt(stars)
 			}
 		});
 
 		let webhookContent =
 			'A new task has been added to the [starboard](https://stars.rjm.ie/)!\n' +
 			'**Title:** ' +
-			reqData.get('title') +
+			name +
 			'\n*' +
-			reqData.get('description') +
+			description +
 			'*\n\n' +
 			'**Reward:** Up to ' +
-			reqData.get('reward');
+			stars;
 
-		if (Number(reqData.get('reward')) == 1 || Number(reqData.get('reward')) == -1) {
+		if (Number(stars) == 1 || Number(stars) == -1) {
 			webhookContent += ' star!';
 		} else {
 			webhookContent += ' stars!';
@@ -186,19 +210,43 @@ export const actions = {
 
 		const webhooks = await prisma.webhooks.findMany();
 
-		for (let i = 0; i < webhooks.length; i++) {
-			axios.post(`https://discord.com/api/webhooks/${webhooks[i].server}/${webhooks[i].webhook}`, {
-				username: 'Starboard',
-				content: webhookContent,
-				avatar_url: 'https://stars.rjm.ie/favicon.webp'
-			});
+		for (const webhook of webhooks) {
+			sendWebhookMessage(webhookContent, webhook.webhook);
 		}
 	},
+
 	deleteTask: async ({ request }) => {
-		const reqData = await request.formData();
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
 
 		await prisma.tasks.delete({
-			where: { id: Number(reqData.get('id')) }
+			where: {
+				id: parseInt(id)
+			}
+		});
+	},
+
+	addWebhook: async ({ request }) => {
+		const formData = await request.formData();
+		const url = formData.get('url');
+		const name = formData.get('name');
+
+		await prisma.webhooks.create({
+			data: {
+				name: String(name),
+				webhook: String(url)
+			}
+		});
+	},
+
+	deleteWebhook: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+
+		await prisma.webhooks.delete({
+			where: {
+				id: parseInt(id)
+			}
 		});
 	}
 } satisfies Actions;
