@@ -4,8 +4,6 @@
 
 	export let stars: number;
 	const starObject = parseStars(stars);
-
-	console.log(starObject);
 </script>
 
 <div class="flex flex-row items-center justify-center">

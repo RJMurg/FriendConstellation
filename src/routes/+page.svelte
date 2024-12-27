@@ -1,20 +1,31 @@
 <script lang="ts">
-	import Card from '$lib/components/ui/card/card.svelte';
+	import type { PageData } from './$types';
+	import EmptyCard from '$lib/components/custom/EmptyCard.svelte';
+	import StarCard from '$lib/components/custom/StarCard.svelte';
 	import Details from '$lib/details.json';
+
+	let { data }: { data: PageData } = $props();
+
 </script>
 
 <h1
 	class="absolute top-0 flex w-full flex-row items-center justify-center text-center text-4xl font-bold md:text-6xl"
 >
-	<img src="favicon.webp" alt="Starboard logo" class="mr-5 w-16" />
+	<img src="favicon.webp" alt="Starboard logo" class="mr-1 w-16" />
 	{Details.title}
-	<img src="favicon.webp" alt="Starboard logo" class="ml-5 w-16" />
+	<img src="favicon.webp" alt="Starboard logo" class="ml-1 w-16" />
 </h1>
 
-<Card>
-	<h2 class="text-2xl font-bold">Welcome to Starboard!</h2>
-	<p class="text-lg">
-		Starboard is a simple, lightweight, and fast URL shortener. It's designed to be easy to use and
-		easy to deploy.
-	</p>
-</Card>
+<div class="w-full md:w-1/4 mx-auto">
+	{#if data.players.length == 0}
+		<EmptyCard message="No champions have joined Starboard yet." />
+	{:else}
+		{#each data.players as player, i}
+			<StarCard
+				player={player.name}
+				position={i + 1}
+				stars={player.stars}
+			/>
+		{/each}
+	{/if}
+</div>

@@ -27,11 +27,13 @@
 			<div class="flex flex-row">
 				<StarsGenerator {stars} />
 
-				{#if stars > 1}
-					- {stars} stars
-				{:else}
-					- {stars} star
-				{/if}
+				<div class="ml-2">
+					{#if stars > 1}
+						{stars} stars
+					{:else}
+						{stars} star
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>

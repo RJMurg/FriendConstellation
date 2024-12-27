@@ -9,23 +9,29 @@ datasource db {
 
 model users {
   id             Int     @id @default(autoincrement())
-  name           String? @default("un-named") @db.VarChar(100)
-  stars          BigInt  @default(1)
+  name           String @default("un-named") @db.VarChar(100)
+  stars          Int  @default(1)
 
   logs logs[]
 }
 
 model tasks {
   id          Int         @id @default(autoincrement())
-  title       String?     @db.VarChar(100)
-  description String?     @db.VarChar(500)
-  reward      BigInt?
+  title       String     @db.VarChar(100)
+  description String     @db.VarChar(500)
+  reward      Int
 }
 
 model webhooks {
-  server  String? @db.VarChar(500)
-  webhook String? @db.VarChar(500)
+  server  String @db.VarChar(500)
+  webhook String @db.VarChar(500)
   id      Int     @id @default(autoincrement())
+}
+
+model logins {
+  id Int @id @default(autoincrement())
+  token String
+  expires DateTime
 }
 
 model logs {
