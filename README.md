@@ -71,4 +71,7 @@ ADMIN_PASSWORD="password"
 
 4. Migrate the database with `npm run db:migrate`
 5. Build the app with `npm run build`
-6. Start the server with `node build/`
+6. Start the server with `node build`
+
+## License
+FriendConstellation is licensed under the GNU General Public License v3.0
