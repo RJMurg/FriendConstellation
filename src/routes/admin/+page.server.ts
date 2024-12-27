@@ -109,6 +109,13 @@ export const actions = {
 		const formData = await request.formData();
 		const id = String(formData.get('id'));
 
+		// We have to delete the relevant logs first to avoid a constraint violation
+		await prisma.logs.deleteMany({
+			where: {
+				user_id: parseInt(id)
+			}
+		});
+
 		await prisma.users.delete({
 			where: {
 				id: parseInt(id)

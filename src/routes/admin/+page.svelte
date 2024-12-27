@@ -10,7 +10,7 @@
 	import StarCard from '$lib/components/custom/StarCard.svelte';
 	import ModifyUser from '$lib/components/custom/ModifyUser.svelte';
 
-	let { data, form }: {data: PageData, form: FormData} = $props();
+	let { data, form }: { data: PageData; form: FormData } = $props();
 
 	let loggedIn = data.loggedIn;
 	let players = $state(data.players ?? []);

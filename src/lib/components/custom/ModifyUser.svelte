@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
