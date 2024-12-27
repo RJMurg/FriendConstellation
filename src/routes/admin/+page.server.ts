@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '$lib/server/prisma';
 import process from 'process';
-import { getActionMessage } from '$lib';
+import { getActionMessage, sendWebhookMessage } from '$lib';
 
 config();
 
@@ -36,10 +36,13 @@ export const load = (async ({ cookies }) => {
 			}
 		});
 
+		const webhooks = await prisma.webhooks.findMany();
+
 		return {
 			loggedIn,
 			players,
-			tasks
+			tasks,
+			webhooks
 		};
 	}
 
@@ -80,16 +83,33 @@ export const actions = {
 				}
 			});
 
+			const webhooks = await prisma.webhooks.findMany();
+
 			return {
 				attemptSuccessful: true,
 				players,
-				tasks
+				tasks,
+				webhooks
 			};
 		} else {
 			return {
 				attemptSuccessful: false
 			};
 		}
+	},
+
+	logout: async ({ cookies }) => {
+		const token = cookies.get('token');
+
+		await prisma.logins.deleteMany({
+			where: {
+				token: token
+			}
+		});
+
+		cookies.delete('token', {
+			path: '/'
+		});
 	},
 
 	addPlayer: async ({ request }) => {
@@ -154,6 +174,78 @@ export const actions = {
 			data: {
 				user_id: parseInt(id),
 				action: actionMessage
+			}
+		});
+	},
+
+	addTask: async ({ request }) => {
+		const formData = await request.formData();
+		const name = formData.get('name');
+		const description = formData.get('description');
+		const stars = String(formData.get('stars'));
+
+		await prisma.tasks.create({
+			data: {
+				title: String(name),
+				description: String(description),
+				reward: parseInt(stars)
+			}
+		});
+
+		let webhookContent =
+			'A new task has been added to the [starboard](https://stars.rjm.ie/)!\n' +
+			'**Title:** ' +
+			name +
+			'\n*' +
+			description +
+			'*\n\n' +
+			'**Reward:** Up to ' +
+			stars;
+
+		if (Number(stars) == 1 || Number(stars) == -1) {
+			webhookContent += ' star!';
+		} else {
+			webhookContent += ' stars!';
+		}
+
+		const webhooks = await prisma.webhooks.findMany();
+
+		for (const webhook of webhooks) {
+			sendWebhookMessage(webhookContent, webhook.webhook);
+		}
+	},
+
+	deleteTask: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+
+		await prisma.tasks.delete({
+			where: {
+				id: parseInt(id)
+			}
+		});
+	},
+
+	addWebhook: async ({ request }) => {
+		const formData = await request.formData();
+		const url = formData.get('url');
+		const name = formData.get('name');
+
+		await prisma.webhooks.create({
+			data: {
+				name: String(name),
+				webhook: String(url)
+			}
+		});
+	},
+
+	deleteWebhook: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+
+		await prisma.webhooks.delete({
+			where: {
+				id: parseInt(id)
 			}
 		});
 	}

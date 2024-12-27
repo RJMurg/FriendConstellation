@@ -1,4 +1,5 @@
 // place files you want to import through the `$lib` alias in this folder.
+import Details from '$lib/details.json';
 
 /**
  * Adds the relevant suffix to a number for positions
@@ -62,7 +63,7 @@ export function parseStars(stars: number): Stars {
  * @returns A string following the format 'Had {stars} stars {added/removed} due to {log}'
  */
 export function getActionMessage(stars: number, log: string): string {
-	let message = 'Had ' + stars + ' stars ';
+	let message = 'Had ' + Math.abs(stars) + ' stars ';
 
 	if (stars < 0) {
 		message += 'removed due to ';
@@ -77,4 +78,30 @@ export function getActionMessage(stars: number, log: string): string {
 	message += log;
 
 	return message;
+}
+
+/**
+ * Sends a message to a Discord webhook
+ * @param content The content of the message
+ * @param webhook The URL of the webhook
+ */
+export function sendWebhookMessage(content: string, webhook: string): void {
+	fetch(webhook, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			content: '',
+			embeds: [
+				{
+					title: 'New Task Added!',
+					description: content,
+					color: 11765248
+				}
+			],
+			username: Details.title,
+			avatar_url: 'https://stars.rjm.ie/favicon.webp'
+		})
+	});
 }

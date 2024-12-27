@@ -10,7 +10,7 @@
 
 <Card>
 	<div class="flex flex-col items-center justify-between p-5">
-		<form action="?/deletePlayer" method="POST">
+		<form action="?/deletePlayer" method="POST" class="mb-5">
 			<input type="hidden" name="id" value={id} />
 			<Button type="submit" variant="destructive" class="text-red-500">
 				<Trash2 class="h-6 w-6 text-white" />
@@ -18,9 +18,7 @@
 		</form>
 
 		<Dialog.Root>
-			<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
-				>Modify Stars</Dialog.Trigger
-			>
+			<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Modify Stars</Dialog.Trigger>
 			<Dialog.Content class="sm:max-w-[425px]">
 				<Dialog.Header>
 					<Dialog.Title class="dark">Modify Stars</Dialog.Title>

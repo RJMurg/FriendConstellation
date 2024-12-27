@@ -23,7 +23,7 @@ model tasks {
 }
 
 model webhooks {
-  server  String @db.VarChar(500)
+  name  String @db.VarChar(500)
   webhook String @db.VarChar(500)
   id      Int     @id @default(autoincrement())
 }

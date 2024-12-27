@@ -8,7 +8,14 @@ export const load = (async () => {
 		}
 	});
 
+	const tasks = await prisma.tasks.findMany({
+		orderBy: {
+			reward: 'desc'
+		}
+	});
+
 	return {
-		players
+		players,
+		tasks
 	};
 }) satisfies PageServerLoad;

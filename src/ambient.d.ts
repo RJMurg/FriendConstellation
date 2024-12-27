@@ -5,3 +5,5 @@ type Stars = {
 	fiftyStars: number;
 	hundredStars: number;
 };
+
+type buttonTypes = 'default' | 'secondary';
