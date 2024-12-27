@@ -28,7 +28,7 @@
 				<StarsGenerator {stars} />
 
 				<div class="ml-2">
-					{#if stars > 1}
+					{#if stars > 1 || stars <= 0}
 						{stars} stars
 					{:else}
 						{stars} star

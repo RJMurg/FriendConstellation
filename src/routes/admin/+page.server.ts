@@ -3,138 +3,151 @@ import { config } from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '$lib/server/prisma';
 import process from 'process';
+import { getActionMessage } from '$lib';
 
 config();
 
 export const load = (async ({ cookies }) => {
-    const token = cookies.get('token');
-    let loggedIn = false;
+	const token = cookies.get('token');
+	let loggedIn = false;
 
-    const tokenFromDatabase = await prisma.logins.findFirst({
-        where: {
-            token: token
-        }
-    })
+	const tokenFromDatabase = await prisma.logins.findFirst({
+		where: {
+			token: token
+		}
+	});
 
-    if(tokenFromDatabase) {
-        if(tokenFromDatabase.expires >= new Date()) {
-            loggedIn = true;
-        }
-    }
+	if (tokenFromDatabase) {
+		if (tokenFromDatabase.expires >= new Date()) {
+			loggedIn = true;
+		}
+	}
 
-    if(loggedIn){
-        const players = await prisma.users.findMany({
-            orderBy: {
-                stars: 'desc'
-            }
-        });
+	if (loggedIn) {
+		const players = await prisma.users.findMany({
+			orderBy: {
+				stars: 'desc'
+			}
+		});
 
-        const tasks = await prisma.tasks.findMany({
-            orderBy: {
-                reward: 'desc'
-            }
-        });
+		const tasks = await prisma.tasks.findMany({
+			orderBy: {
+				reward: 'desc'
+			}
+		});
 
-        return {
-            loggedIn,
-            players,
-            tasks
-        }
-    }
+		return {
+			loggedIn,
+			players,
+			tasks
+		};
+	}
 
-    return {
-        loggedIn
-    }
+	return {
+		loggedIn
+	};
 }) satisfies PageServerLoad;
 
 export const actions = {
-    login: async({cookies, request }) => {
-        const formData = await request.formData();
-        const password = formData.get('password');
+	login: async ({ cookies, request }) => {
+		const formData = await request.formData();
+		const password = formData.get('password');
 
-        if(password === process.env.ADMIN_PASSWORD) {
-            const newToken = uuidv4();
+		if (password === process.env.ADMIN_PASSWORD) {
+			const newToken = uuidv4();
 
-            await prisma.logins.create({
-                data: {
-                    token: newToken,
-                    expires: new Date(Date.now() + 1000 * 60 * 60)
-                }
-            });
+			await prisma.logins.create({
+				data: {
+					token: newToken,
+					expires: new Date(Date.now() + 1000 * 60 * 60)
+				}
+			});
 
-            cookies.set('token', newToken, {
-                maxAge: 60 * 60,
-                path: '/'
-            });
+			cookies.set('token', newToken, {
+				maxAge: 60 * 60,
+				path: '/'
+			});
 
-            const players = await prisma.users.findMany({
-                orderBy: {
-                    stars: 'desc'
-                }
-            });
+			const players = await prisma.users.findMany({
+				orderBy: {
+					stars: 'desc'
+				}
+			});
 
-            const tasks = await prisma.tasks.findMany({
-                orderBy: {
-                    reward: 'desc'
-                }
-            });
+			const tasks = await prisma.tasks.findMany({
+				orderBy: {
+					reward: 'desc'
+				}
+			});
 
-            return {
-                attemptSuccessful: true,
-                players,
-                tasks
-            }
-        }
-        else {
-            return {
-                attemptSuccessful: false
-            }
-        }
-    },
+			return {
+				attemptSuccessful: true,
+				players,
+				tasks
+			};
+		} else {
+			return {
+				attemptSuccessful: false
+			};
+		}
+	},
 
-    addPlayer: async({request}) => {
-        const formData = await request.formData();
-        const name = formData.get('name');
-        const stars = String(formData.get('stars'));
+	addPlayer: async ({ request }) => {
+		const formData = await request.formData();
+		const name = formData.get('name');
+		const stars = String(formData.get('stars'));
 
-        await prisma.users.create({
-            data: {
-                name: String(name),
-                stars: parseInt(stars)
-            }
-        });
-    },
+		await prisma.users.create({
+			data: {
+				name: String(name),
+				stars: parseInt(stars)
+			}
+		});
+	},
 
-    deletePlayer: async({request}) => {
-        const formData = await request.formData();
-        const id = String(formData.get('id'));
+	deletePlayer: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
 
-        await prisma.users.delete({
-            where: {
-                id: parseInt(id)
-            }
-        });
-    },
+		await prisma.users.delete({
+			where: {
+				id: parseInt(id)
+			}
+		});
+	},
 
-    updateStars: async({request}) => {
-        const formData = await request.formData();
-        const id = String(formData.get('id'));
-        const stars = String(formData.get('stars'));
-        const currentStars = await prisma.users.findFirst({
-            where: {
-                id: parseInt(id)
-            }
-        });
+	updateStars: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+		const stars = String(formData.get('stars'));
+		const log = String(formData.get('log'));
 
-        const newStars = parseInt(stars) + (currentStars?.stars ?? 0);
+		console.log(log);
 
-        await prisma.users.update({
-            where: {
-                id: parseInt(id)
-            },
-            data: {
-                stars: newStars
-            }
-        });
-    }
+		const currentStars = await prisma.users.findFirst({
+			where: {
+				id: parseInt(id)
+			}
+		});
+
+		const newStars = parseInt(stars) + (currentStars?.stars ?? 0);
+
+		await prisma.users.update({
+			where: {
+				id: parseInt(id)
+			},
+			data: {
+				stars: newStars
+			}
+		});
+
+		const actionMessage = getActionMessage(parseInt(stars), log);
+
+		await prisma.logs.create({
+			data: {
+				user_id: parseInt(id),
+				action: actionMessage
+			}
+		});
+	}
 } satisfies Actions;

@@ -1,27 +1,51 @@
 <script lang="ts">
-    import { ChevronRight, Trash2 } from 'lucide-svelte';
-	import Card from '../ui/card/card.svelte';
-	import Button from '../ui/button/button.svelte';
-	import Input from '../ui/input/input.svelte';
 
-    export let id: number;
+	import Input from '$lib/components/ui/input/input.svelte';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import { Trash2 } from 'lucide-svelte';
+	import Card from '../ui/card/card.svelte';
+
+	export let id: number;
 </script>
 
 <Card>
-    <div class="flex flex-col items-center justify-between p-5">
-        <form action="?/deletePlayer" method="POST">
-            <input type="hidden" name="id" value="{id}" />
-            <Button type="submit" variant="destructive" class="text-red-500">
-                <Trash2 class="w-6 h-6 text-white" />
-            </Button>
-        </form>
+	<div class="flex flex-col items-center justify-between p-5">
+		<form action="?/deletePlayer" method="POST">
+			<input type="hidden" name="id" value={id} />
+			<Button type="submit" variant="destructive" class="text-red-500">
+				<Trash2 class="h-6 w-6 text-white" />
+			</Button>
+		</form>
 
-        <form action="?/updateStars" method="POST" class="flex flex-row">
-            <input type="hidden" name="id" value="{id}" />
-            <Input type="number" name="stars" value="1" class="text-white" />
-            <Button type="submit" variant="outline" class="text-white">
-                <ChevronRight class="w-6 h-6 text-white" />
-            </Button>
-        </form>
-    </div>
+		<Dialog.Root>
+			<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
+				>Modify Stars</Dialog.Trigger
+			>
+			<Dialog.Content class="sm:max-w-[425px]">
+				<Dialog.Header>
+					<Dialog.Title class="dark">Modify Stars</Dialog.Title>
+				</Dialog.Header>
+				<form action="?/updateStars" method="POST">
+					<input type="hidden" name="id" value={id} />
+					<div class="grid gap-4 py-4">
+						<div class="grid grid-cols-4 items-center gap-4">
+							<Input name="stars" value="1" class="col-span-3 text-white" type="number" />
+						</div>
+
+						<div class="grid grid-cols-4 items-center gap-4">
+							<Input
+								name="log"
+								placeholder="Why were the stars modified?"
+								class="col-span-3 text-white"
+							/>
+						</div>
+					</div>
+					<Dialog.Footer>
+						<Button type="submit">Modify</Button>
+					</Dialog.Footer>
+				</form>
+			</Dialog.Content>
+		</Dialog.Root>
+	</div>
 </Card>

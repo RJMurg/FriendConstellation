@@ -8,16 +8,22 @@
 export function stringifyPosition(position: number): string {
 	const positionArray = position.toString().split('');
 	const lastDigit = positionArray[positionArray.length - 1];
+	const lastTwoDigits = positionArray[positionArray.length - 2] + lastDigit;
 
-	if (lastDigit === '1') {
-		return positionArray.toString() + 'st';
-	} else if (lastDigit === '2') {
-		return positionArray.toString() + 'nd';
-	} else if (lastDigit === '3') {
-		return positionArray.toString() + 'rd';
+	// Because ordinal numbers are weird, exceptions for the 'st', 'nd', 'rd' and 'th' suffixes are needed
+	// For digits 11 through 13 inclusive, the ordinal rules apply an exception and just add 'th'
+	// Thanks English.
+	if (lastTwoDigits !== '11' && lastTwoDigits !== '12' && lastTwoDigits !== '13') {
+		if (lastDigit === '1') {
+			return positionArray.join('') + 'st';
+		} else if (lastDigit === '2') {
+			return positionArray.join('') + 'nd';
+		} else if (lastDigit === '3') {
+			return positionArray.join('') + 'rd';
+		}
 	}
 
-	return positionArray.toString() + 'th';
+	return positionArray.join('') + 'th';
 }
 
 /**
@@ -47,4 +53,28 @@ export function parseStars(stars: number): Stars {
 		fiveStars,
 		stars: oneStars
 	};
+}
+
+/**
+ * Fills the action message with the relevant information
+ * @param stars the amount of stars added or removed
+ * @param log the reason this action took place
+ * @returns A string following the format 'Had {stars} stars {added/removed} due to {log}'
+ */
+export function getActionMessage(stars: number, log: string): string {
+	let message = 'Had ' + stars + ' stars ';
+
+	if (stars < 0) {
+		message += 'removed due to ';
+	} else {
+		message += 'added due to ';
+	}
+
+	if (!log.endsWith('.') || !log.endsWith('!') || !log.endsWith('?')) {
+		log += '.';
+	}
+
+	message += log;
+
+	return message;
 }
