@@ -149,8 +149,6 @@ export const actions = {
 		const stars = String(formData.get('stars'));
 		const log = String(formData.get('log'));
 
-		console.log(log);
-
 		const currentStars = await prisma.users.findFirst({
 			where: {
 				id: parseInt(id)
