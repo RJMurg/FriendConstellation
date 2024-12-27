@@ -53,7 +53,6 @@
 	<form
 		action="?/login"
 		method="post"
-		use:enhance
 		class="flex w-full max-w-sm items-center space-x-2"
 	>
 		<Input type="password" name="password" placeholder="Enter admin password" />
