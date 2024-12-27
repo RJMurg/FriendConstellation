@@ -7,8 +7,8 @@
 	import { ChevronRight } from 'lucide-svelte';
 	import Details from '$lib/details.json';
 	import EmptyCard from '$lib/components/custom/EmptyCard.svelte';
-	import StarCard from '$lib/components/custom/StarCard.svelte';
 	import ModifyUser from '$lib/components/custom/ModifyUser.svelte';
+	import StarCard from '$lib/components/custom/StarCard.svelte';
 	import TaskCard from '$lib/components/custom/TaskCard.svelte';
 	import ModifyTask from '$lib/components/custom/ModifyTask.svelte';
 	import WebhookCard from '$lib/components/custom/WebhookCard.svelte';
@@ -97,7 +97,7 @@
 		{:else}
 			{#each players ?? [] as player, i}
 				<div class="flex flex-row">
-					<StarCard player={player.name} position={i + 1} stars={player.stars} />
+					<StarCard player={player.name} position={i + 1} stars={player.stars} showLogLink={false} />
 
 					<ModifyUser id={player.id} />
 				</div>

@@ -1,12 +1,15 @@
 <script lang="ts">
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { stringifyPosition } from '$lib';
-	import { Crown } from 'lucide-svelte';
+	import { ChevronRight, Crown } from 'lucide-svelte';
 	import StarsGenerator from './StarsGenerator.svelte';
+	import Button from '../ui/button/button.svelte';
 
 	export let player: string;
+	export let id: string = "";
 	export let position: number;
 	export let stars: number;
+	export let showLogLink: boolean;
 </script>
 
 <Card class="mb-2 w-full p-2">
@@ -15,7 +18,7 @@
 			{stringifyPosition(position)}
 		</div>
 
-		<div class="flex w-3/4 flex-col items-start" id="Player">
+		<div class="flex w-1/2 flex-col items-start" id="Player">
 			<h1 class="flex flex-row items-center text-4xl font-bold">
 				{#if position === 1}
 					<Crown class="mr-5 h-8 w-8 text-yellow-500" />
@@ -36,5 +39,12 @@
 				</div>
 			</div>
 		</div>
-	</div>
+
+		{#if showLogLink}
+			<div class="flex w-1/4 flex-row items-center justify-end" id="Actions">
+				<Button variant="outline" href="/log/{id}">
+					<ChevronRight />
+				</Button>
+			</div>
+		{/if}
 </Card>

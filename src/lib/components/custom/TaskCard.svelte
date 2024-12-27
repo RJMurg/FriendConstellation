@@ -10,7 +10,7 @@
 <Card class="mb-2 w-full p-2">
 	<div class="flex w-full flex-row items-center justify-between">
 		<div class="flex w-3/4 flex-col items-start" id="Task">
-			<h1 class="flex flex-row items-center text-4xl font-bold">
+			<h1 class="flex flex-row items-center text-2xl lg:text-4xl font-bold">
 				{name}
 			</h1>
 

@@ -51,7 +51,7 @@
 			<EmptyCard message="No Champions have joined Starboard yet." />
 		{:else}
 			{#each data.players as player, i}
-				<StarCard player={player.name} position={i + 1} stars={player.stars} />
+				<StarCard player={player.name} position={i + 1} stars={player.stars} id={player.id} showLogLink={false} />
 			{/each}
 		{/if}
 	</div>
