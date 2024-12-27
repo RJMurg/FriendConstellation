@@ -6,7 +6,7 @@
 	import Button from '../ui/button/button.svelte';
 
 	export let player: string;
-	export let id: string = "";
+	export let id: string = '';
 	export let position: number;
 	export let stars: number;
 	export let showLogLink: boolean;
@@ -47,4 +47,5 @@
 				</Button>
 			</div>
 		{/if}
-</Card>
+	</div></Card
+>

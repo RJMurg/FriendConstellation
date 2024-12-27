@@ -97,7 +97,12 @@
 		{:else}
 			{#each players ?? [] as player, i}
 				<div class="flex flex-row">
-					<StarCard player={player.name} position={i + 1} stars={player.stars} showLogLink={false} />
+					<StarCard
+						player={player.name}
+						position={i + 1}
+						stars={player.stars}
+						showLogLink={false}
+					/>
 
 					<ModifyUser id={player.id} />
 				</div>
