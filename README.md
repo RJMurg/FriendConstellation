@@ -1,38 +1,74 @@
-# sv
+# FriendConstellation
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+FriendConstellation is a Starboard web app.
 
-## Creating a project
+The admin (Called a Starmaster) can create a list of players, 'Champions', and a list of tasks.
+Each task is worth a certain amount of stars.
 
-If you're seeing this, you've probably already done this step. Congrats!
+The Starmaster reviews the Competitor's attempts at the tasks and awards stars accordingly.
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Features
 
-# create a new project in my-app
-npx sv create my-app
+- Champion Leaderboard
+- Task board
+- Champion Logs (Got 5 stars for completing XYZ)
+- Discord Webhook integration
+- Admin Panel
+
+## Development
+
+**Pre-requisites**
+
+- Node.js
+- PostgreSQL
+- Docker
+
+**Setup**
+
+1. Clone the repository
+2. Run `npm install`
+3. Copy `.env.example` to `.env` and fill in the required values:
+
+```
+DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+ADMIN_PASSWORD="password"
 ```
 
-## Developing
+4. Migrate the database with `npm run db:migrate`
+5. Start the server with `npm run dev`
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Deployment
 
-```bash
-npm run dev
+FriendConstellation has a container build run on every push to the `master` branch.
+I personally host this container and automatically deploy it to my server through Watchtower.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+If you wish to deploy it yourself, you can follow the steps below:
+
+### Docker
+
+**Pre-requisites**
+
+- Docker
+- Docker Compose
+
+1. Start Starboard and the database with `docker-compose up -d` or `docker compose up -d` depending on how Compose was installed
+
+### Manual
+
+**Pre-requisites**
+
+- Node.js
+- PostgreSQL
+
+1. Clone the repository
+2. Run `npm install`
+3. Copy `.env.example` to `.env` and fill in the required values:
+
+```
+DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+ADMIN_PASSWORD="password"
 ```
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+4. Migrate the database with `npm run db:migrate`
+5. Build the app with `npm run build`
+6. Start the server with `node build/`
