@@ -10,7 +10,7 @@ WORKDIR /app
 COPY --from=build /app .
 RUN chmod +x ./start.sh
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --start-interval=5s \
-    CMD ["sh", "-c", "wget -f http://127.0.0.1:3000/ || exit 1"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --start-interval=5s \
+    CMD ["sh", "-c", "wget -q --spider http://127.0.0.1:3000/ || exit 1"]
 
 CMD ["./start.sh"]
