@@ -11,6 +11,6 @@ COPY --from=build /app .
 RUN chmod +x ./start.sh
 
 HEALTHCHECK --interval=1m --timeout=30s --start-period=30s --start-interval=3s \
-    CMD ["sh", "-c", "curl -f http://localhost:3000/ || exit 1"]
+    CMD ["sh", "-c", "curl -f http://127.0.0.1:3000/ || exit 1"]
 
 CMD ["./start.sh"]
