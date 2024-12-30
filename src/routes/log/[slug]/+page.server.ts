@@ -19,8 +19,6 @@ export const load = (async ({ params }) => {
 		}
 	});
 
-	console.log(logs);
-
 	return {
 		player,
 		logs
