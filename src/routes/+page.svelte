@@ -53,9 +53,10 @@
 			{#each data.players as player, i}
 				<StarCard
 					player={player.name}
-					position={i + 1}
+					position={player.position}
 					stars={player.stars}
-					id={player.id}
+					id={String(player.id)}
+					joint={player.jointPosition}
 					showLogLink={true}
 				/>
 			{/each}

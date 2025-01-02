@@ -105,3 +105,7 @@ export function sendWebhookMessage(content: string, webhook: string): void {
 		})
 	});
 }
+
+export function arePlayersTied(player1: player, player2: player): boolean {
+	return player1.stars === player2.stars;
+}
