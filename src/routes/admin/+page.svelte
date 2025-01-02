@@ -94,9 +94,10 @@
 				<div class="flex flex-row">
 					<StarCard
 						player={player.name}
-						position={i + 1}
+						position={player.position}
 						stars={player.stars}
 						showLogLink={false}
+						joint={player.jointPosition}
 					/>
 
 					<ModifyUser id={player.id} />

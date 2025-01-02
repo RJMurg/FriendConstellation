@@ -19,9 +19,9 @@
 		</div>
 
 		{#if data.logs.length === 0}
-			<p class="text-lg text-neutral-500 m-5">No logs found</p>
+			<p class="m-5 text-lg text-neutral-500">No logs found</p>
 		{/if}
-		
+
 		{#each data.logs as log}
 			<div class="mb-2 ml-5 flex flex-row items-end">
 				<h1 class="text-xl font-bold md:text-2xl">{log.action}</h1>

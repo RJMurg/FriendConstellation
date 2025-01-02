@@ -74,4 +74,5 @@ ADMIN_PASSWORD="password"
 6. Start the server with `node build`
 
 ## License
+
 FriendConstellation is licensed under the GNU General Public License v3.0

@@ -106,6 +106,39 @@ export function sendWebhookMessage(content: string, webhook: string): void {
 	});
 }
 
-export function arePlayersTied(player1: player, player2: player): boolean {
+export function orderPlayers(players: player[]): internalPlayer[] {
+	let internalPlayers: internalPlayer[] = [];
+
+	for (let i = 0; i < players.length; i++) {
+		const player = players[i];
+		let position = i + 1;
+		let jointPosition = false;
+
+		if (i == 0) {
+			jointPosition = arePlayersTied(player, players[i + 1]);
+		} else if (i > 0) {
+			jointPosition = arePlayersTied(player, players[i - 1]);
+
+			// This could be made shorter with a ternary, but I prefer long-hand
+			if (jointPosition) {
+				position = internalPlayers[i - 1].position;
+			} else if (i !== players.length - 1 && arePlayersTied(player, players[i + 1])) {
+				jointPosition = true;
+			}
+		}
+
+		internalPlayers.push({
+			id: player.id,
+			name: player.name,
+			stars: player.stars,
+			position,
+			jointPosition
+		});
+	}
+
+	return internalPlayers;
+}
+
+function arePlayersTied(player1: player, player2: player): boolean {
 	return player1.stars === player2.stars;
 }

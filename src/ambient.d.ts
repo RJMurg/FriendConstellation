@@ -12,12 +12,12 @@ type internalPlayer = {
 	stars: number;
 	position: number;
 	jointPosition: boolean;
-}
+};
 
 type player = {
 	id: number;
 	name: string;
 	stars: number;
-}
+};
 
 type buttonTypes = 'default' | 'secondary';

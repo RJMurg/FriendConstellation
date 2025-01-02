@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '$lib/server/prisma';
 import process from 'process';
-import { getActionMessage, sendWebhookMessage } from '$lib';
+import { getActionMessage, orderPlayers, sendWebhookMessage } from '$lib';
 
 config();
 
@@ -24,16 +24,28 @@ export const load = (async ({ cookies }) => {
 	}
 
 	if (loggedIn) {
-		const players = await prisma.users.findMany({
-			orderBy: {
-				stars: 'desc'
-			}
+		const rawPlayers = await prisma.users.findMany({
+			orderBy: [
+				{
+					stars: 'desc'
+				},
+				{
+					name: 'asc'
+				}
+			]
 		});
 
+		let players: internalPlayer[] = orderPlayers(rawPlayers);
+
 		const tasks = await prisma.tasks.findMany({
-			orderBy: {
-				reward: 'desc'
-			}
+			orderBy: [
+				{
+					reward: 'desc'
+				},
+				{
+					title: 'asc'
+				}
+			]
 		});
 
 		const webhooks = await prisma.webhooks.findMany();

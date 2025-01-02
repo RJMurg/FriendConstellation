@@ -15,7 +15,7 @@
 
 <Card class="mb-2 w-full p-2">
 	<div class="flex w-full flex-row items-center justify-between">
-		<div class="ml-5 w-1/4 font-mono text-2xl flex flex-row items-center" id="Position">
+		<div class="ml-5 flex w-1/4 flex-row items-center font-mono text-2xl" id="Position">
 			{stringifyPosition(position)}
 
 			{#if joint}
