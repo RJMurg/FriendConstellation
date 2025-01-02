@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE "users" ADD COLUMN     "position" INTEGER NOT NULL;
+ALTER TABLE "users" ADD COLUMN     "position" INTEGER NOT NULL DEFAULT 0;
