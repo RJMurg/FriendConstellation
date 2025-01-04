@@ -24,11 +24,26 @@ export default ts.config(
 	},
 	{
 		files: ['**/*.svelte'],
+		ignores: ['./src/lib/components/ui/**/*.svelte'],
 
 		languageOptions: {
 			parserOptions: {
 				parser: ts.parser
 			}
+		},
+
+		rules: {
+			// This rule stops ESLint complaining about types not existing when they do lol
+			'no-undef': 'off',
+
+			// This rule stop ESLint throwing a wobbler with ShadCN Svelte
+			'@typescript-eslint/no-unused-vars': [
+				'warn',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^\\$\\$(Props|Events|Slots|Generic)$'
+				}
+			]
 		}
 	}
 );

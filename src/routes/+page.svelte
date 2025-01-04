@@ -50,7 +50,7 @@
 		{#if data.players.length == 0}
 			<EmptyCard message="No Champions have joined Starboard yet." />
 		{:else}
-			{#each data.players as player, i}
+			{#each data.players as player}
 				<StarCard
 					player={player.name}
 					position={player.position}
@@ -67,7 +67,7 @@
 		{#if data.tasks.length == 0}
 			<EmptyCard message="No Tasks have been added Starboard yet." />
 		{:else}
-			{#each data.tasks as task, i}
+			{#each data.tasks as task}
 				<TaskCard name={task.title} description={task.description} stars={task.reward} />
 			{/each}
 		{/if}

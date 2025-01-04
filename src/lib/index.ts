@@ -82,10 +82,11 @@ export function getActionMessage(stars: number, log: string): string {
 
 /**
  * Sends a message to a Discord webhook
+ * @param title The title of the message
  * @param content The content of the message
  * @param webhook The URL of the webhook
  */
-export function sendWebhookMessage(content: string, webhook: string): void {
+export function sendWebhookMessage(title: string, content: string, webhook: string): void {
 	fetch(webhook, {
 		method: 'POST',
 		headers: {
@@ -95,7 +96,7 @@ export function sendWebhookMessage(content: string, webhook: string): void {
 			content: '',
 			embeds: [
 				{
-					title: 'New Task Added!',
+					title: title,
 					description: content,
 					color: 11765248
 				}
@@ -107,7 +108,22 @@ export function sendWebhookMessage(content: string, webhook: string): void {
 }
 
 export function orderPlayers(players: player[]): internalPlayer[] {
-	let internalPlayers: internalPlayer[] = [];
+	const internalPlayers: internalPlayer[] = [];
+
+	if (players.length === 0 || players.length === 1) {
+		for (let i = 0; i < players.length; i++) {
+			const player = players[i];
+			internalPlayers.push({
+				id: player.id,
+				name: player.name,
+				stars: player.stars,
+				position: 1,
+				jointPosition: false
+			});
+		}
+
+		return internalPlayers;
+	}
 
 	for (let i = 0; i < players.length; i++) {
 		const player = players[i];

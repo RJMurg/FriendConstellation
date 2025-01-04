@@ -4,6 +4,7 @@
 	export let playersButtonVariant: buttonTypes = 'default';
 	export let tasksButtonVariant: buttonTypes = 'secondary';
 	export let webhooksButtonvariant: buttonTypes = 'secondary';
+	export let tamperButtonVariant: buttonTypes = 'secondary';
 	export let page: string = 'players';
 </script>
 
@@ -16,6 +17,10 @@
 
 	<Button variant={webhooksButtonvariant} on:click={() => (page = 'webhooks')} class="mr-2">
 		Webhooks
+	</Button>
+
+	<Button variant={tamperButtonVariant} on:click={() => (page = 'tamper')} class="mr-2">
+		Tamper Messages
 	</Button>
 
 	<form action="?/logout" method="POST">

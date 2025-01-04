@@ -14,7 +14,7 @@ export const load = (async () => {
 		]
 	});
 
-	let players: internalPlayer[] = orderPlayers(rawPlayers);
+	const players: internalPlayer[] = orderPlayers(rawPlayers);
 
 	const tasks = await prisma.tasks.findMany({
 		orderBy: [

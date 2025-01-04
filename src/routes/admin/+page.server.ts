@@ -35,7 +35,7 @@ export const load = (async ({ cookies }) => {
 			]
 		});
 
-		let players: internalPlayer[] = orderPlayers(rawPlayers);
+		const players: internalPlayer[] = orderPlayers(rawPlayers);
 
 		const tasks = await prisma.tasks.findMany({
 			orderBy: [
@@ -50,11 +50,14 @@ export const load = (async ({ cookies }) => {
 
 		const webhooks = await prisma.webhooks.findMany();
 
+		const messages = await prisma.tamperEvidentMessages.findMany();
+
 		return {
 			loggedIn,
 			players,
 			tasks,
-			webhooks
+			webhooks,
+			messages
 		};
 	}
 
@@ -218,10 +221,14 @@ export const actions = {
 			webhookContent += ' stars!';
 		}
 
-		const webhooks = await prisma.webhooks.findMany();
+		const webhooks = await prisma.webhooks.findMany({
+			where: {
+				showTasks: true
+			}
+		});
 
 		for (const webhook of webhooks) {
-			sendWebhookMessage(webhookContent, webhook.webhook);
+			sendWebhookMessage('New Task Added!', webhookContent, webhook.webhook);
 		}
 	},
 
@@ -240,11 +247,15 @@ export const actions = {
 		const formData = await request.formData();
 		const url = formData.get('url');
 		const name = formData.get('name');
+		const showTasks = formData.get('tasks') === 'true';
+		const showTampers = formData.get('tamper') === 'true';
 
 		await prisma.webhooks.create({
 			data: {
 				name: String(name),
-				webhook: String(url)
+				webhook: String(url),
+				showTasks,
+				showTampers
 			}
 		});
 	},
@@ -254,6 +265,32 @@ export const actions = {
 		const id = String(formData.get('id'));
 
 		await prisma.webhooks.delete({
+			where: {
+				id: parseInt(id)
+			}
+		});
+	},
+
+	addMessage: async ({ request }) => {
+		const formData = await request.formData();
+		const title = formData.get('name');
+		const message = formData.get('message');
+		const uuid = uuidv4();
+
+		await prisma.tamperEvidentMessages.create({
+			data: {
+				uuid,
+				title: String(title),
+				message: String(message)
+			}
+		});
+	},
+
+	deleteMessage: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+
+		await prisma.tamperEvidentMessages.delete({
 			where: {
 				id: parseInt(id)
 			}
