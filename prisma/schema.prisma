@@ -8,36 +8,48 @@ datasource db {
 }
 
 model users {
-  id             Int     @id @default(autoincrement())
-  name           String  @default("un-named") @db.VarChar(100)
-  stars          Int     @default(1)
+  id    Int     @id @default(autoincrement())
+  name  String  @default("un-named") @db.VarChar(100)
+  stars Int     @default(1)
 
   logs logs[]
 }
 
 model tasks {
-  id          Int         @id @default(autoincrement())
-  title       String      @db.VarChar(100)
-  description String      @db.VarChar(500)
+  id          Int    @id @default(autoincrement())
+  title       String @db.VarChar(100)
+  description String @db.VarChar(500)
   reward      Int
 }
 
 model webhooks {
-  name  String    @db.VarChar(500)
-  webhook String  @db.VarChar(500)
-  id      Int     @id @default(autoincrement())
+  name        String  @db.VarChar(500)
+  webhook     String  @db.VarChar(500)
+  id          Int     @id @default(autoincrement())
+  showTasks   Boolean @default(true)
+  showTampers Boolean @default(false)
 }
 
 model logins {
-  id Int @id @default(autoincrement())
-  token String
+  id      Int @id @default(autoincrement())
+  token   String
   expires DateTime
 }
 
 model logs {
-  id Int @id @default(autoincrement())
-  user_id Int
-  action String
+  id        Int      @id @default(autoincrement())
+  user_id   Int
+  action    String
   timestamp DateTime @default(now())
+
   User users @relation(fields: [user_id], references: [id])
+}
+
+model tamperEvidentMessages {
+  id        Int       @id @default(autoincrement())
+  uuid      String    @unique
+  title     String
+  message   String
+  opened    Boolean   @default(false)
+  timestamp DateTime?
 }
