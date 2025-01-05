@@ -18,6 +18,7 @@
 			<title>
 				{Details.title} - Log Not Found
 			</title>
+		{/if}
 </svelte:head>
 
 <div class="h-screen w-full p-5">
