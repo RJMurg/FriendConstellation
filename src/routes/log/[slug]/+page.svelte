@@ -3,10 +3,22 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { ChevronLeft } from 'lucide-svelte';
+	import Details from '$lib/details.json';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 </script>
+
+<svelte:head>
+	{#if data.player}
+			<title>
+				{Details.title} - {data.player.name} Star Log
+			</title>
+		{:else}
+			<title>
+				{Details.title} - Log Not Found
+			</title>
+</svelte:head>
 
 <div class="h-screen w-full p-5">
 	<Card class="flex h-full w-full flex-col">
