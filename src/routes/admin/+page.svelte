@@ -79,11 +79,11 @@
 
 {#if data.loggedIn}
 	<AdminMenu
-	{playersButtonVariant}
-	{tasksButtonVariant}
-	{webhooksButtonvariant}
-	{tamperButtonVariant}
-	bind:page
+		{playersButtonVariant}
+		{tasksButtonVariant}
+		{webhooksButtonvariant}
+		{tamperButtonVariant}
+		bind:page
 	/>
 {/if}
 
@@ -101,7 +101,6 @@
 	</form>
 	<Button variant="secondary" href="/" class="mt-2">Go Home</Button>
 {:else if page === 'players'}
-
 	<h1 class="my-2 text-center text-4xl font-bold">Champions</h1>
 	<AddChampionDialogue />
 
@@ -124,9 +123,7 @@
 			{/each}
 		{/if}
 	</div>
-
 {:else if page === 'tasks'}
-
 	<h1 class="my-2 text-center text-4xl font-bold">Tasks</h1>
 	<AddTasksDialogue />
 
@@ -143,9 +140,7 @@
 			{/each}
 		{/if}
 	</div>
-
 {:else if page === 'webhooks'}
-
 	<h1 class="my-2 text-center text-4xl font-bold">Webhooks</h1>
 	<AddWebhookDialogue />
 
@@ -162,9 +157,7 @@
 			{/each}
 		{/if}
 	</div>
-
 {:else if page === 'tamper'}
-
 	<h1 class="my-2 text-center text-4xl font-bold">Tamper Evident Messages</h1>
 	<AddMessageDialogue />
 
@@ -188,5 +181,4 @@
 			{/each}
 		{/if}
 	</div>
-	
 {/if}

@@ -208,30 +208,32 @@ export const actions = {
 			}
 		});
 
-		let webhookContent =
-			'A new task has been added to the [starboard](https://stars.rjm.ie/)!\n' +
-			'**Title:** ' +
-			name +
-			'\n*' +
-			description +
-			'*\n\n' +
-			'**Reward:** Up to ' +
-			stars;
+		if (checked) {
+			let webhookContent =
+				'A new task has been added to the [starboard](https://stars.rjm.ie/)!\n' +
+				'**Title:** ' +
+				name +
+				'\n*' +
+				description +
+				'*\n\n' +
+				'**Reward:** Up to ' +
+				stars;
 
-		if (Number(stars) == 1 || Number(stars) == -1) {
-			webhookContent += ' star!';
-		} else {
-			webhookContent += ' stars!';
-		}
-
-		const webhooks = await prisma.webhooks.findMany({
-			where: {
-				showTasks: true
+			if (Number(stars) == 1 || Number(stars) == -1) {
+				webhookContent += ' star!';
+			} else {
+				webhookContent += ' stars!';
 			}
-		});
 
-		for (const webhook of webhooks) {
-			sendWebhookMessage('New Task Added!', webhookContent, webhook.webhook);
+			const webhooks = await prisma.webhooks.findMany({
+				where: {
+					showTasks: true
+				}
+			});
+
+			for (const webhook of webhooks) {
+				sendWebhookMessage('New Task Added!', webhookContent, webhook.webhook);
+			}
 		}
 	},
 
