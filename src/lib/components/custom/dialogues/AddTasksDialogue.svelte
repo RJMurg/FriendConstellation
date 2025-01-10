@@ -3,6 +3,8 @@
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { Label } from '$lib/components/ui/label';
 	import { Textarea } from '$lib/components/ui/textarea';
+
+	let checked = $state(false);
 </script>
 
 <AbstractDialogue
@@ -30,5 +32,11 @@
 			<Label for="stars" class="mb-2 text-muted-foreground">Max Stars Available</Label>
 			<Input name="stars" value="1" class="text-white" type="number" />
 		</div>
+	</div>
+
+	<div class="flex flex-col items-start">
+		<input type="hidden" name="active" value={String(checked)} />
+		<Label for="active" class="mb-2 text-muted-foreground">Show Task?</Label>
+		<Switch name="active" class="text-white" bind:checked />
 	</div>
 </AbstractDialogue>
