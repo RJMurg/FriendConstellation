@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Card from '$lib/components/ui/card/card.svelte';
+	import AbstractCard from './AbstractCard.svelte';
 	import StarsGenerator from '../StarsGenerator.svelte';
 
 	export let name: string;
@@ -7,32 +7,30 @@
 	export let stars: number;
 </script>
 
-<Card class="mb-2 w-full p-2">
-	<div class="flex w-full flex-row items-center justify-between">
-		<div class="flex w-3/4 flex-col items-start" id="Task">
-			<h1 class="flex flex-row items-center text-2xl font-bold lg:text-4xl">
-				{name}
-			</h1>
+<AbstractCard>
+	<div class="flex w-3/4 flex-col items-start" id="Task">
+		<h1 class="flex flex-row items-center text-2xl font-bold lg:text-4xl">
+			{name}
+		</h1>
 
-			<p>
-				{description}
-			</p>
+		<p>
+			{description}
+		</p>
 
-			<div class="flex flex-row items-center">
-				Max reward:
+		<div class="flex flex-row items-center">
+			Max reward:
 
-				<span class="ml-2">
-					<StarsGenerator {stars} />
-				</span>
+			<span class="ml-2">
+				<StarsGenerator {stars} />
+			</span>
 
-				<div class="ml-2">
-					{#if stars > 1 || stars <= 0}
-						{stars} stars
-					{:else}
-						{stars} star
-					{/if}
-				</div>
+			<div class="ml-2">
+				{#if stars > 1 || stars <= 0}
+					{stars} stars
+				{:else}
+					{stars} star
+				{/if}
 			</div>
 		</div>
 	</div>
-</Card>
+</AbstractCard>

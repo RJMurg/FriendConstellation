@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Card from '$lib/components/ui/card/card.svelte';
+	import AbstractCard from './AbstractCard.svelte';
 
 	export let title: string;
 	export let message: string;
@@ -17,20 +17,18 @@
 	}
 </script>
 
-<Card class="mb-2 w-full p-2">
-	<div class="flex w-full flex-row items-center justify-between">
-		<div class="flex w-full flex-col items-start" id="Message">
-			<h1 class="flex items-center justify-center text-2xl font-bold lg:text-4xl">
-				{title} <span class="ml-5 h-full text-xl font-normal">{openedMessage}</span>
-			</h1>
+<AbstractCard>
+	<div class="flex w-full flex-col items-start" id="Message">
+		<h1 class="flex items-center justify-center text-2xl font-bold lg:text-4xl">
+			{title} <span class="ml-5 h-full text-xl font-normal">{openedMessage}</span>
+		</h1>
 
-			<p>
-				{message}
-			</p>
+		<p>
+			{message}
+		</p>
 
-			{#if showLink}
-				<a href={link} class="text-blue-500"> Link to Message </a>
-			{/if}
-		</div>
+		{#if showLink}
+			<a href={link} class="text-blue-500"> Link to Message </a>
+		{/if}
 	</div>
-</Card>
+</AbstractCard>
