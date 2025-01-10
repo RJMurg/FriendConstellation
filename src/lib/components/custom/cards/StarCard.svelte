@@ -2,8 +2,8 @@
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { stringifyPosition } from '$lib';
 	import { ChevronRight, Crown, EllipsisVertical } from 'lucide-svelte';
-	import StarsGenerator from './StarsGenerator.svelte';
-	import Button from '../ui/button/button.svelte';
+	import StarsGenerator from '../StarsGenerator.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
 
 	export let player: string;
 	export let id: string = '';

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '../ui/button/button.svelte';
-	import Card from '../ui/card/card.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
+	import Card from '$lib/components/ui/card/card.svelte';
 
 	export let uuid: string;
 </script>

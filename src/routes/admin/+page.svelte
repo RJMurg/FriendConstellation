@@ -7,15 +7,15 @@
 	import type { PageData } from './$types';
 	import { ChevronRight } from 'lucide-svelte';
 	import Details from '$lib/details.json';
-	import EmptyCard from '$lib/components/custom/EmptyCard.svelte';
+	import EmptyCard from '$lib/components/custom/cards/EmptyCard.svelte';
 	import ModifyUser from '$lib/components/custom/admin/ModifyUser.svelte';
-	import StarCard from '$lib/components/custom/StarCard.svelte';
-	import TaskCard from '$lib/components/custom/TaskCard.svelte';
-	import ModifyTask $lib/components/custom/admin/ModifyTask.sveltesvelte';
-	import WebhookCard from '$lib/components/custom/WebhookCard.svelte';
+	import StarCard from '$lib/components/custom/cards/StarCard.svelte';
+	import TaskCard from '$lib/components/custom/cards/TaskCard.svelte';
+	import ModifyTask from '$lib/components/custom/admin/ModifyTask.svelte';
+	import WebhookCard from '$lib/components/custom/cards/WebhookCard.svelte';
 	import ModifyWebhook from '$lib/components/custom/admin/ModifyWebhook.svelte';
 	import AdminMenu from '$lib/components/custom/admin/AdminMenu.svelte';
-	import MessageCard from '$lib/components/custom/MessageCard.svelte';
+	import MessageCard from '$lib/components/custom/cards/MessageCard.svelte';
 	import ModifyMessage from '$lib/components/custom/admin/ModifyMessage.svelte';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 

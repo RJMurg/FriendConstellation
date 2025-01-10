@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Card from '$lib/components/ui/card/card.svelte';
-	import StarsGenerator from './StarsGenerator.svelte';
+	import StarsGenerator from '../StarsGenerator.svelte';
 
 	export let name: string;
 	export let description: string;
