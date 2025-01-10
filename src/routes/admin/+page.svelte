@@ -108,12 +108,14 @@
 			</Dialog.Header>
 			<form action="?/addPlayer" method="POST" use:enhance>
 				<div class="grid gap-4 py-4">
-					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="name" placeholder="Champion Name" class="col-span-3 text-white" />
+					<div class="flex flex-col items-start">
+						<Label for="name" class="mb-2 text-muted-foreground">Champion Name</Label>
+						<Input name="name" placeholder="Champion Name" class="text-white" />
 					</div>
 
-					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="stars" value="1" class="col-span-3 text-white" type="number" />
+					<div class="flex flex-col items-start">
+						<Label for="stars" class="mb-2 text-muted-foreground">Stars</Label>
+						<Input name="stars" value="1" class="text-white" type="number" />
 					</div>
 				</div>
 				<Dialog.Footer>
@@ -162,20 +164,23 @@
 			</Dialog.Header>
 			<form action="?/addTask" method="POST" use:enhance>
 				<div class="grid gap-4 py-4">
-					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="name" placeholder="Task Title" class="col-span-3 text-white" />
+					<div class="flex flex-col items-start">
+						<Label for="name" class="mb-2 text-muted-foreground">Task Name</Label>
+						<Input name="name" placeholder="Task Title" class="text-white" />
 					</div>
 
-					<div class="grid grid-cols-4 items-center gap-4">
+					<div class="flex flex-col items-start">
+						<Label for="description" class="mb-2 text-muted-foreground">Task Body</Label>
 						<Textarea
 							name="description"
 							placeholder="Explain how to complete the task"
-							class="col-span-3 text-white"
+							class="text-white"
 						/>
 					</div>
 
-					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="stars" value="1" class="col-span-3 text-white" type="number" />
+					<div class="flex flex-col items-start">
+						<Label for="stars" class="mb-2 text-muted-foreground">Max Stars Available</Label>
+						<Input name="stars" value="1" class="text-white" type="number" />
 					</div>
 				</div>
 				<Dialog.Footer>
@@ -190,7 +195,7 @@
 		{:else}
 			{#each tasks ?? [] as task}
 				<div class="flex flex-row">
-					<TaskCard name={task.title} description={task.description} stars={task.reward}/>
+					<TaskCard name={task.title} description={task.description} stars={task.reward} />
 
 					<ModifyTask id={task.id} active={task.active} token={data.token} />
 				</div>
@@ -218,12 +223,14 @@
 			</Dialog.Header>
 			<form action="?/addWebhook" method="POST" use:enhance>
 				<div class="grid gap-4 py-4">
-					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="name" placeholder="Webhook Name" class="col-span-3 text-white" />
+					<div class="flex flex-col items-start">
+						<Label for="name" class="mb-2 text-muted-foreground">Webhook Name</Label>
+						<Input name="name" placeholder="Webhook Name" class="text-white" />
 					</div>
 
-					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="url" placeholder="Webhook URL" class="col-span-3 text-white" />
+					<div class="flex flex-col items-start">
+						<Label for="url" class="mb-2 text-muted-foreground">Webhook URL</Label>
+						<Input name="url" placeholder="Webhook URL" class="text-white" />
 					</div>
 
 					<div class="grid grid-cols-4 items-center gap-4">
@@ -287,15 +294,17 @@
 			</Dialog.Header>
 			<form action="?/addMessage" method="POST" use:enhance>
 				<div class="grid gap-4 py-4">
-					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="name" placeholder="Message Name" class="col-span-3 text-white" />
+					<div class="flex flex-col items-start">
+						<Label for="name" class="mb-2 text-muted-foreground">Tamper-Evident Message Name</Label>
+						<Input name="name" placeholder="Message Name" class="text-white" />
 					</div>
 
-					<div class="grid grid-cols-4 items-center gap-4">
+					<div class="flex flex-col items-start">
+						<Label for="name" class="mb-2 text-muted-foreground">Message Body</Label>
 						<Textarea
 							name="message"
 							placeholder="Enter your Tamper-Evident Message"
-							class="col-span-3 text-white"
+							class="text-white"
 						/>
 					</div>
 

@@ -18,7 +18,7 @@
 	});
 </script>
 
-<Card class="ml-2 mb-2">
+<Card class="mb-2 ml-2">
 	<div class="flex flex-col items-center justify-between p-5">
 		<form action="?/deleteTask" method="POST" class="mb-2">
 			<input type="hidden" name="id" value={id} />
