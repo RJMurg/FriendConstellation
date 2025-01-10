@@ -80,7 +80,7 @@
 
 {#if !data.loggedIn}
 	<h1 class="mb-5 text-center text-4xl font-bold">Admin Login</h1>
-	<form action="?/login" method="post" class="flex w-full max-w-sm items-center space-x-2">
+	<form action="?/login" method="post" class="flex px-4 md:p-0 w-full max-w-sm items-center space-x-2">
 		<Input type="password" name="password" placeholder="Enter admin password" />
 		<Button type="submit">
 			<ChevronRight class="" />
@@ -124,7 +124,7 @@
 			</form>
 		</Dialog.Content>
 	</Dialog.Root>
-	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
+	<div class="mx-auto w-full px-2 md:w-2/3 md:px-0">
 		{#if (players ?? []).length == 0}
 			<EmptyCard message="No champions have been added." />
 		{:else}

@@ -9,7 +9,7 @@
 </script>
 
 <Card class="mb-2 ml-2">
-	<div class="flex flex-col items-center justify-between p-5">
+	<div class="flex flex-col items-center justify-between p-2 md:p-5">
 		<form action="?/deletePlayer" method="POST" class="mb-5">
 			<input type="hidden" name="id" value={id} />
 			<Button type="submit" variant="destructive" class="text-red-500">
@@ -18,7 +18,7 @@
 		</form>
 
 		<Dialog.Root>
-			<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Modify Stars</Dialog.Trigger>
+			<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Modify</Dialog.Trigger>
 			<Dialog.Content class="sm:max-w-[425px]">
 				<Dialog.Header>
 					<Dialog.Title class="dark">Modify Stars</Dialog.Title>

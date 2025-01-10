@@ -37,9 +37,9 @@
 		class="flex flex-row items-center justify-center text-center text-4xl font-bold md:text-6xl"
 		id="title"
 	>
-		<img src="favicon.webp" alt="Starboard logo" class="mr-1 w-16" />
+		<enhanced:img src="/static/favicon.webp" alt="Starboard logo" class="mr-1 w-16" />
 		{Details.title.toUpperCase()}
-		<img src="favicon.webp" alt="Starboard logo" class="ml-1 w-16" />
+		<enhanced:img src="/static/favicon.webp" alt="Starboard logo" class="ml-1 w-16" />
 	</div>
 
 	<HomeMenu {playersButtonVariant} {tasksButtonVariant} bind:page />

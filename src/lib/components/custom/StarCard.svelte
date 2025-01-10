@@ -15,18 +15,21 @@
 
 <Card class="mb-2 w-full p-2">
 	<div class="flex w-full flex-row items-center justify-between">
-		<div class="ml-5 flex w-1/4 flex-row items-center font-mono text-2xl" id="Position">
+		<div
+			class="flex flex-row items-center font-mono text-lg md:ml-5 md:w-1/4 md:text-2xl"
+			id="Position"
+		>
 			{stringifyPosition(position)}
 
 			{#if joint}
-				<EllipsisVertical class="ml-2 h-6 w-6 text-green-500" />
+				<EllipsisVertical class="h-6 w-6 text-green-500 md:ml-2" />
 			{/if}
 		</div>
 
-		<div class="flex w-1/2 flex-col items-start" id="Player">
-			<h1 class="flex flex-row items-center text-4xl font-bold">
+		<div class="flex w-10/12 flex-col items-start md:w-3/4" id="Player">
+			<h1 class="flex flex-row items-center text-2xl font-bold md:text-4xl">
 				{#if position === 1}
-					<Crown class="mr-5 h-8 w-8 text-yellow-500" />
+					<Crown class="mr-2 h-4 w-4 text-yellow-500 md:mr-5 md:h-8 md:w-8" />
 				{/if}
 
 				{player}
