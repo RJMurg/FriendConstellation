@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Trash2 } from 'lucide-svelte';
-	import Card from '../ui/card/card.svelte';
-	import Switch from '../ui/switch/switch.svelte';
+	import Card from '$lib/components/ui/card/card.svelte';
+	import Switch from '$lib/components/ui/switch/switch.svelte';
 
 	let { id, active, token } = $props();
 

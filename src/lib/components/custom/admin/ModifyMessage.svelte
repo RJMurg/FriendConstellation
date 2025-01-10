@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Trash2 } from 'lucide-svelte';
-	import Card from '../ui/card/card.svelte';
+	import Card from '$lib/components/ui/card/card.svelte';
 
 	export let id: number;
 </script>

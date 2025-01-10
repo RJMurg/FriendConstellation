@@ -8,15 +8,15 @@
 	import { ChevronRight } from 'lucide-svelte';
 	import Details from '$lib/details.json';
 	import EmptyCard from '$lib/components/custom/EmptyCard.svelte';
-	import ModifyUser from '$lib/components/custom/ModifyUser.svelte';
+	import ModifyUser from '$lib/components/custom/admin/ModifyUser.svelte';
 	import StarCard from '$lib/components/custom/StarCard.svelte';
 	import TaskCard from '$lib/components/custom/TaskCard.svelte';
-	import ModifyTask from '$lib/components/custom/ModifyTask.svelte';
+	import ModifyTask $lib/components/custom/admin/ModifyTask.sveltesvelte';
 	import WebhookCard from '$lib/components/custom/WebhookCard.svelte';
-	import ModifyWebhook from '$lib/components/custom/ModifyWebhook.svelte';
-	import AdminMenu from '$lib/components/custom/AdminMenu.svelte';
+	import ModifyWebhook from '$lib/components/custom/admin/ModifyWebhook.svelte';
+	import AdminMenu from '$lib/components/custom/admin/AdminMenu.svelte';
 	import MessageCard from '$lib/components/custom/MessageCard.svelte';
-	import ModifyMessage from '$lib/components/custom/ModifyMessage.svelte';
+	import ModifyMessage from '$lib/components/custom/admin/ModifyMessage.svelte';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 
 	let { data }: { data: PageData } = $props();

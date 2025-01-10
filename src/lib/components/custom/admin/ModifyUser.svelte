@@ -3,7 +3,7 @@
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Trash2 } from 'lucide-svelte';
-	import Card from '../ui/card/card.svelte';
+	import Card from '$lib/components/ui/card/card.svelte';
 
 	export let id: number;
 </script>
