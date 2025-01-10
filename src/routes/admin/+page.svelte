@@ -190,7 +190,7 @@
 		{:else}
 			{#each tasks ?? [] as task}
 				<div class="flex flex-row">
-					<TaskCard name={task.title} description={task.description} stars={task.reward} />
+					<TaskCard name={task.title} description={task.description} stars={task.reward}/>
 
 					<ModifyTask id={task.id} active={task.active} token={data.token} />
 				</div>

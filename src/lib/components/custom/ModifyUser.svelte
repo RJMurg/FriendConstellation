@@ -8,7 +8,7 @@
 	export let id: number;
 </script>
 
-<Card>
+<Card class="ml-2 mb-2">
 	<div class="flex flex-col items-center justify-between p-5">
 		<form action="?/deletePlayer" method="POST" class="mb-5">
 			<input type="hidden" name="id" value={id} />
