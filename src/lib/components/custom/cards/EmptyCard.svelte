@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AbstractCard from './AbstractCard.svelte';
-	
+
 	export let message: string;
 </script>
 

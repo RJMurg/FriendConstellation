@@ -1,9 +1,6 @@
 <script lang="ts">
 	import Input from '$lib/components/ui/input/input.svelte';
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
-	import Checkbox from '$lib/components/ui/checkbox/checkbox.svelte';
-	import Label from '$lib/components/ui/label/label.svelte';
-	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import type { PageData } from './$types';
 	import { ChevronRight } from 'lucide-svelte';
 	import Details from '$lib/details.json';
@@ -17,18 +14,19 @@
 	import AdminMenu from '$lib/components/custom/admin/AdminMenu.svelte';
 	import MessageCard from '$lib/components/custom/cards/MessageCard.svelte';
 	import ModifyMessage from '$lib/components/custom/admin/ModifyMessage.svelte';
-	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
+	import AddChampionDialogue from '$lib/components/custom/dialogues/AddChampionDialogue.svelte';
+	import AddTasksDialogue from '$lib/components/custom/dialogues/AddTasksDialogue.svelte';
+	import AddWebhookDialogue from '$lib/components/custom/dialogues/AddWebhookDialogue.svelte';
+	import AddMessageDialogue from '$lib/components/custom/dialogues/AddMessageDialogue.svelte';
 
 	let { data }: { data: PageData } = $props();
+	import { onMount } from 'svelte';
 
 	let players = $state(data.players ?? []);
 	let tasks = $state(data.tasks);
 	let webhooks = $state(data.webhooks);
 	let messages = $state(data.messages);
 	let page = $state('players');
-	let open = $state(false);
-	import { onMount } from 'svelte';
-	import { enhance } from '$app/forms';
 
 	onMount(() => {
 		const savedPage = localStorage.getItem('adminPage');
@@ -41,9 +39,6 @@
 	let tasksButtonVariant: buttonTypes = $state('secondary');
 	let webhooksButtonvariant: buttonTypes = $state('secondary');
 	let tamperButtonVariant: buttonTypes = $state('secondary');
-
-	let tasksCheckbox = $state(true);
-	let messagesCheckbox = $state(false);
 
 	$effect(() => {
 		localStorage.setItem('adminPage', page);
@@ -80,7 +75,11 @@
 
 {#if !data.loggedIn}
 	<h1 class="mb-5 text-center text-4xl font-bold">Admin Login</h1>
-	<form action="?/login" method="post" class="flex px-4 md:p-0 w-full max-w-sm items-center space-x-2">
+	<form
+		action="?/login"
+		method="post"
+		class="flex w-full max-w-sm items-center space-x-2 px-4 md:p-0"
+	>
 		<Input type="password" name="password" placeholder="Enter admin password" />
 		<Button type="submit">
 			<ChevronRight class="" />
@@ -97,33 +96,8 @@
 	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Champions</h1>
-	<Dialog.Root bind:open>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
-			>Add Champion</Dialog.Trigger
-		>
-		<Dialog.Content class="sm:max-w-[425px]">
-			<Dialog.Header>
-				<Dialog.Title class="dark">Add Champion</Dialog.Title>
-				<Dialog.Description>Add a Champion to the Starboard.</Dialog.Description>
-			</Dialog.Header>
-			<form action="?/addPlayer" method="POST" use:enhance>
-				<div class="grid gap-4 py-4">
-					<div class="flex flex-col items-start">
-						<Label for="name" class="mb-2 text-muted-foreground">Champion Name</Label>
-						<Input name="name" placeholder="Champion Name" class="text-white" />
-					</div>
+	<AddChampionDialogue />
 
-					<div class="flex flex-col items-start">
-						<Label for="stars" class="mb-2 text-muted-foreground">Stars</Label>
-						<Input name="stars" value="1" class="text-white" type="number" />
-					</div>
-				</div>
-				<Dialog.Footer>
-					<Button type="submit">Add</Button>
-				</Dialog.Footer>
-			</form>
-		</Dialog.Content>
-	</Dialog.Root>
 	<div class="mx-auto w-full px-2 md:w-2/3 md:px-0">
 		{#if (players ?? []).length == 0}
 			<EmptyCard message="No champions have been added." />
@@ -153,42 +127,8 @@
 	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Tasks</h1>
-	<Dialog.Root bind:open>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
-			>Add Task</Dialog.Trigger
-		>
-		<Dialog.Content class="sm:max-w-[425px]">
-			<Dialog.Header>
-				<Dialog.Title class="dark">Add Task</Dialog.Title>
-				<Dialog.Description>Add a Task to the Starboard.</Dialog.Description>
-			</Dialog.Header>
-			<form action="?/addTask" method="POST" use:enhance>
-				<div class="grid gap-4 py-4">
-					<div class="flex flex-col items-start">
-						<Label for="name" class="mb-2 text-muted-foreground">Task Name</Label>
-						<Input name="name" placeholder="Task Title" class="text-white" />
-					</div>
+	<AddTasksDialogue />
 
-					<div class="flex flex-col items-start">
-						<Label for="description" class="mb-2 text-muted-foreground">Task Body</Label>
-						<Textarea
-							name="description"
-							placeholder="Explain how to complete the task"
-							class="text-white"
-						/>
-					</div>
-
-					<div class="flex flex-col items-start">
-						<Label for="stars" class="mb-2 text-muted-foreground">Max Stars Available</Label>
-						<Input name="stars" value="1" class="text-white" type="number" />
-					</div>
-				</div>
-				<Dialog.Footer>
-					<Button type="submit">Add</Button>
-				</Dialog.Footer>
-			</form>
-		</Dialog.Content>
-	</Dialog.Root>
 	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
 		{#if (tasks ?? []).length == 0}
 			<EmptyCard message="No tasks have been added." />
@@ -212,51 +152,8 @@
 	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Webhooks</h1>
-	<Dialog.Root bind:open>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
-			>Add Webhook</Dialog.Trigger
-		>
-		<Dialog.Content class="sm:max-w-[425px]">
-			<Dialog.Header>
-				<Dialog.Title class="dark">Add Webhook</Dialog.Title>
-				<Dialog.Description>Add a Webhook to the Starboard.</Dialog.Description>
-			</Dialog.Header>
-			<form action="?/addWebhook" method="POST" use:enhance>
-				<div class="grid gap-4 py-4">
-					<div class="flex flex-col items-start">
-						<Label for="name" class="mb-2 text-muted-foreground">Webhook Name</Label>
-						<Input name="name" placeholder="Webhook Name" class="text-white" />
-					</div>
+	<AddWebhookDialogue />
 
-					<div class="flex flex-col items-start">
-						<Label for="url" class="mb-2 text-muted-foreground">Webhook URL</Label>
-						<Input name="url" placeholder="Webhook URL" class="text-white" />
-					</div>
-
-					<div class="grid grid-cols-4 items-center gap-4">
-						<!-- One issue with ShadCN is that we have to do this if we're using normal forms instead of their stupid SupaForms -->
-						<input type="hidden" name="tasks" id="tasks" value={tasksCheckbox} />
-						<Checkbox class="col-span-1 text-white" bind:checked={tasksCheckbox} />
-						<Label for="tasks" class="col-span-3 text-sm text-muted-foreground">
-							Hit this webhook when a task is created?
-						</Label>
-					</div>
-
-					<div class="grid grid-cols-4 items-center gap-4">
-						<!-- One issue with ShadCN is that we have to do this if we're using normal forms instead of their stupid SupaForms -->
-						<input type="hidden" name="tamper" id="tamper" value={messagesCheckbox} />
-						<Checkbox class="col-span-1 text-white" bind:checked={messagesCheckbox} />
-						<Label for="tamper" class="col-span-3 text-sm text-muted-foreground">
-							Hit this webhook when a tamper-evident seal is broken?
-						</Label>
-					</div>
-					<Dialog.Footer>
-						<Button type="submit">Add</Button>
-					</Dialog.Footer>
-				</div>
-			</form>
-		</Dialog.Content>
-	</Dialog.Root>
 	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
 		{#if (webhooks ?? []).length == 0}
 			<EmptyCard message="No webhooks have been added." />
@@ -280,41 +177,8 @@
 	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Tamper Evident Messages</h1>
-	<Dialog.Root bind:open>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
-			>Add Message</Dialog.Trigger
-		>
-		<Dialog.Content class="sm:max-w-[425px]">
-			<Dialog.Header>
-				<Dialog.Title class="dark">Add Message</Dialog.Title>
-				<Dialog.Description>
-					Add a Tamper-Evident Message. <br />
-					This can be given to players and it shows when it is opened
-				</Dialog.Description>
-			</Dialog.Header>
-			<form action="?/addMessage" method="POST" use:enhance>
-				<div class="grid gap-4 py-4">
-					<div class="flex flex-col items-start">
-						<Label for="name" class="mb-2 text-muted-foreground">Tamper-Evident Message Name</Label>
-						<Input name="name" placeholder="Message Name" class="text-white" />
-					</div>
+	<AddMessageDialogue />
 
-					<div class="flex flex-col items-start">
-						<Label for="name" class="mb-2 text-muted-foreground">Message Body</Label>
-						<Textarea
-							name="message"
-							placeholder="Enter your Tamper-Evident Message"
-							class="text-white"
-						/>
-					</div>
-
-					<Dialog.Footer>
-						<Button type="submit">Add</Button>
-					</Dialog.Footer>
-				</div>
-			</form>
-		</Dialog.Content>
-	</Dialog.Root>
 	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
 		{#if (messages ?? []).length == 0}
 			<EmptyCard message="No tamper-evident messages have been added." />

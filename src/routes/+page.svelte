@@ -65,7 +65,7 @@
 {:else if page === 'tasks'}
 	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
 		{#if data.tasks.length == 0}
-			<EmptyCard message="No Tasks have been added Starboard yet." />
+			<EmptyCard message="No Tasks have been added to the Starboard yet." />
 		{:else}
 			{#each data.tasks as task}
 				<TaskCard name={task.title} description={task.description} stars={task.reward} />

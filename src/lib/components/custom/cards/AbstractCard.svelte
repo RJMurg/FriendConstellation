@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Card from '$lib/components/ui/card/card.svelte';
-	
-    export let flex: string = 'row';
+
+	export let flex: string = 'row';
 </script>
 
 <Card class="mb-2 w-full p-2">
