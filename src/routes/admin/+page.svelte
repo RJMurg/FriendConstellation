@@ -19,6 +19,9 @@
 	import AddWebhookDialogue from '$lib/components/custom/dialogues/AddWebhookDialogue.svelte';
 	import AddMessageDialogue from '$lib/components/custom/dialogues/AddMessageDialogue.svelte';
 
+	// This file is so ugly.
+	// I'm sorry.
+
 	let { data }: { data: PageData } = $props();
 	import { onMount } from 'svelte';
 
