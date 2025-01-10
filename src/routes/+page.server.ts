@@ -17,6 +17,9 @@ export const load = (async () => {
 	const players: internalPlayer[] = orderPlayers(rawPlayers);
 
 	const tasks = await prisma.tasks.findMany({
+		where: {
+			active: true
+		},
 		orderBy: [
 			{
 				reward: 'desc'

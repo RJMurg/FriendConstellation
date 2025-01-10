@@ -2,8 +2,20 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Trash2 } from 'lucide-svelte';
 	import Card from '../ui/card/card.svelte';
+	import Switch from '../ui/switch/switch.svelte';
 
-	export let id: number;
+	let { id, active, token } = $props();
+
+	$effect(() => {
+		fetch(`/api/toggleTask`, {
+			method: 'POST',
+			body: JSON.stringify({
+				id,
+				active,
+				token
+			})
+		});
+	});
 </script>
 
 <Card>
@@ -14,5 +26,7 @@
 				<Trash2 class="h-6 w-6 text-white" />
 			</Button>
 		</form>
+
+		<Switch bind:checked={active} />
 	</div>
 </Card>

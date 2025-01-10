@@ -57,7 +57,8 @@ export const load = (async ({ cookies }) => {
 			players,
 			tasks,
 			webhooks,
-			messages
+			messages,
+			token
 		};
 	}
 

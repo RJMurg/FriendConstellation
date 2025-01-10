@@ -17,6 +17,7 @@
 	import AdminMenu from '$lib/components/custom/AdminMenu.svelte';
 	import MessageCard from '$lib/components/custom/MessageCard.svelte';
 	import ModifyMessage from '$lib/components/custom/ModifyMessage.svelte';
+	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -153,7 +154,7 @@
 					</div>
 
 					<div class="grid grid-cols-4 items-center gap-4">
-						<Input
+						<Textarea
 							name="description"
 							placeholder="Explain how to complete the task"
 							class="col-span-3 text-white"
@@ -178,7 +179,7 @@
 				<div class="flex flex-row">
 					<TaskCard name={task.title} description={task.description} stars={task.reward} />
 
-					<ModifyTask id={task.id} />
+					<ModifyTask id={task.id} active={task.active} token={data.token} />
 				</div>
 			{/each}
 		{/if}
@@ -278,7 +279,11 @@
 					</div>
 
 					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="message" placeholder="message" class="col-span-3 text-white" />
+						<Textarea
+							name="message"
+							placeholder="Enter your Tamper-Evident Message"
+							class="col-span-3 text-white"
+						/>
 					</div>
 
 					<Dialog.Footer>
@@ -299,7 +304,7 @@
 						message={message.message}
 						uuid={message.uuid}
 						opened={message.opened}
-						timestamp={message.timestamp}
+						timestamp={message.timestamp ?? new Date()}
 						showLink={true}
 					/>
 
