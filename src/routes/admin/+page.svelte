@@ -111,7 +111,7 @@
 				<Dialog.Title class="dark">Add Champion</Dialog.Title>
 				<Dialog.Description>Add a Champion to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addPlayer" method="POST" use:enhance>
+			<form action="?/addPlayer" method="POST" onsubmit={() => open = false}>
 				<div class="grid gap-4 py-4">
 					<div class="flex flex-col items-start">
 						<Label for="name" class="mb-2 text-muted-foreground">Champion Name</Label>
@@ -167,7 +167,7 @@
 				<Dialog.Title class="dark">Add Task</Dialog.Title>
 				<Dialog.Description>Add a Task to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addTask" method="POST" use:enhance>
+			<form action="?/addTask" method="POST" onsubmit={() => open = false}>
 				<div class="grid gap-4 py-4">
 					<div class="flex flex-col items-start">
 						<Label for="name" class="mb-2 text-muted-foreground">Task Name</Label>
@@ -232,7 +232,7 @@
 				<Dialog.Title class="dark">Add Webhook</Dialog.Title>
 				<Dialog.Description>Add a Webhook to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addWebhook" method="POST" use:enhance>
+			<form action="?/addWebhook" method="POST" onsubmit={() => open = false}>
 				<div class="grid gap-4 py-4">
 					<div class="flex flex-col items-start">
 						<Label for="name" class="mb-2 text-muted-foreground">Webhook Name</Label>
@@ -303,7 +303,7 @@
 					This can be given to players and it shows when it is opened
 				</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addMessage" method="POST" use:enhance>
+			<form action="?/addMessage" method="POST" onsubmit={() => open = false}>
 				<div class="grid gap-4 py-4">
 					<div class="flex flex-col items-start">
 						<Label for="name" class="mb-2 text-muted-foreground">Tamper-Evident Message Name</Label>
