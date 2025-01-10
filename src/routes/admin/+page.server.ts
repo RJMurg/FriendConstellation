@@ -197,12 +197,14 @@ export const actions = {
 		const name = formData.get('name');
 		const description = formData.get('description');
 		const stars = String(formData.get('stars'));
+		const checked = Boolean(formData.get('active'));
 
 		await prisma.tasks.create({
 			data: {
 				title: String(name),
 				description: String(description),
-				reward: parseInt(stars)
+				reward: parseInt(stars),
+				active: checked
 			}
 		});
 

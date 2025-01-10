@@ -19,6 +19,9 @@
 	import ModifyMessage from '$lib/components/custom/ModifyMessage.svelte';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 
+	// This file is so ugly.
+	// I'm sorry.
+
 	let { data }: { data: PageData } = $props();
 
 	let players = $state(data.players ?? []);
@@ -27,8 +30,10 @@
 	let messages = $state(data.messages);
 	let page = $state('players');
 	let open = $state(false);
+	let checked = $state(true);
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
+	import Switch from '$lib/components/ui/switch/switch.svelte';
 
 	onMount(() => {
 		const savedPage = localStorage.getItem('adminPage');
@@ -106,7 +111,7 @@
 				<Dialog.Title class="dark">Add Champion</Dialog.Title>
 				<Dialog.Description>Add a Champion to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addPlayer" method="POST" use:enhance>
+			<form action="?/addPlayer" method="POST" onsubmit={() => open = false}>
 				<div class="grid gap-4 py-4">
 					<div class="flex flex-col items-start">
 						<Label for="name" class="mb-2 text-muted-foreground">Champion Name</Label>
@@ -162,7 +167,7 @@
 				<Dialog.Title class="dark">Add Task</Dialog.Title>
 				<Dialog.Description>Add a Task to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addTask" method="POST" use:enhance>
+			<form action="?/addTask" method="POST" onsubmit={() => open = false}>
 				<div class="grid gap-4 py-4">
 					<div class="flex flex-col items-start">
 						<Label for="name" class="mb-2 text-muted-foreground">Task Name</Label>
@@ -181,6 +186,12 @@
 					<div class="flex flex-col items-start">
 						<Label for="stars" class="mb-2 text-muted-foreground">Max Stars Available</Label>
 						<Input name="stars" value="1" class="text-white" type="number" />
+					</div>
+
+					<div class="flex flex-col items-start">
+						<input type="hidden" name="active" value={String(checked)} />
+						<Label for="active" class="mb-2 text-muted-foreground">Show Task?</Label>
+						<Switch name="active" class="text-white" bind:checked />
 					</div>
 				</div>
 				<Dialog.Footer>
@@ -221,7 +232,7 @@
 				<Dialog.Title class="dark">Add Webhook</Dialog.Title>
 				<Dialog.Description>Add a Webhook to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addWebhook" method="POST" use:enhance>
+			<form action="?/addWebhook" method="POST" onsubmit={() => open = false}>
 				<div class="grid gap-4 py-4">
 					<div class="flex flex-col items-start">
 						<Label for="name" class="mb-2 text-muted-foreground">Webhook Name</Label>
@@ -292,7 +303,7 @@
 					This can be given to players and it shows when it is opened
 				</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addMessage" method="POST" use:enhance>
+			<form action="?/addMessage" method="POST" onsubmit={() => open = false}>
 				<div class="grid gap-4 py-4">
 					<div class="flex flex-col items-start">
 						<Label for="name" class="mb-2 text-muted-foreground">Tamper-Evident Message Name</Label>
