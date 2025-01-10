@@ -1,7 +1,7 @@
 <script lang="ts">
-	import MessageCard from '$lib/components/custom/MessageCard.svelte';
-	import NotFoundMessageCard from '$lib/components/custom/NotFoundMessageCard.svelte';
-	import UnopenedMessageCard from '$lib/components/custom/UnopenedMessageCard.svelte';
+	import MessageCard from '$lib/components/custom/cards/MessageCard.svelte';
+	import NotFoundMessageCard from '$lib/components/custom/cards/NotFoundMessageCard.svelte';
+	import UnopenedMessageCard from '$lib/components/custom/cards/UnopenedMessageCard.svelte';
 	import Details from '$lib/details.json';
 	import type { PageData } from './$types';
 

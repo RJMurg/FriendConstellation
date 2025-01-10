@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { Menu } from 'lucide-svelte';
-	import Button from '../ui/button/button.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
 
 	export let playersButtonVariant: buttonTypes = 'default';
 	export let tasksButtonVariant: buttonTypes = 'secondary';
