@@ -4,11 +4,17 @@
 
 	export let name: string;
 	export let description: string;
-	export let stars: number;
+	export let cost: number;
 	export let font = 'sans';
 	export let hat = '';
 	export let card = '';
 	export let animation = '';
+
+	let starString = 'star';
+
+	if (cost > 1) {
+		starString += 's';
+	}
 </script>
 
 <AbstractCard {font} {card} {animation} {hat}>
@@ -22,19 +28,13 @@
 		</p>
 
 		<div class="flex flex-row items-center">
-			Max reward:
-
-			<span class="ml-2">
-				<StarsGenerator {stars} />
-			</span>
-
-			<div class="ml-2">
-				{#if stars > 1 || stars <= 0}
-					{stars} stars
-				{:else}
-					{stars} star
-				{/if}
+			<div class="mr-2">
+				<span class="font-bold">Cost:</span>
+				{cost}
+				{starString}
 			</div>
+
+			<StarsGenerator stars={cost} />
 		</div>
 	</div>
 </AbstractCard>

@@ -30,8 +30,23 @@ export const load = (async () => {
 		]
 	});
 
+	const cosmetics = await prisma.shop.findMany({
+		where: {
+			active: true
+		},
+		orderBy: [
+			{
+				cost: 'asc'
+			},
+			{
+				name: 'asc'
+			}
+		]
+	});
+
 	return {
 		players,
-		tasks
+		tasks,
+		cosmetics
 	};
 }) satisfies PageServerLoad;

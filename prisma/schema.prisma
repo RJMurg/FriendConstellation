@@ -63,7 +63,6 @@ model shop {
   id          Int     @id @default(autoincrement())
   name        String  @db.VarChar(100)
   description String  @db.VarChar(500)
-  type        String  @db.VarChar(100)
   cost        Int
   active      Boolean @default(true)
   font        String  @default("sans") @db.VarChar(100)

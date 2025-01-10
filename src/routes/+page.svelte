@@ -5,23 +5,28 @@
 	import Details from '$lib/details.json';
 	import HomeMenu from '$lib/components/custom/HomeMenu.svelte';
 	import TaskCard from '$lib/components/custom/cards/TaskCard.svelte';
+	import ShopCard from '$lib/components/custom/cards/ShopCard.svelte';
 
 	let { data }: { data: PageData } = $props();
 
 	let page = $state('players');
 	let playersButtonVariant: buttonTypes = $state('default');
 	let tasksButtonVariant: buttonTypes = $state('secondary');
+	let shopButtonVariant: buttonTypes = $state('secondary');
 
 	$effect(() => {
-		if (page === 'tasks') {
-			playersButtonVariant = 'secondary';
-			tasksButtonVariant = 'default';
-		} else if (page === 'webhooks') {
-			playersButtonVariant = 'secondary';
-			tasksButtonVariant = 'secondary';
-		} else if (page === 'players') {
+		if (page === 'players') {
 			playersButtonVariant = 'default';
 			tasksButtonVariant = 'secondary';
+			shopButtonVariant = 'secondary';
+		} else if (page === 'tasks') {
+			playersButtonVariant = 'secondary';
+			tasksButtonVariant = 'default';
+			shopButtonVariant = 'secondary';
+		} else if (page === 'shop') {
+			playersButtonVariant = 'secondary';
+			tasksButtonVariant = 'secondary';
+			shopButtonVariant = 'default';
 		}
 	});
 </script>
@@ -42,7 +47,7 @@
 		<enhanced:img src="/static/favicon.webp" alt="Starboard logo" class="ml-1 w-16" />
 	</div>
 
-	<HomeMenu {playersButtonVariant} {tasksButtonVariant} bind:page />
+	<HomeMenu {playersButtonVariant} {tasksButtonVariant} {shopButtonVariant} bind:page />
 </h1>
 
 {#if page === 'players'}
@@ -69,6 +74,26 @@
 		{:else}
 			{#each data.tasks as task}
 				<TaskCard name={task.title} description={task.description} stars={task.reward} />
+			{/each}
+		{/if}
+	</div>
+{:else if page === 'shop'}
+	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
+		{#if data.cosmetics.length == 0}
+			<EmptyCard message="Nothing is for sale yet." />
+		{:else}
+			<h2 class="text-center text-2xl font-bold">Contact the Starmaster to purchase cosmetics</h2>
+
+			{#each data.cosmetics as cosmetic}
+				<ShopCard
+					name={cosmetic.name}
+					description={cosmetic.description}
+					cost={cosmetic.cost}
+					font={cosmetic.font}
+					hat={cosmetic.hat}
+					card={cosmetic.card}
+					animation={cosmetic.animation}
+				/>
 			{/each}
 		{/if}
 	</div>

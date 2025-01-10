@@ -1,7 +1,7 @@
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
-import animations from '@midudev/tailwind-animations'
+import animations from '@midudev/tailwind-animations';
 import tailwindAnimations from 'tailwindcss-animate';
 
 const config: Config = {

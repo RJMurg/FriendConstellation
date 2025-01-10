@@ -13,7 +13,7 @@
 		{trigger}
 	</Dialog.Trigger>
 
-	<Dialog.Content class="sm:max-w-[425px]">
+	<Dialog.Content class="h-fit overflow-y-scroll sm:max-w-[425px]">
 		<Dialog.Header>
 			<Dialog.Title class="dark">{title}</Dialog.Title>
 			<Dialog.Description>{description}</Dialog.Description>

@@ -7,6 +7,7 @@
 	export let tasksButtonVariant: buttonTypes = 'secondary';
 	export let webhooksButtonvariant: buttonTypes = 'secondary';
 	export let tamperButtonVariant: buttonTypes = 'secondary';
+	export let cosmeticButtonVariant: buttonTypes = 'secondary';
 	export let page: string = 'players';
 </script>
 
@@ -23,6 +24,10 @@
 
 	<Button variant={tamperButtonVariant} on:click={() => (page = 'tamper')} class="mr-2">
 		Tamper Messages
+	</Button>
+
+	<Button variant={cosmeticButtonVariant} on:click={() => (page = 'cosmetics')} class="mr-2">
+		Cosmetics
 	</Button>
 
 	<form action="?/logout" method="POST">
@@ -50,6 +55,10 @@
 
 			<Button variant={tamperButtonVariant} on:click={() => (page = 'tamper')} class="mb-2">
 				Tamper Messages
+			</Button>
+
+			<Button variant={cosmeticButtonVariant} on:click={() => (page = 'cosmetics')} class="mb-2">
+				Cosmetics
 			</Button>
 
 			<form action="?/logout" method="POST">

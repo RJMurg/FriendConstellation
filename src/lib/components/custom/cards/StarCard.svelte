@@ -12,9 +12,13 @@
 	export let stars: number;
 	export let joint: boolean;
 	export let showLogLink = true;
+	export let font = 'sans';
+	export let hat = '';
+	export let card = '';
+	export let animation = '';
 </script>
 
-<AbstractCard>
+<AbstractCard {font} {card} {animation} {hat}>
 	<div
 		class="flex flex-row items-center font-mono text-lg md:ml-5 md:w-1/4 md:text-2xl"
 		id="Position"

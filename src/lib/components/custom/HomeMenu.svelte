@@ -3,6 +3,7 @@
 
 	export let playersButtonVariant: buttonTypes = 'default';
 	export let tasksButtonVariant: buttonTypes = 'secondary';
+	export let shopButtonVariant: buttonTypes = 'secondary';
 	export let page: string = 'players';
 </script>
 
@@ -12,4 +13,6 @@
 	</Button>
 
 	<Button variant={tasksButtonVariant} on:click={() => (page = 'tasks')} class="mr-2">Tasks</Button>
+
+	<Button variant={shopButtonVariant} on:click={() => (page = 'shop')} class="mr-2">Shop</Button>
 </div>
