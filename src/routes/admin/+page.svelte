@@ -19,6 +19,9 @@
 	import ModifyMessage from '$lib/components/custom/ModifyMessage.svelte';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 
+	// This file is so ugly.
+	// I'm sorry.
+
 	let { data }: { data: PageData } = $props();
 
 	let players = $state(data.players ?? []);
@@ -27,8 +30,10 @@
 	let messages = $state(data.messages);
 	let page = $state('players');
 	let open = $state(false);
+	let checked = $state(true);
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
+	import Switch from '$lib/components/ui/switch/switch.svelte';
 
 	onMount(() => {
 		const savedPage = localStorage.getItem('adminPage');
@@ -181,6 +186,12 @@
 					<div class="flex flex-col items-start">
 						<Label for="stars" class="mb-2 text-muted-foreground">Max Stars Available</Label>
 						<Input name="stars" value="1" class="text-white" type="number" />
+					</div>
+
+					<div class="flex flex-col items-start">
+						<input type="hidden" name="active" value={String(checked)} />
+						<Label for="active" class="mb-2 text-muted-foreground">Show Task?</Label>
+						<Switch name="active" class="text-white" bind:checked />
 					</div>
 				</div>
 				<Dialog.Footer>
