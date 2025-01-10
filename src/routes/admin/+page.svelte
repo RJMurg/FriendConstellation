@@ -43,6 +43,7 @@
 	$effect(() => {
 		localStorage.setItem('adminPage', page);
 
+		// I hate this so much
 		if (page === 'players') {
 			playersButtonVariant = 'default';
 			tasksButtonVariant = 'secondary';
@@ -73,6 +74,16 @@
 	</title>
 </svelte:head>
 
+{#if data.loggedIn}
+	<AdminMenu
+	{playersButtonVariant}
+	{tasksButtonVariant}
+	{webhooksButtonvariant}
+	{tamperButtonVariant}
+	bind:page
+	/>
+{/if}
+
 {#if !data.loggedIn}
 	<h1 class="mb-5 text-center text-4xl font-bold">Admin Login</h1>
 	<form
@@ -87,13 +98,6 @@
 	</form>
 	<Button variant="secondary" href="/" class="mt-2">Go Home</Button>
 {:else if page === 'players'}
-	<AdminMenu
-		{playersButtonVariant}
-		{tasksButtonVariant}
-		{webhooksButtonvariant}
-		{tamperButtonVariant}
-		bind:page
-	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Champions</h1>
 	<AddChampionDialogue />
@@ -117,14 +121,8 @@
 			{/each}
 		{/if}
 	</div>
+
 {:else if page === 'tasks'}
-	<AdminMenu
-		{playersButtonVariant}
-		{tasksButtonVariant}
-		{webhooksButtonvariant}
-		{tamperButtonVariant}
-		bind:page
-	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Tasks</h1>
 	<AddTasksDialogue />
@@ -142,14 +140,8 @@
 			{/each}
 		{/if}
 	</div>
+
 {:else if page === 'webhooks'}
-	<AdminMenu
-		{playersButtonVariant}
-		{tasksButtonVariant}
-		{webhooksButtonvariant}
-		{tamperButtonVariant}
-		bind:page
-	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Webhooks</h1>
 	<AddWebhookDialogue />
@@ -167,14 +159,8 @@
 			{/each}
 		{/if}
 	</div>
+
 {:else if page === 'tamper'}
-	<AdminMenu
-		{playersButtonVariant}
-		{tasksButtonVariant}
-		{webhooksButtonvariant}
-		{tamperButtonVariant}
-		bind:page
-	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Tamper Evident Messages</h1>
 	<AddMessageDialogue />
@@ -199,4 +185,5 @@
 			{/each}
 		{/if}
 	</div>
+	
 {/if}
