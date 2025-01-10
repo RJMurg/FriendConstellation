@@ -11,14 +11,14 @@
 
 <svelte:head>
 	{#if data.player}
-			<title>
-				{Details.title} - {data.player.name} Star Log
-			</title>
-		{:else}
-			<title>
-				{Details.title} - Log Not Found
-			</title>
-		{/if}
+		<title>
+			{Details.title} - {data.player.name} Star Log
+		</title>
+	{:else}
+		<title>
+			{Details.title} - Log Not Found
+		</title>
+	{/if}
 </svelte:head>
 
 <div class="h-screen w-full p-5">

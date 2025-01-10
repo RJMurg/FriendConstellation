@@ -17,6 +17,7 @@
 	import AdminMenu from '$lib/components/custom/AdminMenu.svelte';
 	import MessageCard from '$lib/components/custom/MessageCard.svelte';
 	import ModifyMessage from '$lib/components/custom/ModifyMessage.svelte';
+	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -25,6 +26,17 @@
 	let webhooks = $state(data.webhooks);
 	let messages = $state(data.messages);
 	let page = $state('players');
+	let open = $state(false);
+	import { onMount } from 'svelte';
+	import { enhance } from '$app/forms';
+
+	onMount(() => {
+		const savedPage = localStorage.getItem('adminPage');
+		if (savedPage) {
+			page = savedPage;
+		}
+	});
+
 	let playersButtonVariant: buttonTypes = $state('default');
 	let tasksButtonVariant: buttonTypes = $state('secondary');
 	let webhooksButtonvariant: buttonTypes = $state('secondary');
@@ -34,6 +46,8 @@
 	let messagesCheckbox = $state(false);
 
 	$effect(() => {
+		localStorage.setItem('adminPage', page);
+
 		if (page === 'players') {
 			playersButtonVariant = 'default';
 			tasksButtonVariant = 'secondary';
@@ -83,7 +97,7 @@
 	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Champions</h1>
-	<Dialog.Root>
+	<Dialog.Root bind:open>
 		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
 			>Add Champion</Dialog.Trigger
 		>
@@ -92,7 +106,7 @@
 				<Dialog.Title class="dark">Add Champion</Dialog.Title>
 				<Dialog.Description>Add a Champion to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addPlayer" method="POST">
+			<form action="?/addPlayer" method="POST" use:enhance>
 				<div class="grid gap-4 py-4">
 					<div class="grid grid-cols-4 items-center gap-4">
 						<Input name="name" placeholder="Champion Name" class="col-span-3 text-white" />
@@ -137,7 +151,7 @@
 	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Tasks</h1>
-	<Dialog.Root>
+	<Dialog.Root bind:open>
 		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
 			>Add Task</Dialog.Trigger
 		>
@@ -146,14 +160,14 @@
 				<Dialog.Title class="dark">Add Task</Dialog.Title>
 				<Dialog.Description>Add a Task to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addTask" method="POST">
+			<form action="?/addTask" method="POST" use:enhance>
 				<div class="grid gap-4 py-4">
 					<div class="grid grid-cols-4 items-center gap-4">
 						<Input name="name" placeholder="Task Title" class="col-span-3 text-white" />
 					</div>
 
 					<div class="grid grid-cols-4 items-center gap-4">
-						<Input
+						<Textarea
 							name="description"
 							placeholder="Explain how to complete the task"
 							class="col-span-3 text-white"
@@ -178,7 +192,7 @@
 				<div class="flex flex-row">
 					<TaskCard name={task.title} description={task.description} stars={task.reward} />
 
-					<ModifyTask id={task.id} />
+					<ModifyTask id={task.id} active={task.active} token={data.token} />
 				</div>
 			{/each}
 		{/if}
@@ -193,7 +207,7 @@
 	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Webhooks</h1>
-	<Dialog.Root>
+	<Dialog.Root bind:open>
 		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
 			>Add Webhook</Dialog.Trigger
 		>
@@ -202,7 +216,7 @@
 				<Dialog.Title class="dark">Add Webhook</Dialog.Title>
 				<Dialog.Description>Add a Webhook to the Starboard.</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addWebhook" method="POST">
+			<form action="?/addWebhook" method="POST" use:enhance>
 				<div class="grid gap-4 py-4">
 					<div class="grid grid-cols-4 items-center gap-4">
 						<Input name="name" placeholder="Webhook Name" class="col-span-3 text-white" />
@@ -259,7 +273,7 @@
 	/>
 
 	<h1 class="my-2 text-center text-4xl font-bold">Tamper Evident Messages</h1>
-	<Dialog.Root>
+	<Dialog.Root bind:open>
 		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' mb-2'}
 			>Add Message</Dialog.Trigger
 		>
@@ -271,14 +285,18 @@
 					This can be given to players and it shows when it is opened
 				</Dialog.Description>
 			</Dialog.Header>
-			<form action="?/addMessage" method="POST">
+			<form action="?/addMessage" method="POST" use:enhance>
 				<div class="grid gap-4 py-4">
 					<div class="grid grid-cols-4 items-center gap-4">
 						<Input name="name" placeholder="Message Name" class="col-span-3 text-white" />
 					</div>
 
 					<div class="grid grid-cols-4 items-center gap-4">
-						<Input name="message" placeholder="message" class="col-span-3 text-white" />
+						<Textarea
+							name="message"
+							placeholder="Enter your Tamper-Evident Message"
+							class="col-span-3 text-white"
+						/>
 					</div>
 
 					<Dialog.Footer>
@@ -299,7 +317,7 @@
 						message={message.message}
 						uuid={message.uuid}
 						opened={message.opened}
-						timestamp={message.timestamp}
+						timestamp={message.timestamp ?? new Date()}
 						showLink={true}
 					/>
 

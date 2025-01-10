@@ -20,6 +20,7 @@ model tasks {
   title       String @db.VarChar(100)
   description String @db.VarChar(500)
   reward      Int
+  active      Boolean @default(true)
 }
 
 model webhooks {
