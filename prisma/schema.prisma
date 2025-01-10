@@ -8,9 +8,13 @@ datasource db {
 }
 
 model users {
-  id    Int     @id @default(autoincrement())
-  name  String  @default("un-named") @db.VarChar(100)
-  stars Int     @default(1)
+  id        Int     @id @default(autoincrement())
+  name      String  @default("Missingno")  @db.VarChar(100)
+  stars     Int     @default(1)
+  font      String  @default("Montserrat") @db.VarChar(100)
+  hat       String  @default("")           @db.VarChar(100)
+  card      String  @default("")           @db.VarChar(100)
+  animation String  @default("")           @db.VarChar(100)
 
   logs logs[]
 }
@@ -53,4 +57,13 @@ model tamperEvidentMessages {
   message   String
   opened    Boolean   @default(false)
   timestamp DateTime?
+}
+
+model shop {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(100)
+  description String  @db.VarChar(500)
+  type        String  @db.VarChar(100)
+  cost        Int
+  active      Boolean @default(true)
 }
