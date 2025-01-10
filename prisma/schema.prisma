@@ -11,7 +11,7 @@ model users {
   id        Int     @id @default(autoincrement())
   name      String  @default("Missingno")  @db.VarChar(100)
   stars     Int     @default(1)
-  font      String  @default("Montserrat") @db.VarChar(100)
+  font      String  @default("sans")       @db.VarChar(100)
   hat       String  @default("")           @db.VarChar(100)
   card      String  @default("")           @db.VarChar(100)
   animation String  @default("")           @db.VarChar(100)
@@ -66,4 +66,8 @@ model shop {
   type        String  @db.VarChar(100)
   cost        Int
   active      Boolean @default(true)
+  font        String  @default("sans") @db.VarChar(100)
+  hat         String  @default("")     @db.VarChar(100)
+  card        String  @default("")     @db.VarChar(100)
+  animation   String  @default("")     @db.VarChar(100)
 }
