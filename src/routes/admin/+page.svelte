@@ -124,7 +124,7 @@
 			</form>
 		</Dialog.Content>
 	</Dialog.Root>
-	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
+	<div class="mx-auto w-full px-2 md:w-2/3 md:px-0">
 		{#if (players ?? []).length == 0}
 			<EmptyCard message="No champions have been added." />
 		{:else}
