@@ -8,13 +8,16 @@ datasource db {
 }
 
 model users {
-  id        Int     @id @default(autoincrement())
-  name      String  @default("Missingno")  @db.VarChar(100)
-  stars     Int     @default(1)
-  font      String  @default("sans")       @db.VarChar(100)
-  hat       String  @default("")           @db.VarChar(100)
-  card      String  @default("")           @db.VarChar(100)
-  animation String  @default("")           @db.VarChar(100)
+  id           Int     @id @default(autoincrement())
+  name         String  @default("Missingno")  @db.VarChar(100)
+  stars        Int     @default(1)
+  font         String  @default("sans")       @db.VarChar(100)
+  hat          String  @default("")           @db.VarChar(100)
+  card         String  @default("")           @db.VarChar(100)
+  animation    String  @default("")           @db.VarChar(100)
+  cosmetic_id  Int?
+
+  Cosmetic shop? @relation(fields: [cosmetic_id], references: [id])
 
   logs logs[]
 }
@@ -69,4 +72,6 @@ model shop {
   hat         String  @default("")     @db.VarChar(100)
   card        String  @default("")     @db.VarChar(100)
   animation   String  @default("")     @db.VarChar(100)
+
+  users users[]
 }

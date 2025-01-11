@@ -13,10 +13,10 @@
 		cost = 1,
 		font = '',
 		card = '',
+		action = 'addCosmetic',
 		animation = '',
 		hat = '',
 		checked = true,
-		action = '',
 		trigger = 'Add Cosmetic',
 		title = 'Add Cosmetic'
 	} = $props();
@@ -28,7 +28,9 @@
 	{trigger}
 	{action}
 >
-	<input type="hidden" name="id" value={id} />
+	{#if id}
+		<input type="hidden" name="id" value={id} />
+	{/if}
 
 	<div class="grid grid-cols-2 gap-4 py-4">
 		<div class="flex flex-col items-start">

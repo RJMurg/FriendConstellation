@@ -132,9 +132,12 @@
 						stars={player.stars}
 						showLogLink={false}
 						joint={player.jointPosition}
+						font={player.font}
+						card={player.card}
+						animation={player.animation}
 					/>
 
-					<ModifyUser id={player.id} cosmetics={data.cosmetics} />
+					<ModifyUser id={player.id} cosmetics={data.cosmetics} token={data.token} />
 				</div>
 			{/each}
 		{/if}
@@ -199,7 +202,7 @@
 	</div>
 {:else if page === 'cosmetics'}
 	<h1 class="my-2 text-center text-4xl font-bold">Cosmetics</h1>
-	<CreateCosmetic />
+	<CreateCosmetic action="addCosmetic" />
 
 	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
 		{#if (cosmetics ?? []).length == 0}

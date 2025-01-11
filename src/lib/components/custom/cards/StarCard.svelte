@@ -12,7 +12,7 @@
 	export let stars: number;
 	export let joint: boolean;
 	export let showLogLink = true;
-	export let font = 'sans';
+	export let font = 'font-sans';
 	export let hat = '';
 	export let card = '';
 	export let animation = '';
@@ -30,7 +30,7 @@
 		{/if}
 	</div>
 
-	<div class="flex w-10/12 flex-col items-start md:w-3/4" id="Player">
+	<div class="flex w-10/12 flex-col items-start md:w-full" id="Player">
 		<h1 class="flex flex-row items-center text-2xl font-bold md:text-4xl">
 			{#if position === 1}
 				<Crown class="mr-2 h-4 w-4 text-yellow-500 md:mr-5 md:h-8 md:w-8" />

@@ -1,11 +1,14 @@
 <script lang="ts">
 	import Card from '$lib/components/ui/card/card.svelte';
 
-	export let flex: string = 'row';
-	export let font = 'sans';
-	export let card = '';
-	export let animation = '';
-	export let hat = '';
+	let {
+		flex = 'row',
+		font = 'font-sans',
+		card = '',
+		animation = '',
+		hat = '',
+		children
+	} = $props();
 </script>
 
 <Card class="mb-2 w-full p-2 {card} {animation}">
@@ -18,6 +21,6 @@
 			/>
 		{/if}
 
-		<slot />
+		{@render children()}
 	</div>
 </Card>

@@ -118,7 +118,11 @@ export function orderPlayers(players: player[]): internalPlayer[] {
 				name: player.name,
 				stars: player.stars,
 				position: 1,
-				jointPosition: false
+				jointPosition: false,
+				font: player.font,
+				card: player.card,
+				animation: player.animation,
+				hat: player.hat
 			});
 		}
 
@@ -148,7 +152,11 @@ export function orderPlayers(players: player[]): internalPlayer[] {
 			name: player.name,
 			stars: player.stars,
 			position,
-			jointPosition
+			jointPosition,
+			font: player.font,
+			card: player.card,
+			animation: player.animation,
+			hat: player.hat
 		});
 	}
 

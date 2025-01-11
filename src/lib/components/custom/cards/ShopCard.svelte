@@ -5,7 +5,7 @@
 	export let name: string;
 	export let description: string;
 	export let cost: number;
-	export let font = 'sans';
+	export let font = 'font-sans';
 	export let hat = '';
 	export let card = '';
 	export let animation = '';
@@ -17,7 +17,7 @@
 	}
 </script>
 
-<AbstractCard {font} {card} {animation} {hat}>
+<AbstractCard {font} {hat} {card} {animation}>
 	<div class="flex w-3/4 flex-col items-start" id="Task">
 		<h1 class="flex flex-row items-center text-2xl font-bold lg:text-4xl">
 			{name}

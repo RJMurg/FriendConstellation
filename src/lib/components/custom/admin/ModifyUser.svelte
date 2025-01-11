@@ -3,11 +3,10 @@
 	import ModifyUserStarsDialogue from '../dialogues/ModifyUserStarsDialogue.svelte';
 	import AddCosmeticToUser from '../AddCosmeticToUser.svelte';
 
-	export let id: number;
-	export let cosmetics: any[] = [];
+	let { id, cosmetics, token } = $props();
 </script>
 
 <AbstractModify {id} action="deletePlayer">
 	<ModifyUserStarsDialogue {id} />
-	<AddCosmeticToUser {id} {cosmetics} />
+	<AddCosmeticToUser {id} {cosmetics} {token} />
 </AbstractModify>

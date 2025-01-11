@@ -63,6 +63,10 @@
 					id={String(player.id)}
 					joint={player.jointPosition}
 					showLogLink={true}
+					font={player.font}
+					hat={player.hat}
+					card={player.card}
+					animation={player.animation}
 				/>
 			{/each}
 		{/if}

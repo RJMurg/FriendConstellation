@@ -9,7 +9,7 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + "mb-2"}>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + 'mb-2'}>
 		{trigger}
 	</Dialog.Trigger>
 

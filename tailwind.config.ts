@@ -7,7 +7,29 @@ import tailwindAnimations from 'tailwindcss-animate';
 const config: Config = {
 	darkMode: ['class'],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
-	safelist: ['dark'],
+
+	// To allow the creation of styled cosmetics, we need to
+	// add to a safelist all the classes that we want to use.
+	// This bloats the final CSS file, but it's the only way
+	// to allow dynamic classes.
+	safelist: [
+		'dark',
+		// All bg-* classes
+		{
+			pattern: /^bg-/ // bg-*
+		},
+		// All Gradient classes
+		{
+			pattern: /^from-/ // from-*
+		},
+		{
+			pattern: /^via-/ // via-*
+		},
+		{
+			pattern: /^to-/ // to-*
+		}
+	],
+
 	plugins: [animations, tailwindAnimations],
 	theme: {
 		container: {
