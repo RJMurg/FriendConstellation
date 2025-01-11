@@ -63,7 +63,13 @@ export function parseStars(stars: number): Stars {
  * @returns A string following the format 'Had {stars} stars {added/removed} due to {log}'
  */
 export function getActionMessage(stars: number, log: string): string {
-	let message = Math.abs(stars) + ' stars ';
+	let message = Math.abs(stars) + ' star';
+
+	if (Math.abs(stars) !== 1) {
+		message += 's ';
+	} else {
+		message += ' ';
+	}
 
 	if (stars < 0) {
 		message += 'removed for ';
