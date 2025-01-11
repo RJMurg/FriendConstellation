@@ -51,7 +51,7 @@ export const load = (async ({ cookies }) => {
 		const cosmetics = await prisma.shop.findMany({
 			orderBy: [
 				{
-					cost: 'asc'
+					cost: 'desc'
 				},
 				{
 					name: 'asc'

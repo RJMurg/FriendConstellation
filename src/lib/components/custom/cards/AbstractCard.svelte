@@ -16,7 +16,7 @@
 		{#if hat}
 			<img
 				src="./cosmetics/{hat}"
-				class="absolute -ml-4 -mt-20 h-8 w-8 md:-ml-12 md:-mt-28 md:h-16 md:w-16"
+				class="absolute -ml-4 -mt-32 h-8 w-8 md:-ml-10 md:-mt-28 md:h-16 md:w-16"
 				alt="Hat"
 			/>
 		{/if}
