@@ -153,6 +153,29 @@ export const actions = {
 		});
 	},
 
+	updatePlayer: async ({ request }) => {
+		const formData = await request.formData();
+		const id = parseInt(String(formData.get('id')));
+		const name = String(formData.get('name'));
+		const card = String(formData.get('card'));
+		const font = String(formData.get('font'));
+		const animation = String(formData.get('animation'));
+		const hat = String(formData.get('hat'));
+
+		await prisma.users.update({
+			where: {
+				id
+			},
+			data: {
+				name,
+				card,
+				font,
+				animation,
+				hat
+			}
+		});
+	},
+
 	deletePlayer: async ({ request }) => {
 		const formData = await request.formData();
 		const id = String(formData.get('id'));

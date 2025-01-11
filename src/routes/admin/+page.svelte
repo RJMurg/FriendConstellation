@@ -137,7 +137,7 @@
 						animation={player.animation}
 					/>
 
-					<ModifyUser id={player.id} cosmetics={data.cosmetics} token={data.token} />
+					<ModifyUser {player} cosmetics={data.cosmetics} token={data.token} />
 				</div>
 			{/each}
 		{/if}
