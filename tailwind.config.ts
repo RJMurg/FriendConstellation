@@ -27,6 +27,18 @@ const config: Config = {
 		},
 		{
 			pattern: /^to-/ // to-*
+		},
+		{
+			pattern: /^animate-/ // animate-*
+		},
+		{
+			pattern: /^duration-/ // duration-*
+		},
+		{
+			pattern: /^repeat-/ // repeate-*
+		},
+		{
+			pattern: /^font-/ // font-*
 		}
 	],
 
@@ -83,7 +95,10 @@ const config: Config = {
 			},
 			fontFamily: {
 				sans: ['Montserrat', ...fontFamily.sans],
-				mono: ['JetBrains Mono', ...fontFamily.mono]
+				mono: ['JetBrains Mono', ...fontFamily.mono],
+				courier: ['Courier Prime', ...fontFamily.mono],
+				raleway: ['Raleway', ...fontFamily.sans],
+				ubuntu: ['Ubuntu', ...fontFamily.sans]
 			},
 			screens: {
 				xs: '200px'
