@@ -134,7 +134,7 @@
 						joint={player.jointPosition}
 					/>
 
-					<ModifyUser id={player.id} />
+					<ModifyUser id={player.id} cosmetics={data.cosmetics} />
 				</div>
 			{/each}
 		{/if}

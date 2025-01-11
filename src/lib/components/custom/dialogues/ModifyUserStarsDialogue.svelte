@@ -9,7 +9,7 @@
 <AbstractDialogue
 	title="Modify Stars"
 	description="Add or remove stars from a player."
-	trigger="Modify"
+	trigger="Stars"
 	action="updateStars"
 >
 	<input type="hidden" name="id" value={id} />
