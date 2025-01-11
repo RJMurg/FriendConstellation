@@ -24,11 +24,15 @@
 
 	let { data }: { data: PageData } = $props();
 	import { onMount } from 'svelte';
+	import CreateCosmetic from '$lib/components/custom/dialogues/CreateCosmetic.svelte';
+	import ShopCard from '$lib/components/custom/cards/ShopCard.svelte';
+	import ModifyCosmetics from '$lib/components/custom/admin/ModifyCosmetics.svelte';
 
 	let players = $state(data.players ?? []);
 	let tasks = $state(data.tasks);
 	let webhooks = $state(data.webhooks);
 	let messages = $state(data.messages);
+	let cosmetics = $state(data.cosmetics);
 	let page = $state('players');
 
 	onMount(() => {
@@ -42,6 +46,7 @@
 	let tasksButtonVariant: buttonTypes = $state('secondary');
 	let webhooksButtonvariant: buttonTypes = $state('secondary');
 	let tamperButtonVariant: buttonTypes = $state('secondary');
+	let cosmeticButtonVariant: buttonTypes = $state('secondary');
 
 	$effect(() => {
 		localStorage.setItem('adminPage', page);
@@ -52,21 +57,31 @@
 			tasksButtonVariant = 'secondary';
 			webhooksButtonvariant = 'secondary';
 			tamperButtonVariant = 'secondary';
+			cosmeticButtonVariant = 'secondary';
 		} else if (page === 'tasks') {
 			playersButtonVariant = 'secondary';
 			tasksButtonVariant = 'default';
 			webhooksButtonvariant = 'secondary';
 			tamperButtonVariant = 'secondary';
+			cosmeticButtonVariant = 'secondary';
 		} else if (page === 'webhooks') {
 			playersButtonVariant = 'secondary';
 			tasksButtonVariant = 'secondary';
 			webhooksButtonvariant = 'default';
 			tamperButtonVariant = 'secondary';
+			cosmeticButtonVariant = 'secondary';
 		} else if (page === 'tamper') {
 			playersButtonVariant = 'secondary';
 			webhooksButtonvariant = 'secondary';
 			tasksButtonVariant = 'secondary';
 			tamperButtonVariant = 'default';
+			cosmeticButtonVariant = 'secondary';
+		} else if (page === 'cosmetics') {
+			playersButtonVariant = 'secondary';
+			webhooksButtonvariant = 'secondary';
+			tasksButtonVariant = 'secondary';
+			tamperButtonVariant = 'secondary';
+			cosmeticButtonVariant = 'default';
 		}
 	});
 </script>
@@ -83,6 +98,7 @@
 		{tasksButtonVariant}
 		{webhooksButtonvariant}
 		{tamperButtonVariant}
+		{cosmeticButtonVariant}
 		bind:page
 	/>
 {/if}
@@ -116,9 +132,12 @@
 						stars={player.stars}
 						showLogLink={false}
 						joint={player.jointPosition}
+						font={player.font}
+						card={player.card}
+						animation={player.animation}
 					/>
 
-					<ModifyUser id={player.id} />
+					<ModifyUser id={player.id} cosmetics={data.cosmetics} token={data.token} />
 				</div>
 			{/each}
 		{/if}
@@ -177,6 +196,31 @@
 					/>
 
 					<ModifyMessage id={message.id} />
+				</div>
+			{/each}
+		{/if}
+	</div>
+{:else if page === 'cosmetics'}
+	<h1 class="my-2 text-center text-4xl font-bold">Cosmetics</h1>
+	<CreateCosmetic action="addCosmetic" />
+
+	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
+		{#if (cosmetics ?? []).length == 0}
+			<EmptyCard message="No cosmetics messages have been added." />
+		{:else}
+			{#each cosmetics ?? [] as cosmetic}
+				<div class="flex flex-row">
+					<ShopCard
+						name={cosmetic.name}
+						description={cosmetic.description}
+						cost={cosmetic.cost}
+						card={cosmetic.card}
+						font={cosmetic.font}
+						animation={cosmetic.animation}
+						hat={cosmetic.hat}
+					/>
+
+					<ModifyCosmetics {cosmetic} />
 				</div>
 			{/each}
 		{/if}

@@ -1,11 +1,48 @@
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
+import animations from '@midudev/tailwind-animations';
+import tailwindAnimations from 'tailwindcss-animate';
 
 const config: Config = {
 	darkMode: ['class'],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
-	safelist: ['dark'],
+
+	// To allow the creation of styled cosmetics, we need to
+	// add to a safelist all the classes that we want to use.
+	// This bloats the final CSS file, but it's the only way
+	// to allow dynamic classes.
+	safelist: [
+		'dark',
+		// All bg-* classes
+		{
+			pattern: /^bg-/ // bg-*
+		},
+		// All Gradient classes
+		{
+			pattern: /^from-/ // from-*
+		},
+		{
+			pattern: /^via-/ // via-*
+		},
+		{
+			pattern: /^to-/ // to-*
+		},
+		{
+			pattern: /^animate-/ // animate-*
+		},
+		{
+			pattern: /^duration-/ // duration-*
+		},
+		{
+			pattern: /^repeat-/ // repeate-*
+		},
+		{
+			pattern: /^font-/ // font-*
+		}
+	],
+
+	plugins: [animations, tailwindAnimations],
 	theme: {
 		container: {
 			center: true,
@@ -58,8 +95,10 @@ const config: Config = {
 			},
 			fontFamily: {
 				sans: ['Montserrat', ...fontFamily.sans],
-				roboto: ['Roboto', ...fontFamily.sans],
-				mono: ['JetBrains Mono', ...fontFamily.mono]
+				mono: ['JetBrains Mono', ...fontFamily.mono],
+				courier: ['Courier Prime', ...fontFamily.mono],
+				raleway: ['Raleway', ...fontFamily.sans],
+				ubuntu: ['Ubuntu', ...fontFamily.sans]
 			},
 			screens: {
 				xs: '200px'

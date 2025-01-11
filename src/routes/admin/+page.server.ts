@@ -48,6 +48,17 @@ export const load = (async ({ cookies }) => {
 			]
 		});
 
+		const cosmetics = await prisma.shop.findMany({
+			orderBy: [
+				{
+					cost: 'desc'
+				},
+				{
+					name: 'asc'
+				}
+			]
+		});
+
 		const webhooks = await prisma.webhooks.findMany();
 
 		const messages = await prisma.tamperEvidentMessages.findMany();
@@ -58,6 +69,7 @@ export const load = (async ({ cookies }) => {
 			tasks,
 			webhooks,
 			messages,
+			cosmetics,
 			token
 		};
 	}
@@ -296,6 +308,71 @@ export const actions = {
 		const id = String(formData.get('id'));
 
 		await prisma.tamperEvidentMessages.delete({
+			where: {
+				id: parseInt(id)
+			}
+		});
+	},
+
+	addCosmetic: async ({ request }) => {
+		const formData = await request.formData();
+		const name = formData.get('name');
+		const cost = String(formData.get('cost'));
+		const description = formData.get('description');
+		const card = formData.get('card');
+		const font = formData.get('font');
+		const animation = formData.get('animation');
+		const hat = formData.get('hat');
+		const active = formData.get('active') === 'true';
+
+		await prisma.shop.create({
+			data: {
+				name: String(name),
+				cost: parseInt(cost),
+				description: String(description),
+				card: String(card),
+				font: String(font),
+				animation: String(animation),
+				hat: String(hat),
+				active
+			}
+		});
+	},
+
+	modifyCosmetic: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+		const name = formData.get('name');
+		const cost = String(formData.get('cost'));
+		const description = formData.get('description');
+		const card = formData.get('card');
+		const font = formData.get('font');
+		const animation = formData.get('animation');
+		const hat = formData.get('hat');
+		const active = formData.get('active') === 'true';
+
+		await prisma.shop.update({
+			where: {
+				id: parseInt(id)
+			},
+			data: {
+				name: String(name),
+				cost: parseInt(cost),
+				description: String(description),
+				card: String(card),
+				font: String(font),
+				animation: String(animation),
+				hat: String(hat),
+				active
+			}
+		});
+	},
+
+	deleteCosmetic: async ({ request }) => {
+		const formData = await request.formData();
+		const id = String(formData.get('id'));
+
+		await prisma.shop.delete({
 			where: {
 				id: parseInt(id)
 			}
