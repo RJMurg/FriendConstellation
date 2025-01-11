@@ -98,7 +98,10 @@ const config: Config = {
 				mono: ['JetBrains Mono', ...fontFamily.mono],
 				courier: ['Courier Prime', ...fontFamily.mono],
 				raleway: ['Raleway', ...fontFamily.sans],
-				ubuntu: ['Ubuntu', ...fontFamily.sans]
+				ubuntu: ['Ubuntu', ...fontFamily.sans],
+				playwrite: ['Playwrite AU SA', ...fontFamily.sans],
+				rubikMono: ['Rubik Mono One', ...fontFamily.mono],
+				rubikVinyl: ['Rubik Vinyl', ...fontFamily.mono]
 			},
 			screens: {
 				xs: '200px'

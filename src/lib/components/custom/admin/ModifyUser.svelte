@@ -1,12 +1,12 @@
 <script lang="ts">
 	import AbstractModify from './AbstractModify.svelte';
 	import ModifyUserStarsDialogue from '../dialogues/ModifyUserStarsDialogue.svelte';
-	import AddCosmeticToUser from '../AddCosmeticToUser.svelte';
+	import ModifyUserDialogue from '../dialogues/ModifyUserDialogue.svelte';
 
-	let { id, cosmetics, token } = $props();
+	let { player } = $props();
 </script>
 
-<AbstractModify {id} action="deletePlayer">
-	<ModifyUserStarsDialogue {id} />
-	<AddCosmeticToUser {id} {cosmetics} {token} />
+<AbstractModify id={player.id} action="deletePlayer">
+	<ModifyUserStarsDialogue id={player.id} />
+	<ModifyUserDialogue {player} />
 </AbstractModify>
