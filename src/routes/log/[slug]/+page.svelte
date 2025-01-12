@@ -1,5 +1,5 @@
 <script lang="ts">
-	import StarsGenerator from '$lib/components/custom/StarsGenerator.svelte';
+	import StarGenerator from '$lib/components/custom/StarGenerator.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { ChevronLeft } from 'lucide-svelte';
@@ -29,7 +29,7 @@
 			</Button>
 			<div class="align-start m-5 flex flex-col items-start">
 				<h1 class="text-2xl font-bold md:text-4xl">{data.player?.name}</h1>
-				<StarsGenerator stars={data.player?.stars} size={8} />
+				<StarGenerator stars={data.player?.stars} size={8} />
 			</div>
 
 			{#if data.logs.length === 0}

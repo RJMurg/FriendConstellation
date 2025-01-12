@@ -1,7 +1,7 @@
 <script lang="ts">
 	import AbstractCard from './AbstractCard.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import StarsGenerator from '../StarsGenerator.svelte';
+	import StarGenerator from '../StarGenerator.svelte';
 
 	import { stringifyPosition } from '$lib';
 	import { ChevronRight, Crown, EllipsisVertical } from 'lucide-svelte';
@@ -40,7 +40,7 @@
 		</h1>
 
 		<div class="flex flex-row">
-			<StarsGenerator {stars} />
+			<StarGenerator {stars} />
 
 			<div class="ml-2">
 				{#if stars > 1 || stars <= 0}

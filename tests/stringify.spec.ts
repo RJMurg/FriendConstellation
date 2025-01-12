@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { stringifyPosition } from '../lib';
+import { stringifyPosition } from '$lib';
 
 describe('Stringify Position Test', () => {
 	it('should correctly handle 1st, 2nd, and 3rd', () => {
