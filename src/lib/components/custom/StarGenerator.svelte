@@ -15,8 +15,12 @@
 </script>
 
 <div class="flex flex-row items-center justify-center">
-	{#each Array.from({ length: starObject.stars }) as _}
-		<Star class="{starSize} {colour}" />
+	{#each Array.from({ length: starObject.hundredStars }) as _}
+		<Trophy class="{starSize} {colour}" />
+	{/each}
+
+	{#each Array.from({ length: starObject.fiftyStars }) as _}
+		<Sparkles class="{starSize} {colour}" />
 	{/each}
 
 	{#each Array.from({ length: starObject.fiveStars }) as _}
@@ -27,11 +31,7 @@
 		<Sparkle class="{starSize} {colour}" />
 	{/each}
 
-	{#each Array.from({ length: starObject.fiftyStars }) as _}
-		<Sparkles class="{starSize} {colour}" />
-	{/each}
-
-	{#each Array.from({ length: starObject.hundredStars }) as _}
-		<Trophy class="{starSize} {colour}" />
+	{#each Array.from({ length: starObject.stars }) as _}
+		<Star class="{starSize} {colour}" />
 	{/each}
 </div>
