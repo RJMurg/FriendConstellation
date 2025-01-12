@@ -6,29 +6,32 @@
 	import HomeMenu from '$lib/components/custom/HomeMenu.svelte';
 	import TaskCard from '$lib/components/custom/cards/TaskCard.svelte';
 	import ShopCard from '$lib/components/custom/cards/ShopCard.svelte';
+	import * as Popover from '$lib/components/ui/popover/index.js';
+	import { Label } from '$lib/components/ui/label';
+	import { source } from 'sveltekit-sse';
+	import { Button } from '$lib/components/ui/button';
+	import { SettingsIcon } from 'lucide-svelte';
+	import Switch from '$lib/components/ui/switch/switch.svelte';
 
 	let { data }: { data: PageData } = $props();
 
 	let page = $state('players');
-	let playersButtonVariant: buttonTypes = $state('default');
-	let tasksButtonVariant: buttonTypes = $state('secondary');
-	let shopButtonVariant: buttonTypes = $state('secondary');
+	let live = $state(true);
+	let playersButtonVariant: buttonTypes = $derived(page == 'players' ? 'default' : 'secondary');
+	let tasksButtonVariant: buttonTypes = $derived(page == 'tasks' ? 'default' : 'secondary');
+	let shopButtonVariant: buttonTypes = $derived(page == 'shop' ? 'default' : 'secondary');
+
+	const liveUpdate = $state(source('/api/liveUpdates').select('players').json());
+	let updatedPlayers = $state(data.players);
 
 	$effect(() => {
-		if (page === 'players') {
-			playersButtonVariant = 'default';
-			tasksButtonVariant = 'secondary';
-			shopButtonVariant = 'secondary';
-		} else if (page === 'tasks') {
-			playersButtonVariant = 'secondary';
-			tasksButtonVariant = 'default';
-			shopButtonVariant = 'secondary';
-		} else if (page === 'shop') {
-			playersButtonVariant = 'secondary';
-			tasksButtonVariant = 'secondary';
-			shopButtonVariant = 'default';
-		}
+		liveUpdate.subscribe((value: unknown) => {
+			const data = value as internalPlayer[];
+			updatedPlayers = data || [];
+		});
 	});
+
+	let players = $derived(live ? updatedPlayers : data.players);
 </script>
 
 <svelte:head>
@@ -52,10 +55,10 @@
 
 {#if page === 'players'}
 	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
-		{#if data.players.length == 0}
+		{#if players.length === 0}
 			<EmptyCard message="No Champions have joined Starboard yet." />
 		{:else}
-			{#each data.players as player}
+			{#each players as player}
 				<StarCard
 					player={player.name}
 					position={player.position}
@@ -73,7 +76,7 @@
 	</div>
 {:else if page === 'tasks'}
 	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
-		{#if data.tasks.length == 0}
+		{#if data.tasks.length === 0}
 			<EmptyCard message="No Tasks have been added to the Starboard yet." />
 		{:else}
 			{#each data.tasks as task}
@@ -83,7 +86,7 @@
 	</div>
 {:else if page === 'shop'}
 	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
-		{#if data.cosmetics.length == 0}
+		{#if data.cosmetics.length === 0}
 			<EmptyCard message="Nothing is for sale yet." />
 		{:else}
 			<h2 class="text-center text-2xl font-bold">Contact the Starmaster to purchase cosmetics</h2>
@@ -102,3 +105,31 @@
 		{/if}
 	</div>
 {/if}
+
+<Popover.Root portal={null}>
+	<Popover.Trigger asChild let:builder>
+		<Button builders={[builder]} variant="outline" class="absolute bottom-0 right-0 z-50 m-5">
+			<SettingsIcon class="h-6 w-6" />
+		</Button>
+	</Popover.Trigger>
+	<Popover.Content class="w-80">
+		<div class="grid gap-4">
+			<div class="space-y-2">
+				<h4 class="font-medium leading-none">Live Update</h4>
+				<p class="text-sm text-muted-foreground">
+					Starboard will automatically update the player list when the rankings change, or a
+					Champion joins.
+					<br />
+					<br />
+					If you want to minimise data usage, you can disable this feature.
+				</p>
+			</div>
+			<div class="grid gap-2">
+				<div class="grid grid-cols-3 items-center gap-4">
+					<Label for="toggleLiveUpdates">Get Live Updates</Label>
+					<Switch id="toggleLiveUpdates" value="none" class="col-span-2 h-8" bind:checked={live} />
+				</div>
+			</div>
+		</div>
+	</Popover.Content>
+</Popover.Root>

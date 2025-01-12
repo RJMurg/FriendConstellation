@@ -5,7 +5,7 @@
 
 	export let playersButtonVariant: buttonTypes = 'default';
 	export let tasksButtonVariant: buttonTypes = 'secondary';
-	export let webhooksButtonvariant: buttonTypes = 'secondary';
+	export let webhooksButtonVariant: buttonTypes = 'secondary';
 	export let tamperButtonVariant: buttonTypes = 'secondary';
 	export let cosmeticButtonVariant: buttonTypes = 'secondary';
 	export let page: string = 'players';
@@ -18,7 +18,7 @@
 
 	<Button variant={tasksButtonVariant} on:click={() => (page = 'tasks')} class="mr-2">Tasks</Button>
 
-	<Button variant={webhooksButtonvariant} on:click={() => (page = 'webhooks')} class="mr-2">
+	<Button variant={webhooksButtonVariant} on:click={() => (page = 'webhooks')} class="mr-2">
 		Webhooks
 	</Button>
 
@@ -49,7 +49,7 @@
 				Tasks
 			</Button>
 
-			<Button variant={webhooksButtonvariant} on:click={() => (page = 'webhooks')} class="mb-2">
+			<Button variant={webhooksButtonVariant} on:click={() => (page = 'webhooks')} class="mb-2">
 				Webhooks
 			</Button>
 

@@ -6,7 +6,7 @@
 
 <AbstractDialogue
 	title="Add Champion"
-	description="Add a Chamption to the Starboard."
+	description="Add a Champion to the Starboard."
 	trigger="Add Champion"
 	action="addPlayer"
 >

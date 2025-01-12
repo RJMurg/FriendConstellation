@@ -200,8 +200,6 @@ export const actions = {
 		const stars = String(formData.get('stars'));
 		const log = String(formData.get('log'));
 
-		console.log(stars);
-
 		const currentStars = await prisma.users.findFirst({
 			where: {
 				id: parseInt(id)
@@ -362,6 +360,8 @@ export const actions = {
 				active
 			}
 		});
+
+		return;
 	},
 
 	modifyCosmetic: async ({ request }) => {
@@ -391,6 +391,8 @@ export const actions = {
 				active
 			}
 		});
+
+		return;
 	},
 
 	deleteCosmetic: async ({ request }) => {
@@ -402,5 +404,7 @@ export const actions = {
 				id: parseInt(id)
 			}
 		});
+
+		return;
 	}
 } satisfies Actions;
