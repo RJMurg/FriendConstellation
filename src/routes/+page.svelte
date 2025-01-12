@@ -108,9 +108,11 @@
 
 <Popover.Root portal={null}>
 	<Popover.Trigger asChild let:builder>
-		<Button builders={[builder]} variant="outline" class="absolute bottom-0 right-0 z-50 m-5">
-			<SettingsIcon class="h-6 w-6" />
-		</Button>
+		<div class="sticky bottom-0 z-50 ml-auto">
+			<Button builders={[builder]} variant="outline" class="m-5 mb-5 ml-auto">
+				<SettingsIcon class="h-6 w-6" />
+			</Button>
+		</div>
 	</Popover.Trigger>
 	<Popover.Content class="w-80">
 		<div class="grid gap-4">
