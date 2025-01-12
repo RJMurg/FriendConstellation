@@ -10,7 +10,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import { source } from 'sveltekit-sse';
 	import { Button } from '$lib/components/ui/button';
-	import { SettingsIcon } from 'lucide-svelte';
+	import { Instagram, SettingsIcon } from 'lucide-svelte';
 	import Switch from '$lib/components/ui/switch/switch.svelte';
 
 	let { data }: { data: PageData } = $props();
@@ -109,7 +109,7 @@
 <Popover.Root portal={null}>
 	<Popover.Trigger asChild let:builder>
 		<div class="sticky bottom-0 z-50 ml-auto">
-			<Button builders={[builder]} variant="outline" class="m-5 mb-5 ml-auto">
+			<Button builders={[builder]} variant="outline" class="m-5 ml-auto">
 				<SettingsIcon class="h-6 w-6" />
 			</Button>
 		</div>
@@ -135,3 +135,14 @@
 		</div>
 	</Popover.Content>
 </Popover.Root>
+
+<div class="sticky bottom-0 z-50 mr-auto">
+	<Button
+		href="https://www.instagram.com/stars.rjm.ie"
+		target="_blank"
+		variant="outline"
+		class="m-5 mr-auto"
+	>
+		<Instagram class="h-6 w-6" />
+	</Button>
+</div>
