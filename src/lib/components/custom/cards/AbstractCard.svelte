@@ -12,7 +12,7 @@
 </script>
 
 <Card class="mb-2 w-full p-2 {card} {animation}">
-	<div class="flex w-full flex-{flex} items-center justify-between {font}">
+	<div class="flex w-full flex-{flex} items-center justify-start {font}">
 		{#if hat}
 			<img
 				src={hat}

@@ -172,3 +172,13 @@ export function orderPlayers(players: player[]): internalPlayer[] {
 function arePlayersTied(player1: player, player2: player): boolean {
 	return player1.stars === player2.stars;
 }
+
+/**
+ * Set a timer to delay the execution of a script at a point.
+ * @param ms The number of milliseconds to delay.
+ */
+export function delay(ms: number) {
+	return new Promise(function run(resolve) {
+		setTimeout(resolve, ms);
+	});
+}
