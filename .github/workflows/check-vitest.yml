@@ -22,7 +22,6 @@ jobs:
       - name: 'Install Deps'
         run: npm install
       - name: 'Test'
-        # I have to do this double `--` because the first one is for the `run` command
         run: 'npm run test:coverage'
       - name: 'Report Coverage'
         # Set if: always() to also generate the report if tests are failing
