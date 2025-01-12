@@ -15,7 +15,7 @@
 	<div class="flex w-full flex-{flex} items-center justify-between {font}">
 		{#if hat}
 			<img
-				src="./cosmetics/{hat}"
+				src="{hat}"
 				class="absolute -ml-4 -mt-28 h-8 w-8 md:-ml-10 md:-mt-28 md:h-16 md:w-16"
 				alt="Hat"
 			/>
