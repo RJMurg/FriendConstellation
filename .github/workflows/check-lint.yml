@@ -20,4 +20,4 @@ jobs:
       - name: 'Install Deps'
         run: npm install eslint
       - name: 'Lint'
-        run: npm run link
+        run: npm run lint
