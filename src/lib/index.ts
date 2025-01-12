@@ -110,7 +110,7 @@ export function sendWebhookMessage(title: string, content: string, webhook: stri
 			username: Details.title,
 			avatar_url: 'https://stars.rjm.ie/favicon.webp'
 		})
-	});
+	}).then();
 }
 
 export function orderPlayers(players: player[]): internalPlayer[] {

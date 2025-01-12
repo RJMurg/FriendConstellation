@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AbstractCard from './AbstractCard.svelte';
-	import StarsGenerator from '../StarsGenerator.svelte';
+	import StarGenerator from '../StarGenerator.svelte';
 
 	export let name: string;
 	export let description: string;
@@ -25,7 +25,7 @@
 			Max reward:
 
 			<span class="ml-2">
-				<StarsGenerator {stars} />
+				<StarGenerator {stars} />
 			</span>
 
 			<div class="ml-2">

@@ -15,23 +15,23 @@
 </script>
 
 <div class="flex flex-row items-center justify-center">
-	{#each Array.from({ length: starObject.stars })}
+	{#each Array.from({ length: starObject.stars }) as _}
 		<Star class="{starSize} {colour}" />
 	{/each}
 
-	{#each Array.from({ length: starObject.fiveStars })}
+	{#each Array.from({ length: starObject.fiveStars }) as _}
 		<StarHalf class="{starSize} {colour}" />
 	{/each}
 
-	{#each Array.from({ length: starObject.tenStars })}
+	{#each Array.from({ length: starObject.tenStars }) as _}
 		<Sparkle class="{starSize} {colour}" />
 	{/each}
 
-	{#each Array.from({ length: starObject.fiftyStars })}
+	{#each Array.from({ length: starObject.fiftyStars }) as _}
 		<Sparkles class="{starSize} {colour}" />
 	{/each}
 
-	{#each Array.from({ length: starObject.hundredStars })}
+	{#each Array.from({ length: starObject.hundredStars }) as _}
 		<Trophy class="{starSize} {colour}" />
 	{/each}
 </div>
