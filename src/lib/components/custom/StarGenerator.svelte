@@ -2,11 +2,11 @@
 	import { parseStars } from '$lib';
 	import { Star, StarHalf, Sparkle, Sparkles, Trophy } from 'lucide-svelte';
 
-	export let stars: number = 0;
-	export let size: number = 4;
+	let { stars, size = 4 }: { stars: number; size: number } = $props();
+
 	const starObject = parseStars(Math.abs(stars));
 
-	let colour = 'text-yellow-500';
+	let colour = $state('text-yellow-500');
 	let starSize = `h-${size} w-${size}`;
 
 	if (stars < 0) {
