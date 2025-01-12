@@ -29,10 +29,10 @@
 	import ModifyCosmetics from '$lib/components/custom/admin/ModifyCosmetics.svelte';
 
 	let players = $state(data.players ?? []);
-	let tasks = $state(data.tasks);
-	let webhooks = $state(data.webhooks);
-	let messages = $state(data.messages);
-	let cosmetics = $state(data.cosmetics);
+	let tasks = $state(data.tasks ?? []);
+	let webhooks = $state(data.webhooks ?? []);
+	let messages = $state(data.messages ?? []);
+	let cosmetics = $state(data.cosmetics ?? []);
 	let page = $state('players');
 
 	onMount(() => {
@@ -44,7 +44,7 @@
 
 	let playersButtonVariant: buttonTypes = $state('default');
 	let tasksButtonVariant: buttonTypes = $state('secondary');
-	let webhooksButtonvariant: buttonTypes = $state('secondary');
+	let webhooksButtonVariant: buttonTypes = $state('secondary');
 	let tamperButtonVariant: buttonTypes = $state('secondary');
 	let cosmeticButtonVariant: buttonTypes = $state('secondary');
 
@@ -55,30 +55,30 @@
 		if (page === 'players') {
 			playersButtonVariant = 'default';
 			tasksButtonVariant = 'secondary';
-			webhooksButtonvariant = 'secondary';
+			webhooksButtonVariant = 'secondary';
 			tamperButtonVariant = 'secondary';
 			cosmeticButtonVariant = 'secondary';
 		} else if (page === 'tasks') {
 			playersButtonVariant = 'secondary';
 			tasksButtonVariant = 'default';
-			webhooksButtonvariant = 'secondary';
+			webhooksButtonVariant = 'secondary';
 			tamperButtonVariant = 'secondary';
 			cosmeticButtonVariant = 'secondary';
 		} else if (page === 'webhooks') {
 			playersButtonVariant = 'secondary';
 			tasksButtonVariant = 'secondary';
-			webhooksButtonvariant = 'default';
+			webhooksButtonVariant = 'default';
 			tamperButtonVariant = 'secondary';
 			cosmeticButtonVariant = 'secondary';
 		} else if (page === 'tamper') {
 			playersButtonVariant = 'secondary';
-			webhooksButtonvariant = 'secondary';
+			webhooksButtonVariant = 'secondary';
 			tasksButtonVariant = 'secondary';
 			tamperButtonVariant = 'default';
 			cosmeticButtonVariant = 'secondary';
 		} else if (page === 'cosmetics') {
 			playersButtonVariant = 'secondary';
-			webhooksButtonvariant = 'secondary';
+			webhooksButtonVariant = 'secondary';
 			tasksButtonVariant = 'secondary';
 			tamperButtonVariant = 'secondary';
 			cosmeticButtonVariant = 'default';
@@ -96,7 +96,7 @@
 	<AdminMenu
 		{playersButtonVariant}
 		{tasksButtonVariant}
-		{webhooksButtonvariant}
+		{webhooksButtonVariant}
 		{tamperButtonVariant}
 		{cosmeticButtonVariant}
 		bind:page
@@ -121,7 +121,7 @@
 	<AddChampionDialogue />
 
 	<div class="mx-auto w-full px-2 md:w-2/3 md:px-0">
-		{#if (players ?? []).length == 0}
+		{#if players.length === 0}
 			<EmptyCard message="No champions have been added." />
 		{:else}
 			{#each players ?? [] as player}
@@ -137,7 +137,7 @@
 						animation={player.animation}
 					/>
 
-					<ModifyUser {player} cosmetics={data.cosmetics} token={data.token} />
+					<ModifyUser {player} />
 				</div>
 			{/each}
 		{/if}
@@ -147,7 +147,7 @@
 	<AddTasksDialogue />
 
 	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
-		{#if (tasks ?? []).length == 0}
+		{#if tasks.length === 0}
 			<EmptyCard message="No tasks have been added." />
 		{:else}
 			{#each tasks ?? [] as task}
@@ -164,7 +164,7 @@
 	<AddWebhookDialogue />
 
 	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
-		{#if (webhooks ?? []).length == 0}
+		{#if webhooks.length === 0}
 			<EmptyCard message="No webhooks have been added." />
 		{:else}
 			{#each webhooks ?? [] as webhook}
@@ -181,7 +181,7 @@
 	<AddMessageDialogue />
 
 	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
-		{#if (messages ?? []).length == 0}
+		{#if messages.length === 0}
 			<EmptyCard message="No tamper-evident messages have been added." />
 		{:else}
 			{#each messages ?? [] as message}
@@ -205,7 +205,7 @@
 	<CreateCosmetic action="addCosmetic" />
 
 	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
-		{#if (cosmetics ?? []).length == 0}
+		{#if cosmetics.length === 0}
 			<EmptyCard message="No cosmetics messages have been added." />
 		{:else}
 			{#each cosmetics ?? [] as cosmetic}

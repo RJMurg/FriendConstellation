@@ -52,7 +52,7 @@
 
 {#if page === 'players'}
 	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
-		{#if data.players.length == 0}
+		{#if data.players.length === 0}
 			<EmptyCard message="No Champions have joined Starboard yet." />
 		{:else}
 			{#each data.players as player}
@@ -73,7 +73,7 @@
 	</div>
 {:else if page === 'tasks'}
 	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
-		{#if data.tasks.length == 0}
+		{#if data.tasks.length === 0}
 			<EmptyCard message="No Tasks have been added to the Starboard yet." />
 		{:else}
 			{#each data.tasks as task}
@@ -83,7 +83,7 @@
 	</div>
 {:else if page === 'shop'}
 	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
-		{#if data.cosmetics.length == 0}
+		{#if data.cosmetics.length === 0}
 			<EmptyCard message="Nothing is for sale yet." />
 		{:else}
 			<h2 class="text-center text-2xl font-bold">Contact the Starmaster to purchase cosmetics</h2>

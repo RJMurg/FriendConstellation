@@ -362,6 +362,8 @@ export const actions = {
 				active
 			}
 		});
+
+		return;
 	},
 
 	modifyCosmetic: async ({ request }) => {
@@ -391,6 +393,8 @@ export const actions = {
 				active
 			}
 		});
+
+		return;
 	},
 
 	deleteCosmetic: async ({ request }) => {
@@ -402,5 +406,7 @@ export const actions = {
 				id: parseInt(id)
 			}
 		});
+
+		return;
 	}
 } satisfies Actions;
