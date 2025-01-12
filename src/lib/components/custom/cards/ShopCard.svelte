@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AbstractCard from './AbstractCard.svelte';
-	import StarsGenerator from '../StarsGenerator.svelte';
+	import StarGenerator from '../StarGenerator.svelte';
 
 	export let name: string;
 	export let description: string;
@@ -34,7 +34,7 @@
 				{starString}
 			</div>
 
-			<StarsGenerator stars={cost} />
+			<StarGenerator stars={cost} />
 		</div>
 	</div>
 </AbstractCard>
