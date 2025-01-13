@@ -4,14 +4,18 @@
 
 	let { stars, size = 4 }: { stars: number; size: number } = $props();
 
-	const starObject = parseStars(Math.abs(stars));
+	const starObject = $derived(parseStars(Math.abs(stars)));
 
 	let colour = $state('text-yellow-500');
 	let starSize = `h-${size} w-${size}`;
 
-	if (stars < 0) {
-		colour = 'text-red-500';
-	}
+	$effect(() => {
+		if (stars < 0) {
+			colour = 'text-red-500';
+		} else {
+			colour = 'text-yellow-500';
+		}
+	});
 </script>
 
 <div class="flex flex-row items-center justify-center">
