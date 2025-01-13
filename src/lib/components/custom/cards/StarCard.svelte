@@ -5,17 +5,29 @@
 
 	import { stringifyPosition } from '$lib';
 	import { ChevronRight, Crown, EllipsisVertical } from 'lucide-svelte';
-
-	export let player: string;
-	export let id: string = '';
-	export let position: number;
-	export let stars: number;
-	export let joint: boolean;
-	export let showLogLink = true;
-	export let font = 'font-sans';
-	export let hat = '';
-	export let card = '';
-	export let animation = '';
+	let {
+		player,
+		id = '',
+		position,
+		stars,
+		joint,
+		showLogLink = true,
+		font = 'font-sans',
+		hat = '',
+		card = '',
+		animation = ''
+	}: {
+		player: string;
+		id: string;
+		position: number;
+		stars: number;
+		joint: boolean;
+		showLogLink: boolean;
+		font: string;
+		hat: string;
+		card: string;
+		animation: string;
+	} = $props();
 </script>
 
 <AbstractCard {font} {card} {animation} {hat}>
