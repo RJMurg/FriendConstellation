@@ -8,7 +8,7 @@ done
 echo "DB is ready."
 
 # Check if the previous build was successful or if the build success file doesn't exist
-if [ ! -f ./build-success ] || grep -q "false" ./build-success; then
+if [ ! -f ./first-start-fragment ] || grep -q "false" ./first-start-fragment; then
   echo "Previous build failed or build success file doesn't exist. Rebuilding..."
 
   echo "Generating Prisma Client"
@@ -18,16 +18,13 @@ if [ ! -f ./build-success ] || grep -q "false" ./build-success; then
   echo "Running Prisma migrations..."
   npx prisma migrate deploy
 
-  echo "Building Site"
-  npm run build
-
   # If build was successful, write a token to the file system
   if [ $? -eq 0 ]; then
     echo "Build successful."
-    echo "true" > ./build-success
+    echo "true" > ./first-start-fragment
   else
     echo "Build failed."
-    echo "false" > ./build-success
+    echo "false" > ./first-start-fragment
   fi
 else
   echo "Previous build was successful. Skipping build steps."

@@ -8,9 +8,10 @@ RUN npm ci
 FROM node:18-alpine
 WORKDIR /app
 COPY --from=build /app .
+RUN npm run build
 RUN chmod +x ./start.sh
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --start-interval=5s \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --start-interval=5s \
     CMD ["sh", "-c", "wget -q --spider http://127.0.0.1:3000/ || exit 1"]
 
 CMD ["./start.sh"]
