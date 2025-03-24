@@ -22,7 +22,7 @@
 </svelte:head>
 
 {#if data.player}
-	<div class="h-screen w-full p-5 {data.player.font}">
+	<div class="h-full w-full overflow-auto p-5 {data.player.font}">
 		<Card class="flex h-full w-full flex-col {data.player.card}">
 			<Button variant="outline" href="/" class="m-5 w-fit">
 				<ChevronLeft size={24} />
