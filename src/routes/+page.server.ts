@@ -48,7 +48,7 @@ export const load = (async () => {
 	});
 
 	return {
-		title: process.env.STARBOARD_TITLE || 'auaga',
+		title: process.env.STARBOARD_TITLE || 'Starboard',
 		subtitle: process.env.STARBOARD_SUBTITLE || 'Star Harder',
 		shopEnabled: process.env.SHOP_ENABLED === 'true',
 		players,
