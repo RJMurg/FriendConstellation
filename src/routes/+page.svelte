@@ -63,7 +63,7 @@
 
 	{#if page === 'players'}
 		<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
-			{#if data.gameDetails.scoreboardEnabled}
+			{#if !data.gameDetails.scoreboardEnabled}
 				<EmptyCard message="The scoreboard is disabled." />
 			{:else if players.length === 0}
 				<EmptyCard message="No Champions have joined Starboard yet." />
