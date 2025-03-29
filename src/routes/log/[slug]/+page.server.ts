@@ -1,5 +1,8 @@
 import type { PageServerLoad } from './$types';
 import prisma from '$lib/server/prisma';
+import { config } from 'dotenv';
+
+config();
 
 export const load = (async ({ params }) => {
 	const userId = params.slug;
@@ -20,6 +23,7 @@ export const load = (async ({ params }) => {
 	});
 
 	return {
+		title: process.env.STARBOARD_TITLE || 'Starboard',
 		player,
 		logs
 	};

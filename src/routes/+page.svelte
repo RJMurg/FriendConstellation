@@ -2,13 +2,12 @@
 	import type { PageData } from './$types';
 	import EmptyCard from '$lib/components/custom/cards/EmptyCard.svelte';
 	import StarCard from '$lib/components/custom/cards/StarCard.svelte';
-	import Details from '$lib/details.json';
 	import HomeMenu from '$lib/components/custom/HomeMenu.svelte';
 	import TaskCard from '$lib/components/custom/cards/TaskCard.svelte';
 	import ShopCard from '$lib/components/custom/cards/ShopCard.svelte';
-	import * as Popover from '$lib/components/ui/popover/index.js';
 	import { Label } from '$lib/components/ui/label';
 	import { source } from 'sveltekit-sse';
+	import * as Popover from '$lib/components/ui/popover/index';
 	import { Button } from '$lib/components/ui/button';
 	import { Instagram, SettingsIcon } from 'lucide-svelte';
 	import Switch from '$lib/components/ui/switch/switch.svelte';
@@ -36,7 +35,7 @@
 
 <svelte:head>
 	<title>
-		{Details.title} - {Details.subtitle}
+		{data.title} - {data.subtitle}
 	</title>
 </svelte:head>
 
@@ -46,11 +45,17 @@
 		id="title"
 	>
 		<enhanced:img src="/static/favicon.webp" alt="Starboard logo" class="mr-1 w-16" />
-		{Details.title.toUpperCase()}
+		{data.title.toUpperCase()}
 		<enhanced:img src="/static/favicon.webp" alt="Starboard logo" class="ml-1 w-16" />
 	</div>
 
-	<HomeMenu {playersButtonVariant} {tasksButtonVariant} {shopButtonVariant} bind:page />
+	<HomeMenu
+		{playersButtonVariant}
+		{tasksButtonVariant}
+		{shopButtonVariant}
+		shopEnabled={data.shopEnabled}
+		bind:page
+	/>
 </h1>
 
 {#if page === 'players'}
@@ -84,7 +89,7 @@
 			{/each}
 		{/if}
 	</div>
-{:else if page === 'shop'}
+{:else if page === 'shop' && data.shopEnabled}
 	<div class="mx-auto mt-32 w-full px-2 md:w-1/2 md:px-0">
 		{#if data.cosmetics.length === 0}
 			<EmptyCard message="Nothing is for sale yet." />

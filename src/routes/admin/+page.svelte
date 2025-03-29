@@ -3,7 +3,6 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import type { PageData } from './$types';
 	import { ChevronRight } from 'lucide-svelte';
-	import Details from '$lib/details.json';
 	import EmptyCard from '$lib/components/custom/cards/EmptyCard.svelte';
 	import ModifyUser from '$lib/components/custom/admin/ModifyUser.svelte';
 	import StarCard from '$lib/components/custom/cards/StarCard.svelte';
@@ -88,7 +87,7 @@
 
 <svelte:head>
 	<title>
-		{Details.title} - Admin
+		{data.title} - Admin
 	</title>
 </svelte:head>
 

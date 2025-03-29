@@ -1,5 +1,4 @@
 // place files you want to import through the `$lib` alias in this folder.
-import Details from '$lib/details.json';
 
 /**
  * Adds the relevant suffix to a number for positions
@@ -88,11 +87,17 @@ export function getActionMessage(stars: number, log: string): string {
 
 /**
  * Sends a message to a Discord webhook
+ * @param username The username of the message
  * @param title The title of the message
  * @param content The content of the message
  * @param webhook The URL of the webhook
  */
-export function sendWebhookMessage(title: string, content: string, webhook: string): void {
+export function sendWebhookMessage(
+	username: string,
+	title: string,
+	content: string,
+	webhook: string
+): void {
 	fetch(webhook, {
 		method: 'POST',
 		headers: {
@@ -107,7 +112,7 @@ export function sendWebhookMessage(title: string, content: string, webhook: stri
 					color: 11765248
 				}
 			],
-			username: Details.title,
+			username: username,
 			avatar_url: 'https://stars.rjm.ie/favicon.webp'
 		})
 	}).then();

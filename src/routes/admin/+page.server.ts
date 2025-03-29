@@ -64,6 +64,8 @@ export const load = (async ({ cookies }) => {
 		const messages = await prisma.tamperEvidentMessages.findMany();
 
 		return {
+			title: process.env.STARBOARD_TITLE || 'Starboard',
+			subtitle: process.env.STARBOARD_SUBTITLE || 'Star Harder',
 			loggedIn,
 			players,
 			tasks,
@@ -267,7 +269,12 @@ export const actions = {
 			});
 
 			for (const webhook of webhooks) {
-				sendWebhookMessage('New Task Added!', webhookContent, webhook.webhook);
+				sendWebhookMessage(
+					process.env.STARBOARD_TITLE || 'Starboard',
+					'New Task Added!',
+					webhookContent,
+					webhook.webhook
+				);
 			}
 		}
 	},

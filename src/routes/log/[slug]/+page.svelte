@@ -3,7 +3,6 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { ChevronLeft } from 'lucide-svelte';
-	import Details from '$lib/details.json';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -12,11 +11,11 @@
 <svelte:head>
 	{#if data.player}
 		<title>
-			{Details.title} - {data.player.name} Star Log
+			{data.title} - {data.player.name} Star Log
 		</title>
 	{:else}
 		<title>
-			{Details.title} - Log Not Found
+			{data.title} - Log Not Found
 		</title>
 	{/if}
 </svelte:head>

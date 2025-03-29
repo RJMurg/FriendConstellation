@@ -1,6 +1,9 @@
 import type { PageServerLoad } from './$types';
 import prisma from '$lib/server/prisma';
 import { orderPlayers } from '$lib';
+import { config } from 'dotenv';
+
+config();
 
 export const load = (async () => {
 	const rawPlayers = await prisma.users.findMany({
@@ -45,6 +48,9 @@ export const load = (async () => {
 	});
 
 	return {
+		title: process.env.STARBOARD_TITLE || 'auaga',
+		subtitle: process.env.STARBOARD_SUBTITLE || 'Star Harder',
+		shopEnabled: process.env.SHOP_ENABLED === 'true',
 		players,
 		tasks,
 		cosmetics

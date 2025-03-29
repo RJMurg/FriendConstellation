@@ -11,6 +11,10 @@ services:
     container_name: starboard
     environment:
       DATABASE_URL: postgresql://prisma:prisma@db:5432/prismadb?schema=public
+      ADMIN_PASSWORD: changeme
+      SHOP_ENABLED: 'true'
+      STARBOARD_TITLE: 'Starboard'
+      STARBOARD_SUBTITLE: 'Starharder'
     depends_on:
       - db
     networks:
