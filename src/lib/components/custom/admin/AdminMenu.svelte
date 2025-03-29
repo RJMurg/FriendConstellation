@@ -8,6 +8,7 @@
 	export let webhooksButtonVariant: buttonTypes = 'secondary';
 	export let tamperButtonVariant: buttonTypes = 'secondary';
 	export let cosmeticButtonVariant: buttonTypes = 'secondary';
+	export let gameButtonVariant: buttonTypes = 'secondary';
 	export let page: string = 'players';
 </script>
 
@@ -28,6 +29,10 @@
 
 	<Button variant={cosmeticButtonVariant} on:click={() => (page = 'cosmetics')} class="mr-2">
 		Cosmetics
+	</Button>
+
+	<Button variant={gameButtonVariant} on:click={() => (page = 'game')} class="mr-2">
+		Game Settings
 	</Button>
 
 	<form action="?/logout" method="POST">

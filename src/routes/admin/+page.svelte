@@ -26,6 +26,9 @@
 	import CreateCosmetic from '$lib/components/custom/dialogues/CreateCosmetic.svelte';
 	import ShopCard from '$lib/components/custom/cards/ShopCard.svelte';
 	import ModifyCosmetics from '$lib/components/custom/admin/ModifyCosmetics.svelte';
+	import AbstractCard from '$lib/components/custom/cards/AbstractCard.svelte';
+	import { Switch } from '$lib/components/ui/switch';
+	import { Label } from '$lib/components/ui/label';
 
 	let players = $state(data.players ?? []);
 	let tasks = $state(data.tasks ?? []);
@@ -41,53 +44,21 @@
 		}
 	});
 
-	let playersButtonVariant: buttonTypes = $state('default');
-	let tasksButtonVariant: buttonTypes = $state('secondary');
-	let webhooksButtonVariant: buttonTypes = $state('secondary');
-	let tamperButtonVariant: buttonTypes = $state('secondary');
-	let cosmeticButtonVariant: buttonTypes = $state('secondary');
+	let playersButtonVariant: buttonTypes = $derived(page === 'players' ? 'default' : 'secondary');
+	let tasksButtonVariant: buttonTypes = $derived(page === 'tasks' ? 'default' : 'secondary');
+	let webhooksButtonVariant: buttonTypes = $derived(page === 'webhooks' ? 'default' : 'secondary');
+	let tamperButtonVariant: buttonTypes = $derived(page === 'tamper' ? 'default' : 'secondary');
+	let cosmeticButtonVariant: buttonTypes = $derived(page === 'cosmetics' ? 'default' : 'secondary');
+	let gameButtonVariant: buttonTypes = $derived(page === 'game' ? 'default' : 'secondary');
 
 	$effect(() => {
 		localStorage.setItem('adminPage', page);
-
-		// I hate this so much
-		if (page === 'players') {
-			playersButtonVariant = 'default';
-			tasksButtonVariant = 'secondary';
-			webhooksButtonVariant = 'secondary';
-			tamperButtonVariant = 'secondary';
-			cosmeticButtonVariant = 'secondary';
-		} else if (page === 'tasks') {
-			playersButtonVariant = 'secondary';
-			tasksButtonVariant = 'default';
-			webhooksButtonVariant = 'secondary';
-			tamperButtonVariant = 'secondary';
-			cosmeticButtonVariant = 'secondary';
-		} else if (page === 'webhooks') {
-			playersButtonVariant = 'secondary';
-			tasksButtonVariant = 'secondary';
-			webhooksButtonVariant = 'default';
-			tamperButtonVariant = 'secondary';
-			cosmeticButtonVariant = 'secondary';
-		} else if (page === 'tamper') {
-			playersButtonVariant = 'secondary';
-			webhooksButtonVariant = 'secondary';
-			tasksButtonVariant = 'secondary';
-			tamperButtonVariant = 'default';
-			cosmeticButtonVariant = 'secondary';
-		} else if (page === 'cosmetics') {
-			playersButtonVariant = 'secondary';
-			webhooksButtonVariant = 'secondary';
-			tasksButtonVariant = 'secondary';
-			tamperButtonVariant = 'secondary';
-			cosmeticButtonVariant = 'default';
-		}
 	});
 </script>
 
 <svelte:head>
 	<title>
-		{data.title} - Admin
+		{data.gameDetails.name} - Admin
 	</title>
 </svelte:head>
 
@@ -98,6 +69,7 @@
 		{webhooksButtonVariant}
 		{tamperButtonVariant}
 		{cosmeticButtonVariant}
+		{gameButtonVariant}
 		bind:page
 	/>
 {/if}
@@ -223,5 +195,45 @@
 				</div>
 			{/each}
 		{/if}
+	</div>
+{:else if page === 'game'}
+	<h1 class="my-2 text-center text-4xl font-bold">Game Settings</h1>
+
+	<div class="mx-auto w-full px-5 md:w-2/3 md:px-0">
+		<AbstractCard>
+			<div class="flex w-full flex-col items-center">
+				<form action="?/updateGameDetails" method="post">
+					<div class="flex flex-col">
+						<Label for="name" class="mt-4">Game Name</Label>
+						<Input type="text" name="name" placeholder="Game Name" value={data.gameDetails.name} />
+
+						<Label for="subtitle" class="mt-4">Game Subtitle</Label>
+						<Input
+							type="text"
+							name="subtitle"
+							placeholder="Game Subtitle"
+							value={data.gameDetails.subtitle}
+						/>
+
+						<Label for="active" class="mb-2 mt-4">Game Active?</Label>
+						<Switch name="active" bind:checked={data.gameDetails.active} />
+
+						<Label for="showInstagram" class="mb-2 mt-4">Show Instagram?</Label>
+						<Switch name="showInstagram" bind:checked={data.gameDetails.showInstagram} />
+
+						<Label for="shopEnabled" class="mb-2 mt-4">Shop Enabled?</Label>
+						<Switch name="shopEnabled" bind:checked={data.gameDetails.shopEnabled} />
+
+						<Label for="tasksEnabled" class="mb-2 mt-4">Tasks Enabled?</Label>
+						<Switch name="tasksEnabled" bind:checked={data.gameDetails.tasksEnabled} />
+
+						<Label for="scoreboardEnabled" class="mb-2 mt-4">Scoreboard Enabled?</Label>
+						<Switch name="scoreboardEnabled" bind:checked={data.gameDetails.scoreboardEnabled} />
+
+						<Button type="submit" class="mt-4">Update Game Details</Button>
+					</div>
+				</form>
+			</div>
+		</AbstractCard>
 	</div>
 {/if}

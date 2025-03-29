@@ -63,15 +63,16 @@ export const load = (async ({ cookies }) => {
 
 		const messages = await prisma.tamperEvidentMessages.findMany();
 
+		const gameSettings = await prisma.game.findFirst();
+
 		return {
-			title: process.env.STARBOARD_TITLE || 'Starboard',
-			subtitle: process.env.STARBOARD_SUBTITLE || 'Star Harder',
 			loggedIn,
 			players,
 			tasks,
 			webhooks,
 			messages,
 			cosmetics,
+			gameSettings,
 			token
 		};
 	}
@@ -269,12 +270,7 @@ export const actions = {
 			});
 
 			for (const webhook of webhooks) {
-				sendWebhookMessage(
-					process.env.STARBOARD_TITLE || 'Starboard',
-					'New Task Added!',
-					webhookContent,
-					webhook.webhook
-				);
+				sendWebhookMessage('Starboard', 'New Task Added!', webhookContent, webhook.webhook);
 			}
 		}
 	},
@@ -411,6 +407,45 @@ export const actions = {
 				id: parseInt(id)
 			}
 		});
+
+		return;
+	},
+
+	updateGameDetails: async ({ request }) => {
+		const formData = await request.formData();
+		const doesGameExist = (await prisma.game.findFirst()) !== null;
+
+		console.log(formData);
+
+		if (doesGameExist) {
+			await prisma.game.update({
+				where: {
+					id: 0
+				},
+				data: {
+					name: String(formData.get('name')),
+					subtitle: String(formData.get('subtitle')),
+					active: formData.get('active') === 'on',
+					showInstagram: formData.get('showInstagram') === 'on',
+					shopEnabled: formData.get('shopEnabled') === 'on',
+					tasksEnabled: formData.get('tasksEnabled') === 'on',
+					scoreboardEnabled: formData.get('scoreboardEnabled') === 'on'
+				}
+			});
+		} else {
+			await prisma.game.create({
+				data: {
+					id: 0,
+					name: String(formData.get('name')),
+					subtitle: String(formData.get('subtitle')),
+					active: formData.get('active') === 'on',
+					showInstagram: formData.get('showInstagram') === 'on',
+					shopEnabled: formData.get('shopEnabled') === 'on',
+					tasksEnabled: formData.get('tasksEnabled') === 'on',
+					scoreboardEnabled: formData.get('scoreboardEnabled') === 'on'
+				}
+			});
+		}
 
 		return;
 	}

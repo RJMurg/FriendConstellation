@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import X from 'lucide-svelte/icons/x';
 
 	export let title: string;
 	export let description = '';
@@ -27,5 +28,14 @@
 				</Dialog.Footer>
 			</div>
 		</form>
+
+		<Dialog.Close
+			class="focus-visible:outline-hidden absolute right-5 top-5 rounded-md focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+		>
+			<div>
+				<X class="size-5 text-foreground" />
+				<span class="sr-only">Close</span>
+			</div>
+		</Dialog.Close>
 	</Dialog.Content>
 </Dialog.Root>

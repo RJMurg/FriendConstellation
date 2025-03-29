@@ -1,9 +1,6 @@
 import type { PageServerLoad, Actions } from './$types';
 import prisma from '$lib/server/prisma';
 import { sendWebhookMessage } from '$lib';
-import { config } from 'dotenv';
-
-config();
 
 export const load = (async ({ params }) => {
 	const uuid = params.slug;
@@ -19,7 +16,6 @@ export const load = (async ({ params }) => {
 
 	if (opened) {
 		return {
-			title: process.env.STARBOARD_TITLE || 'Starboard',
 			exists,
 			opened,
 			message,
@@ -28,7 +24,6 @@ export const load = (async ({ params }) => {
 	}
 
 	return {
-		title: process.env.STARBOARD_TITLE || 'Starboard',
 		exists,
 		opened,
 		uuid
@@ -72,7 +67,7 @@ export const actions = {
 
 		for (const webhook of webhooks) {
 			sendWebhookMessage(
-				process.env.STARBOARD_TITLE || 'Starboard',
+				'Starboard',
 				'Tamper-Evident Message Opened!',
 				webhookContent,
 				webhook.webhook

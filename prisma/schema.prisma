@@ -7,15 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model game {
+  id                Int     @id @default(0)
+  name              String  @default("Starboard")
+  subtitle          String  @default("Star Harder")
+  active            Boolean @default(false)
+  showInstagram     Boolean @default(true)
+  shopEnabled       Boolean @default(true)
+  tasksEnabled      Boolean @default(true)
+  scoreboardEnabled Boolean @default(true)
+}
+
 model users {
-  id           Int     @id @default(autoincrement())
-  name         String  @default("Missingno")  @db.VarChar(100)
-  stars        Int     @default(1)
-  font         String  @default("font-sans")       @db.VarChar(100)
-  hat          String  @default("")           @db.VarChar(100)
-  card         String  @default("")           @db.VarChar(100)
-  animation    String  @default("")           @db.VarChar(100)
-  cosmetic_id  Int?
+  id          Int    @id @default(autoincrement())
+  name        String @default("Missingno") @db.VarChar(100)
+  stars       Int    @default(1)
+  font        String @default("font-sans") @db.VarChar(100)
+  hat         String @default("") @db.VarChar(100)
+  card        String @default("") @db.VarChar(100)
+  animation   String @default("") @db.VarChar(100)
+  cosmetic_id Int?
 
   Cosmetic shop? @relation(fields: [cosmetic_id], references: [id])
 
@@ -23,9 +34,9 @@ model users {
 }
 
 model tasks {
-  id          Int    @id @default(autoincrement())
-  title       String @db.VarChar(100)
-  description String @db.VarChar(500)
+  id          Int     @id @default(autoincrement())
+  title       String  @db.VarChar(100)
+  description String  @db.VarChar(500)
   reward      Int
   active      Boolean @default(true)
 }
@@ -39,7 +50,7 @@ model webhooks {
 }
 
 model logins {
-  id      Int @id @default(autoincrement())
+  id      Int      @id @default(autoincrement())
   token   String
   expires DateTime
 }
@@ -69,9 +80,9 @@ model shop {
   cost        Int
   active      Boolean @default(true)
   font        String  @default("sans") @db.VarChar(100)
-  hat         String  @default("")     @db.VarChar(100)
-  card        String  @default("")     @db.VarChar(100)
-  animation   String  @default("")     @db.VarChar(100)
+  hat         String  @default("") @db.VarChar(100)
+  card        String  @default("") @db.VarChar(100)
+  animation   String  @default("") @db.VarChar(100)
 
   users users[]
 }
