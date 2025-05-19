@@ -1,13 +1,26 @@
-node_modules
-.git
+# Dotfiles
 .dockerignore
-Dockerfile
-docker-compose.yaml
-README.md
 .env.example
 .eslintignore
 .eslintrc.cjs
+.gitignore
 .npmrc
 .prettierignore
 .prettierrc
+
+# Dirs
+.git
 .github
+.idea
+.svelte-kit
+build
+docs
+node_modules
+tests
+
+# Normal Files
+Dockerfile
+LICENSE.md
+README.md
+docker-compose.yaml
+eslint.config.js

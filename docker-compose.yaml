@@ -17,6 +17,8 @@ services:
       STARBOARD_SUBTITLE: 'Starharder'
     depends_on:
       - db
+    ports:
+      - '3000:3000'
     networks:
       - traefik-external
 
