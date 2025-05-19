@@ -45,7 +45,7 @@
 			class="flex flex-row items-center justify-center text-center text-4xl font-bold md:text-6xl"
 			id="title"
 		>
-			<enhanced:img src="/static/favicon.webp" alt="Starboard logo" class="mr-1 w-16" />
+			<enhanced:img src="/static/favicon.webp" alt="Starboard logo" class="ml-1 w-16" />
 			{data.gameDetails.name.toUpperCase()}
 			<enhanced:img src="/static/favicon.webp" alt="Starboard logo" class="ml-1 w-16" />
 		</div>
