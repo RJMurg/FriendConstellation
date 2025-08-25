@@ -1,3 +1,12 @@
+# Wait for the database to be ready
+echo "Waiting for DB to be ready..."
+
+until nc -z starboard-db 5432; do
+
+  sleep 1
+done
+echo "DB is ready."
+
 # Check if the previous build was successful or if the build success file doesn't exist
 if [ ! -f ./first-start-fragment ] || grep -q "false" ./first-start-fragment; then
   echo "Previous build failed or build success file doesn't exist. Rebuilding..."
