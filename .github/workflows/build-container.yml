@@ -34,7 +34,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.PACKAGE_TOKEN }}
 
       - name: Extract metadata for Docker
         id: meta
@@ -48,8 +48,22 @@ jobs:
           flavor: |
             latest=auto
 
+      - name: Fix Docker Issues
+        run: |
+          HOST_DOCKER_GID=996
+          CURRENT_USER=$(whoami)
+          if ! getent group $HOST_DOCKER_GID ; then
+            sudo groupadd -o -g $HOST_DOCKER_GID docker_host_996
+            echo "Created new group 'docker_host_996' with GID 996."
+          else
+            echo "Group with GID 996 already exists."
+          fi
+          sudo usermod -aG $HOST_DOCKER_GID $CURRENT_USER
+          echo "Groups after modification:"
+          id $CURRENT_USER
+
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
