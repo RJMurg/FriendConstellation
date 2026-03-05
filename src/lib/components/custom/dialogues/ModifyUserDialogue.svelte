@@ -59,7 +59,7 @@
 			<Label for="hat" class="mb-2 text-white">Hat</Label>
 			<Input
 				name="hat"
-				placeholder="The had to be added"
+				placeholder="The hat to be added"
 				class="text-white"
 				bind:value={player.hat}
 			/>
